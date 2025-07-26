@@ -4,7 +4,6 @@
 
 {
   imports = [
-    ../services/openssh.nix
     ../services/tailscale.nix
     ../services/samba.nix
     ../services/plex.nix

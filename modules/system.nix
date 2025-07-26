@@ -14,6 +14,7 @@
   networking.firewall.trustedInterfaces = [ "lo" ];
 
   imports = [
+    ./services/openssh.nix
     ./services/avahi.nix
     ./services/resolved.nix
     ./common/locale.nix
