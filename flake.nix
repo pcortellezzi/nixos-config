@@ -17,12 +17,12 @@
   outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, ... }@inputs:
     let
       # Generic host configuration
-      mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
+      mkHost = { hostPath, homeModules ? [], isBuilder ? false }: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           hostPath
-          ./modules/roles/builder.nix # Add signature module
+        ] ++ nixpkgs.lib.optional isBuilder ./modules/roles/builder.nix ++ [ # Add signature module
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {
@@ -51,6 +51,7 @@
       nixosConfigurations = {
         vvb = mkHost {
           hostPath = ./hosts/vvb/configuration.nix;
+          isBuilder = true;
           homeModules = [
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
