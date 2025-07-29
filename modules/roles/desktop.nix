@@ -8,6 +8,7 @@
     ../services/pipewire.nix
     ../services/displaylink.nix
     ../services/tailscale.nix
+    ../services/logid.nix
   ];
 
   services.xserver.enable = true;
