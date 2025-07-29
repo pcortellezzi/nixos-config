@@ -9,6 +9,7 @@
     (motivewave-beta.override {
       licenseFile = config.age.secrets.motivewave_license.path;
     })
+    grpc
     protobuf
     tradingview
     vscode
