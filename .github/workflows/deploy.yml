@@ -1,0 +1,117 @@
+name: Build and Deploy NixOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'flake.nix'
+      - 'flake.lock'
+      - 'home/**'
+      - 'hosts/**'
+      - 'lib/**'
+      - 'modules/**'
+      - 'secrets/**'
+  workflow_dispatch:
+    inputs:
+      host:
+        description: 'Select host to deploy to (leave empty for all)'
+        required: false
+        type: choice
+        options:
+          - all
+          - flip-cx5
+          - ser5
+          - vvb
+
+jobs:
+  # --- Job 1: Détermine la matrice de déploiement --- #
+  setup:
+    name: Setup Deployment Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.hosts }}
+    steps:
+      - id: set-matrix
+        run: |
+          if [[ "${{ github.event.inputs.host }}" == "all" || -z "${{ github.event.inputs.host }}" ]]; then
+            echo 'hosts=["flip-cx5", "ser5", "vvb"]' >> $GITHUB_OUTPUT
+          else
+            echo 'hosts=["${{ github.event.inputs.host }}"]' >> $GITHUB_OUTPUT
+          fi
+
+  # --- Job 2: Déploie sur les hôtes déterminés par le Job 1 --- #
+  deploy:
+    name: Deploy to ${{ matrix.host }}
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJSON(needs.setup.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Install Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
+          tags: tag:gh-nixos-deploy-runner
+
+      - name: Install SSH Deploy Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_KEY }}
+          name: id_ed25519_deploy
+          known_hosts: 'just-a-placeholder'
+
+      - name: Add SSH host key to known_hosts
+        run: |
+          HOST_KEY=$(nix eval --raw -f lib/ssh-host-keys.nix ${{ matrix.host }})
+          mkdir -p ~/.ssh
+          echo "${{ matrix.host }} $HOST_KEY" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Create SSH Config
+        run: |
+          mkdir -p ~/.ssh
+          cat > ~/.ssh/config <<EOF
+          Host ${{ matrix.host }}
+            User deploy-user
+            IdentityFile /home/runner/.ssh/id_ed25519_deploy
+            IdentitiesOnly yes
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Check host availability
+        id: check_host
+        run: |
+          if nc -zvw1 ${{ matrix.host }} 22; then
+            echo "Host ${{ matrix.host }} is reachable."
+            echo "is_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "Host ${{ matrix.host }} is not reachable. Skipping subsequent steps."
+            echo "is_available=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build system configuration
+        id: build
+        if: steps.check_host.outputs.is_available == 'true'
+        run: |
+          echo "Building system configuration for ${{ matrix.host }}..."
+          nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel -o result-${{ matrix.host }}
+          SYSTEM_STORE_PATH=$(readlink -f result-${{ matrix.host }})
+          echo "system_path=$SYSTEM_STORE_PATH" >> $GITHUB_OUTPUT
+
+      - name: Copy system closure to host
+        if: steps.check_host.outputs.is_available == 'true'
+        run: nix copy --to ssh://${{ matrix.host }} ${{ steps.build.outputs.system_path }}
+
+      - name: Activate new system on host
+        if: steps.check_host.outputs.is_available == 'true'
+        run: ssh ${{ matrix.host }} "sudo ${{ steps.build.outputs.system_path }}/bin/switch-to-configuration switch"

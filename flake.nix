@@ -16,18 +16,22 @@
 
   outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, ... }@inputs:
     let
-      # Generic host configuration
-      mkHost = { hostPath, homeModules ? [], isBuilder ? false }: nixpkgs.lib.nixosSystem {
+      # Create a pkgs set with your custom overlays applied
+      pkgsWithMyOverlays = import nixpkgs {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        overlays = [ my-nixpkgs.overlays.default ];
+        config.allowUnfree = true;
+      };
+
+      # Generic host configuration
+      mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; pkgs = pkgsWithMyOverlays; }; # Pass the modified pkgs
         modules = [
           hostPath
-        ] ++ nixpkgs.lib.optional isBuilder ./modules/roles/builder.nix ++ [ # Add signature module
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {
-            nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
-
             # The system deploys the user's SSH key.
             age.secrets.philippe_ssh_id_ed25519 = {
               file = ./secrets/philippe_ssh_id_ed25519.age;
@@ -51,7 +55,6 @@
       nixosConfigurations = {
         vvb = mkHost {
           hostPath = ./hosts/vvb/configuration.nix;
-          isBuilder = true;
           homeModules = [
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix

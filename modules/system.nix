@@ -19,18 +19,21 @@
     ./services/resolved.nix
     ./common/locale.nix
     ./common/wifi-networks.nix
+    ./common/deploy-user.nix
   ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  
 
   # Enable Nix experimental features for flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Configure Cachix for pcortellezzi cache
+  nix.settings.substituters = [ "https://pcortellezzi.cachix.org" ];
+
   # Ajoute la clé publique de la machine de construction (vvb) à la liste de confiance.
   # NixOS fusionnera automatiquement cette valeur avec les clés par défaut.
   nix.settings.trusted-public-keys = [
-    "vvb-nix-cache:q1VDc+XiA53SfE/xSJ8XoUVUSTzZhCdG2J8Vj2NtUOk="
+    "pcortellezzi.cachix.org-1:IL7g88BOsIf1AeFl37PclJtA/lLY6Auf3xtRh30M0fI="
   ];
 
   
