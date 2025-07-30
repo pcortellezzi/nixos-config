@@ -13,6 +13,8 @@
     protobuf
     tradingview
     vscode
+    podman
+    podman-compose
   ];
 
   age.secrets.motivewave_license = {
