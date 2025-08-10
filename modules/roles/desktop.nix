@@ -4,11 +4,12 @@
 
 {
   imports = [
-    ../services/printing.nix
-    ../services/pipewire.nix
+    ../services/bluetooth.nix
     ../services/displaylink.nix
-    ../services/tailscale.nix
     ../services/logid.nix
+    ../services/pipewire.nix
+    ../services/printing.nix
+    ../services/tailscale.nix
   ];
 
   services.xserver.enable = true;
