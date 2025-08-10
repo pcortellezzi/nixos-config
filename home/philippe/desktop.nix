@@ -13,6 +13,7 @@
     protobuf
     tradingview
     vscode
+    (vscode-extensions.ms-vscode-remote.remote-containers)
     podman
     podman-compose
   ];
