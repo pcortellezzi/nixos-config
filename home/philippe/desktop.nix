@@ -4,6 +4,7 @@
 
 {
   home.packages = with pkgs; [
+    vlc
     dotnet-sdk_8
     gemini-cli
     (motivewave-beta.override {
