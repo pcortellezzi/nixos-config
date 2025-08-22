@@ -4,6 +4,7 @@
 
 {
   home.packages = with pkgs; [
+    google-chrome
     vlc
     dotnet-sdk_8
     gemini-cli
