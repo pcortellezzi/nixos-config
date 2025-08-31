@@ -18,6 +18,7 @@
     (vscode-extensions.ms-vscode-remote.remote-containers)
     podman
     podman-compose
+    vdhcoapp
   ];
 
   age.secrets.motivewave_license = {
