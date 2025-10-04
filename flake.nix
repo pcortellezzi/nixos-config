@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, ... }@inputs:
     let
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
@@ -23,10 +24,15 @@
         config.allowUnfree = true;
       };
 
+      pkgs-unstable = import nixpkgs-unstable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
       # Generic host configuration
       mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; pkgs = pkgsWithMyOverlays; }; # Pass the modified pkgs
+        specialArgs = { inherit inputs; pkgs = pkgsWithMyOverlays; };
         modules = [
           hostPath
           agenix.nixosModules.default
@@ -41,11 +47,14 @@
               symlink = false;
             };
 
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.philippe = {
-              imports = [ agenix.homeManagerModules.default ] ++ homeModules;
-              age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.philippe = {
+                imports = [ agenix.homeManagerModules.default ] ++ homeModules;
+                age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
+              };
+              extraSpecialArgs = { inherit pkgs-unstable; };
             };
           }
         ];

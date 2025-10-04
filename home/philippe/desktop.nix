@@ -1,18 +1,16 @@
 {
-  config, pkgs, ...
+  config, pkgs, pkgs-unstable, ...
 }:
 
 {
   home.packages = with pkgs; [
-    google-chrome
-    vlc
-    dotnet-sdk_8
-    gemini-cli
-    (motivewave-beta.override {
+    (motivewave.override {
       licenseFile = config.age.secrets.motivewave_license.path;
     })
-    grpc
-    protobuf
+  ] ++ (with pkgs-unstable; [
+    google-chrome
+    vlc
+    gemini-cli
     tradingview
     vscode
     (vscode-extensions.ms-vscode-remote.remote-containers)
@@ -20,7 +18,7 @@
     podman-compose
     vdhcoapp
     rar
-  ];
+  ]);
 
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
