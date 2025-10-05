@@ -32,8 +32,11 @@
       # Generic host configuration
       mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; pkgs = pkgsWithMyOverlays; };
+        specialArgs = { inherit inputs; };
         modules = [
+          {
+            nixpkgs.pkgs = pkgsWithMyOverlays;
+          }
           hostPath
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager

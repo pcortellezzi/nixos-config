@@ -11,7 +11,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "evdi" ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
+  boot.extraModulePackages = [ pkgs.linuxPackages_latest.evdi ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/db648e45-6a35-40ca-a626-a9c216c76732";
