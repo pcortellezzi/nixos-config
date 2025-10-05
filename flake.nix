@@ -34,7 +34,9 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
           {
+            my.auto-update.enable = true; # Enable auto-update for all hosts
             nixpkgs.pkgs = pkgsWithMyOverlays;
           }
           hostPath
