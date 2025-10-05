@@ -17,7 +17,6 @@
     podman
     podman-compose
     vdhcoapp
-    rar
   ]);
 
   age.secrets.motivewave_license = {
