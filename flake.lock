@@ -92,11 +92,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1759708532,
-        "narHash": "sha256-mTiAA/nZWa7X847DX2+vTyI2brIoXpLCllPsVgeoWf8=",
+        "lastModified": 1759709314,
+        "narHash": "sha256-x5jseJNBEK3xZaaZicz//9RUSrFTPz0LkNCMgHWSM50=",
         "owner": "pcortellezzi",
         "repo": "nixpkgs",
-        "rev": "a37dda69d0077f9a9db7431f9143a01ee05d1cd1",
+        "rev": "85452258595de45eba5dc3c15bb88caa617a7280",
         "type": "github"
       },
       "original": {
