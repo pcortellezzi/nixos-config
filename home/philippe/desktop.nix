@@ -17,6 +17,7 @@
     podman
     podman-compose
     vdhcoapp
+    wine
   ]);
 
   age.secrets.motivewave_license = {
