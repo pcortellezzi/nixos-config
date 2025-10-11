@@ -28,11 +28,15 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Configure Cachix for pcortellezzi cache
-  nix.settings.substituters = [ "https://pcortellezzi.cachix.org" ];
+  nix.settings.substituters = [
+    "https://cache.nixos.org/"
+    "https://pcortellezzi.cachix.org"
+  ];
 
   # Ajoute la clé publique de la machine de construction (vvb) à la liste de confiance.
   # NixOS fusionnera automatiquement cette valeur avec les clés par défaut.
   nix.settings.trusted-public-keys = [
+    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     "pcortellezzi.cachix.org-1:IL7g88BOsIf1AeFl37PclJtA/lLY6Auf3xtRh30M0fI="
   ];
 
