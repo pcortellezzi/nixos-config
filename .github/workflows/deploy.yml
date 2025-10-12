@@ -55,6 +55,8 @@ jobs:
 
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
+        with:
+          cachix-cache-names: pcortellezzi
 
       - name: Install Tailscale
         uses: tailscale/github-action@v2
