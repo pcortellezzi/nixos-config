@@ -12,6 +12,7 @@
     vlc
     gemini-cli
     tradingview
+    jetbrains.rust-rover
     vscode
     (vscode-extensions.ms-vscode-remote.remote-containers)
     podman
