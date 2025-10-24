@@ -11,26 +11,32 @@ in
   };
 
   config = lib.mkIf cfg.enable (
-    let
-      updateScript = pkgs.writeShellScriptBin "nixos-auto-update" ''
-        #!${pkgs.runtimeShell}
-        set -e
-        echo "Attempting to update NixOS configuration from ${flakeUrl}..."
-        ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake ${flakeUrl}#${config.networking.hostName}
-        echo "NixOS configuration update process completed."
-      '';
-    in
     {
-            systemd.services.nixos-auto-update = {
-              description = "Automatically update NixOS configuration from GitHub on boot";
-              wantedBy = [ "multi-user.target" ];
-              after = [ "network-online.target" ];
-              wants = [ "network-online.target" ];
-                      serviceConfig = {
-                        Type = "oneshot";
-                        User = "root";
-                        ExecStart = "${pkgs.util-linux}/bin/flock --nonblock /run/nixos-rebuild.lock -c '${updateScript}/bin/nixos-auto-update'";
-                        SuccessExitStatus = 1;
-                      };            };    }
+      # The actual worker service that performs the update
+      systemd.services.nixos-update-runner = {
+        description = "NixOS Update Runner (performs the actual switch)";
+        # No WantedBy, it's triggered by nixos-auto-update.service or CI
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = "${config.my.deploy-user.triggerUpdateScript}/bin/trigger-nixos-update";
+        };
+      };
+
+      # The boot-time trigger service
+      systemd.services.nixos-auto-update = {
+        description = "Automatically trigger NixOS update on boot";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = "${pkgs.systemd}/bin/systemctl start --no-block nixos-update-runner.service";
+        };
+      };
+    }
   );
 }

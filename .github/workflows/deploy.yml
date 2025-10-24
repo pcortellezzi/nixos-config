@@ -110,8 +110,8 @@ jobs:
         if: steps.check_host.outputs.is_available == 'true'
         run: |
           echo "Triggering remote update on ${{ matrix.host }} and waiting for completion..."
-          if ! ssh ${{ matrix.host }} "sudo systemctl start --wait nixos-auto-update.service"; then
+          if ! ssh ${{ matrix.host }} "sudo systemctl start --wait nixos-update-runner.service"; then
             echo "::error::Remote update failed. Fetching last 50 log lines from the service..."
-            ssh ${{ matrix.host }} "sudo journalctl -u nixos-auto-update.service -n 50 --no-pager"
+            ssh ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager"
             exit 1
           fi

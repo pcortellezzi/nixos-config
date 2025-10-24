@@ -31,26 +31,63 @@ let
   };
 in
 {
-  system.activationScripts.setup-deploy-user = {
-    deps = [ "users" ];
-    text = ''
-      # Execute the self-contained script.
-      ${setupScript}/bin/setup-deploy-user
-    '';
+  options.my.deploy-user.triggerUpdateScript = lib.mkOption {
+    type = lib.types.package;
+    description = "The script to trigger NixOS updates.";
+    readOnly = true; # This option is set internally
   };
 
-  # Grant passwordless sudo for the specific systemctl command.
-  security.sudo.extraRules = [
-    {
-      users = [ "deploy-user" ];
-      commands = [
-        {
-          command = "${pkgs.systemd}/bin/systemctl start nixos-auto-update.service";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
+  config = {
+    system.activationScripts.setup-deploy-user = {
+      deps = [ "users" ];
+      text = ''
+        # Execute the self-contained script.
+        ${setupScript}/bin/setup-deploy-user
+      '';
+    };
 
-  nix.settings.trusted-users = [ "deploy-user" ];
+    # Create a wrapper script for triggering NixOS updates.
+    # This script will be run by sudo and will launch the actual update via systemd-run.
+    my.deploy-user.triggerUpdateScript = pkgs.writeShellScriptBin "trigger-nixos-update" ''
+      #!${pkgs.runtimeShell}
+      set -e
+              echo "Attempting to acquire update lock and launch NixOS configuration switch..."
+              if ! ${pkgs.util-linux}/bin/flock --nonblock /run/nixos-rebuild.lock -c "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch -v --flake github:pcortellezzi/nixos-config#${config.networking.hostName} --refresh" ; then
+                echo "Update lock already held. Skipping update." >&2
+                exit 0 # Exit with 0 to indicate success (no action needed)
+              fi    '';
+
+        # Grant passwordless sudo for the specific wrapper script and systemctl/journalctl commands.
+
+        security.sudo.extraRules = [
+
+          {
+
+            users = [ "deploy-user" ];
+
+            commands = [
+
+              {
+
+                command = "/nix/store/*-system-path/bin/systemctl start --wait nixos-update-runner.service";
+
+                options = [ "NOPASSWD" ];
+
+              }
+
+              {
+
+                command = "/nix/store/*-system-path/bin/journalctl -u nixos-update-runner.service -n 50 --no-pager";
+
+                options = [ "NOPASSWD" ];
+
+              }
+
+            ];
+
+          }
+
+        ];
+    nix.settings.trusted-users = [ "deploy-user" ];
+  };
 }
