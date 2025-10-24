@@ -39,13 +39,13 @@ in
     '';
   };
 
-  # Grant passwordless sudo for the specific nixos-rebuild command.
+  # Grant passwordless sudo for the specific systemctl command.
   security.sudo.extraRules = [
     {
       users = [ "deploy-user" ];
       commands = [
         {
-          command = "/nix/store/*/bin/switch-to-configuration switch";
+          command = "${pkgs.systemd}/bin/systemctl start nixos-auto-update.service";
           options = [ "NOPASSWD" ];
         }
       ];

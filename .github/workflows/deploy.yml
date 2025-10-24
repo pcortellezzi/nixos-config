@@ -110,10 +110,17 @@ jobs:
           SYSTEM_STORE_PATH=$(readlink -f result-${{ matrix.host }})
           echo "system_path=$SYSTEM_STORE_PATH" >> $GITHUB_OUTPUT
 
-      - name: Copy system closure to host
+      - name: Push system closure to Cachix
         if: steps.check_host.outputs.is_available == 'true'
-        run: nix copy --to ssh://${{ matrix.host }} ${{ steps.build.outputs.system_path }}
+        uses: cachix/cachix-action@v14
+        with:
+          name: pcortellezzi
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          storePaths: |
+            ${{ steps.build.outputs.system_path }}
 
-      - name: Activate new system on host
+      - name: Trigger remote update on host
         if: steps.check_host.outputs.is_available == 'true'
-        run: ssh ${{ matrix.host }} "sudo ${{ steps.build.outputs.system_path }}/bin/switch-to-configuration switch"
+        run: |
+          echo "Triggering remote update on ${{ matrix.host }}..."
+          ssh ${{ matrix.host }} "sudo /run/current-system/sw/bin/systemctl start nixos-auto-update.service"
