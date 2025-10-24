@@ -50,15 +50,6 @@ jobs:
         host: ${{ fromJSON(needs.setup.outputs.matrix) }}
 
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@v10
-        with:
-          root-reserve-mb: 512
-          swap-size-mb: 1024
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -68,6 +59,9 @@ jobs:
           extra-conf: |
             substituters = https://cache.nixos.org/ https://pcortellezzi.cachix.org
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= pcortellezzi.cachix.org-1:IL7g88BOsIf1AeFl37PclJtA/lLY6Auf3xtRh30M0fI=
+
+      - name: Check flake validity
+        run: nix flake check
 
       - name: Install Tailscale
         uses: tailscale/github-action@v2
@@ -112,26 +106,12 @@ jobs:
             echo "is_available=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build system configuration
-        id: build
+      - name: Deploy and wait for result
         if: steps.check_host.outputs.is_available == 'true'
         run: |
-          echo "Building system configuration for ${{ matrix.host }}..."
-          nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel -o result-${{ matrix.host }}
-          SYSTEM_STORE_PATH=$(readlink -f result-${{ matrix.host }})
-          echo "system_path=$SYSTEM_STORE_PATH" >> $GITHUB_OUTPUT
-
-      - name: Push system closure to Cachix
-        if: steps.check_host.outputs.is_available == 'true'
-        uses: cachix/cachix-action@v14
-        with:
-          name: pcortellezzi
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-          storePaths: |
-            ${{ steps.build.outputs.system_path }}
-
-      - name: Trigger remote update on host
-        if: steps.check_host.outputs.is_available == 'true'
-        run: |
-          echo "Triggering remote update on ${{ matrix.host }}..."
-          ssh ${{ matrix.host }} "sudo /run/current-system/sw/bin/systemctl start nixos-auto-update.service"
+          echo "Triggering remote update on ${{ matrix.host }} and waiting for completion..."
+          if ! ssh ${{ matrix.host }} "sudo systemctl start --wait nixos-auto-update.service"; then
+            echo "::error::Remote update failed. Fetching last 50 log lines from the service..."
+            ssh ${{ matrix.host }} "sudo journalctl -u nixos-auto-update.service -n 50 --no-pager"
+            exit 1
+          fi
