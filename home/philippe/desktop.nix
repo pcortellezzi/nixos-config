@@ -16,17 +16,13 @@
     jetbrains.rust-rover
     vscode
     (vscode-extensions.ms-vscode-remote.remote-containers)
-    podman
-    podman-compose
     vdhcoapp
     wine
   ]);
 
+  services.podman.enable = true;
+
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
   };
-
-  
-
-  programs.firefox.enable = true;
 }
