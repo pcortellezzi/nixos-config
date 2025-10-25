@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ../../modules/home-manager/direnv.nix
+  ];
+
   home = {
     username = "philippe";
     homeDirectory = "/home/philippe";
@@ -22,7 +26,11 @@
     };
   };
 
-  
+  programs.bash = {
+    enable = true;
+  };
+
+
   home.file = {
     # Déploie le fichier de clé publique de manière déclarative.
     ".ssh/id_ed25519.pub" = {
