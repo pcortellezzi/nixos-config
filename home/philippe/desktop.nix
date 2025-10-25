@@ -18,6 +18,7 @@
     (vscode-extensions.ms-vscode-remote.remote-containers)
     vdhcoapp
     wine
+    rustup
   ]);
 
   services.podman.enable = true;
