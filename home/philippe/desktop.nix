@@ -20,9 +20,6 @@
     (vscode-extensions.ms-vscode-remote.remote-containers)
     vdhcoapp
     wine
-    rustup
-    gcc
-    lldb
   ]);
 
   services.podman.enable = true;
