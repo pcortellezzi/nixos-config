@@ -19,6 +19,7 @@
     vdhcoapp
     wine
     rustup
+    gcc
   ]);
 
   services.podman.enable = true;
