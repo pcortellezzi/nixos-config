@@ -20,6 +20,7 @@
     wine
     rustup
     gcc
+    lldb
   ]);
 
   services.podman.enable = true;
