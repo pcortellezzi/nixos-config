@@ -14,6 +14,8 @@
     gemini-cli
     tradingview
     jetbrains.rust-rover
+    jetbrains.gateway
+    jetbrains-runner
     vscode
     (vscode-extensions.ms-vscode-remote.remote-containers)
     vdhcoapp
