@@ -24,6 +24,10 @@
 
   services.podman.enable = true;
 
+  programs.bash.shellAliases = {
+    gemini = "npx https://github.com/google-gemini/gemini-cli";
+  };
+
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
   };
