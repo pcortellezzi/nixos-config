@@ -11,7 +11,6 @@
   ] ++ (with pkgs-unstable; [
     google-chrome
     vlc
-    gemini-cli
     tradingview
     jetbrains.rust-rover
     jetbrains.gateway
@@ -20,6 +19,7 @@
     (vscode-extensions.ms-vscode-remote.remote-containers)
     vdhcoapp
     wine
+    nodejs_24
   ]);
 
   services.podman.enable = true;
