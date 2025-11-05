@@ -26,6 +26,7 @@
 
   # Enable Nix experimental features for flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = lib.mkForce (1048576 * 2);
 
   # Configure Cachix for pcortellezzi cache
   nix.settings.substituters = [
@@ -63,6 +64,21 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
+
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "8192";
+    }
+    {
+      domain = "*";
+      type = "hard";
+      item = "nofile";
+      value = "65536";
+    }
+  ];
 
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 }
