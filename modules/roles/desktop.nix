@@ -19,6 +19,8 @@
     compositor.name = "niri";
   };
 
+  programs.niri.enable = true;
+
   environment.variables = {
     KWIN_DRM_PREFER_COLOR_DEPTH = "24";
   };
