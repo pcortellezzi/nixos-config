@@ -40,7 +40,12 @@
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
         system = "x86_64-linux";
-        overlays = [ my-nixpkgs.overlays.default ];
+        overlays = [
+          my-nixpkgs.overlays.default
+          (final: prev: {
+            quickshell = pkgs-unstable.quickshell;
+          })
+        ];
         config.allowUnfree = true;
       };
 
