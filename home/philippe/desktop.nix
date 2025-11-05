@@ -3,6 +3,10 @@
 }:
 
 {
+  imports = [
+    ../../modules/home-manager/dms.nix
+  ];
+
   home.packages = with pkgs; [
     kdePackages.skanpage
     (motivewave.override {
@@ -20,12 +24,13 @@
     vdhcoapp
     wine
     nodejs_24
+    unrar
   ]);
 
   services.podman.enable = true;
 
   programs.bash.shellAliases = {
-    gemini = "npx https://github.com/google-gemini/gemini-cli";
+    gemini = "npx @google/gemini-cli";
   };
 
   age.secrets.motivewave_license = {

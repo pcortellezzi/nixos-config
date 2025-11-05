@@ -3,8 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -13,9 +13,29 @@
     my-nixpkgs = {
       url = "github:pcortellezzi/nixpkgs";
     };
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.dgop.follows = "dgop";
+      inputs.dms-cli.follows = "dms-cli";
+    };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, dankMaterialShell, ... }@inputs:
     let
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
@@ -37,11 +57,19 @@
           ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
           {
             my.auto-update.enable = true; # Enable auto-update for all hosts
+            nixpkgs.overlays = [ (final: prev: {
+              niri = inputs.niri.packages.${prev.system}.niri-unstable.overrideAttrs (old: {
+                doCheck = false;
+              });
+            }) ];
             nixpkgs.pkgs = pkgsWithMyOverlays;
           }
           hostPath
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
+          dankMaterialShell.nixosModules.greeter
+          inputs.niri.nixosModules.niri
+          #quickshell.nixosModules.default
           {
             # The system deploys the user's SSH key.
             age.secrets.philippe_ssh_id_ed25519 = {
@@ -59,7 +87,7 @@
                 imports = [ agenix.homeManagerModules.default ] ++ homeModules;
                 age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
               };
-              extraSpecialArgs = { inherit pkgs-unstable; };
+              extraSpecialArgs = { inherit pkgs-unstable dankMaterialShell; };
             };
           }
         ];

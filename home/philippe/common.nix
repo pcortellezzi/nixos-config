@@ -9,14 +9,18 @@
     username = "philippe";
     homeDirectory = "/home/philippe";
     stateVersion = "25.05";
+    enableNixpkgsReleaseCheck = false;
   };
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
-    userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts ${config.home.homeDirectory}/.ssh/known_hosts_declarative";
+    enableDefaultConfig = false;
 
     matchBlocks = {
+      "*" = {
+        addKeysToAgent = "yes";
+        userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts ${config.home.homeDirectory}/.ssh/known_hosts_declarative";
+      };
       "github.com" = {
         hostname = "github.com";
         user = "git";
