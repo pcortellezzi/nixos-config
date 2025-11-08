@@ -4,7 +4,7 @@
 
 {
   imports = [
-    ../../modules/home-manager/dms.nix
+    ../../modules/home-manager/dms-niri.nix
   ];
 
   home.packages = with pkgs; [

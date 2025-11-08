@@ -1,5 +1,4 @@
 { config, pkgs, dankMaterialShell, pkgs-unstable, ... }:
-
 {
   imports = [
     dankMaterialShell.homeModules.dankMaterialShell.default

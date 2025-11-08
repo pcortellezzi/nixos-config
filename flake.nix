@@ -31,11 +31,15 @@
     };
     niri = {
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri-override = {
+      url = "github:scottmckendry/niri/primary-render-fallback";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, dankMaterialShell, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, dankMaterialShell, niri, niri-override, ... }@inputs:
     let
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
@@ -62,18 +66,13 @@
           ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
           {
             my.auto-update.enable = true; # Enable auto-update for all hosts
-            nixpkgs.overlays = [ (final: prev: {
-              niri = inputs.niri.packages.${prev.system}.niri-unstable.overrideAttrs (old: {
-                doCheck = false;
-              });
-            }) ];
             nixpkgs.pkgs = pkgsWithMyOverlays;
           }
           hostPath
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           dankMaterialShell.nixosModules.greeter
-          inputs.niri.nixosModules.niri
+          niri.nixosModules.niri
           #quickshell.nixosModules.default
           {
             # The system deploys the user's SSH key.

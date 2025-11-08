@@ -176,7 +176,7 @@
         "niri-stable": "niri-stable",
         "niri-unstable": "niri-unstable",
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "nixpkgs-stable": "nixpkgs-stable",
         "xwayland-satellite-stable": "xwayland-satellite-stable",
@@ -193,6 +193,28 @@
       "original": {
         "owner": "sodiboo",
         "repo": "niri-flake",
+        "type": "github"
+      }
+    },
+    "niri-override": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1762502189,
+        "narHash": "sha256-UIgpnCkj5ZX4OZHOCdD20OKGEEoddTZVa1PVI5hmZ24=",
+        "owner": "scottmckendry",
+        "repo": "niri",
+        "rev": "7b663309c2f543ff762944b1221242f5a8cc4259",
+        "type": "github"
+      },
+      "original": {
+        "owner": "scottmckendry",
+        "ref": "primary-render-fallback",
+        "repo": "niri",
         "type": "github"
       }
     },
@@ -318,8 +340,30 @@
         "home-manager": "home-manager_2",
         "my-nixpkgs": "my-nixpkgs",
         "niri": "niri",
+        "niri-override": "niri-override",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable_2"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "niri-override",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757989933,
+        "narHash": "sha256-9cpKYWWPCFhgwQTww8S94rTXgg8Q8ydFv9fXM6I8xQM=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "8249aa3442fb9b45e615a35f39eca2fe5510d7c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "systems": {
