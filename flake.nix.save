@@ -13,14 +13,44 @@
     my-nixpkgs = {
       url = "github:pcortellezzi/nixpkgs";
     };
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dms-cli = {
+      url = "github:AvengeMedia/danklinux";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.dgop.follows = "dgop";
+      inputs.dms-cli.follows = "dms-cli";
+    };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri-override = {
+      url = "github:scottmckendry/niri/primary-render-fallback";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, dankMaterialShell, niri, niri-override, ... }@inputs:
     let
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
         system = "x86_64-linux";
-        overlays = [ my-nixpkgs.overlays.default ];
+        overlays = [
+          my-nixpkgs.overlays.default
+          (final: prev: {
+            quickshell = pkgs-unstable.quickshell;
+          })
+        ];
         config.allowUnfree = true;
       };
 
@@ -42,6 +72,9 @@
           hostPath
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
+          dankMaterialShell.nixosModules.greeter
+          niri.nixosModules.niri
+          #quickshell.nixosModules.default
           {
             # The system deploys the user's SSH key.
             age.secrets.philippe_ssh_id_ed25519 = {
@@ -59,7 +92,7 @@
                 imports = [ agenix.homeManagerModules.default ] ++ homeModules;
                 age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
               };
-              extraSpecialArgs = { inherit pkgs-unstable; };
+              extraSpecialArgs = { inherit pkgs-unstable dankMaterialShell; };
             };
           }
         ];
