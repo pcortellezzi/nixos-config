@@ -21,6 +21,7 @@
     wine
     nodejs_24
     unrar
+    zoom-us
   ]);
 
   services.podman.enable = true;
