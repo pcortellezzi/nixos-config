@@ -18,6 +18,7 @@
     nodejs_24
     unrar
     zoom-us
+    protonvpn-gui
   ] ++ (with llm-agents; [
     gemini-cli
     claude-code
