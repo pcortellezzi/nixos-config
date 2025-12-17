@@ -1,30 +1,34 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    my-nixpkgs.url = "github:pcortellezzi/nixpkgs";
+    my-nixpkgs = {
+      url = "github:pcortellezzi/nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, ... }@inputs:
     let
       # Create a pkgs set with your custom overlays applied
       pkgsWithMyOverlays = import nixpkgs {
         system = "x86_64-linux";
         overlays = [ my-nixpkgs.overlays.default ];
-        config.allowUnfree = true;
-      };
-
-      pkgs-unstable = import nixpkgs-unstable {
-        system = "x86_64-linux";
         config.allowUnfree = true;
       };
 
@@ -58,7 +62,7 @@
                 imports = [ agenix.homeManagerModules.default ] ++ homeModules;
                 age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
               };
-              extraSpecialArgs = { inherit pkgs-unstable; };
+              extraSpecialArgs = { inherit llm-agents; };
             };
           }
         ];

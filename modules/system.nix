@@ -37,6 +37,7 @@
     "https://cache.nixos.org/"
     "https://pcortellezzi.cachix.org"
     "https://cosmic.cachix.org/"
+    "https://cache.numtide.com"
   ];
 
   # Ajoute la clé publique de la machine de construction (vvb) à la liste de confiance.
@@ -45,6 +46,7 @@
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     "pcortellezzi.cachix.org-1:IL7g88BOsIf1AeFl37PclJtA/lLY6Auf3xtRh30M0fI="
     "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+    "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
   ];
 
   

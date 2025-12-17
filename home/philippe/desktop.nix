@@ -1,5 +1,5 @@
 {
-  config, pkgs, pkgs-unstable, ...
+  config, pkgs, llm-agents, ...
 }:
 
 {
@@ -8,27 +8,22 @@
     (motivewave.override {
       licenseFile = config.age.secrets.motivewave_license.path;
     })
-  ] ++ (with pkgs-unstable; [
     google-chrome
     vlc
     tradingview
     jetbrains.rust-rover
     jetbrains.gateway
     jetbrains-runner
-    vscode
-    (vscode-extensions.ms-vscode-remote.remote-containers)
     vdhcoapp
     wine
     nodejs_24
     unrar
     zoom-us
+  ] ++ (with llm-agents; [
+    gemini-cli
+    claude-code
+    claude-code-router
   ]);
-
-  services.podman.enable = true;
-
-  programs.bash.shellAliases = {
-    gemini = "npx @google/gemini-cli";
-  };
 
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
