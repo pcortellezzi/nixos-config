@@ -4,7 +4,6 @@
 
 {
   home.packages = with pkgs; [
-    kdePackages.skanpage
     (motivewave.override {
       licenseFile = config.age.secrets.motivewave_license.path;
     })
