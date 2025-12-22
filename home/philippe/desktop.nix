@@ -23,6 +23,7 @@
     gemini-cli
     claude-code
     claude-code-router
+    zed-editor
   ]);
 
   age.secrets.motivewave_license = {
