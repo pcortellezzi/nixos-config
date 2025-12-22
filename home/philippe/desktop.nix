@@ -19,7 +19,7 @@
     unrar
     zoom-us
     protonvpn-gui
-  ] ++ (with llm-agents; [
+  ] ++ (with llm-agents.packages.${pkgs.system}; [
     gemini-cli
     claude-code
     claude-code-router
