@@ -19,6 +19,7 @@
     unrar
     zoom-us
     protonvpn-gui
+    sublime-merge
   ] ++ (with llm-agents.packages.${pkgs.system}; [
     gemini-cli
     claude-code
