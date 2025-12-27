@@ -1,7 +1,10 @@
 {
-  config, pkgs, llm-agents, ...
+  config, pkgs, inputs, ...
 }:
 
+let
+  inherit (inputs) llm-agents;
+in
 {
   home.packages = with pkgs; [
     (motivewave.override {
@@ -20,7 +23,7 @@
     zoom-us
     protonvpn-gui
     sublime-merge
-  ] ++ (with llm-agents.packages.${pkgs.system}; [
+  ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     gemini-cli
     claude-code
     claude-code-router

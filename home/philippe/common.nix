@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, stateVersion, ... }:
 
 {
   imports = [
@@ -8,7 +8,7 @@
   home = {
     username = "philippe";
     homeDirectory = "/home/philippe";
-    stateVersion = "25.05";
+    stateVersion = stateVersion;
     enableNixpkgsReleaseCheck = false;
   };
 

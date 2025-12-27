@@ -11,5 +11,6 @@
     ../services/tailscale.nix
 
     ../de/cosmic.nix
+    ../de/niri+dms.nix
   ];
 }

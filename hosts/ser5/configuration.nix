@@ -16,11 +16,4 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Autorise l'''utilisateur 'philippe' à effectuer des opérations Nix de confiance.
-  # C'''est nécessaire pour que l'''option `--option require-sigs false` fonctionne.
-  nix.settings.trusted-users = [ "root" "philippe" ];
-
-  
-
-  
 }

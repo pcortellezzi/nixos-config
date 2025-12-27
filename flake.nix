@@ -21,26 +21,31 @@
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    danksearch = {
+      url = "github:AvengeMedia/danksearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, dms, danksearch, ... }@inputs:
     let
-      # Create a pkgs set with your custom overlays applied
-      pkgsWithMyOverlays = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ my-nixpkgs.overlays.default ];
-        config.allowUnfree = true;
-      };
+      stateVersion = "25.11";
 
       # Generic host configuration
       mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs stateVersion; };
         modules = [
           ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
           {
             my.auto-update.enable = true; # Enable auto-update for all hosts
-            nixpkgs.pkgs = pkgsWithMyOverlays;
+            nixpkgs.hostPlatform = "x86_64-linux";
+            nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
+            nixpkgs.config.allowUnfree = true;
           }
           hostPath
           agenix.nixosModules.default
@@ -62,7 +67,9 @@
                 imports = [ agenix.homeManagerModules.default ] ++ homeModules;
                 age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
               };
-              extraSpecialArgs = { inherit llm-agents; };
+              extraSpecialArgs = {
+                inherit inputs stateVersion;
+              };
             };
           }
         ];
@@ -70,6 +77,13 @@
     in
     {
       nixosConfigurations = {
+        ser5 = mkHost {
+          hostPath = ./hosts/ser5/configuration.nix;
+          homeModules = [
+            ./home/philippe/common.nix
+          ];
+        };
+
         vvb = mkHost {
           hostPath = ./hosts/vvb/configuration.nix;
           homeModules = [
@@ -83,13 +97,6 @@
           homeModules = [
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
-          ];
-        };
-
-        ser5 = mkHost {
-          hostPath = ./hosts/ser5/configuration.nix;
-          homeModules = [
-            ./home/philippe/common.nix
           ];
         };
       };
