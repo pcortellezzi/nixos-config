@@ -279,6 +279,7 @@
         mode "2560x1440@60.0"
         position x=3440 y=0
         scale 1.0
+        transform "270"
       }
       output "eDP-1" {
         mode "2880x1620@120.0"
