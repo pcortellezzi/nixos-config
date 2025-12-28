@@ -283,7 +283,7 @@
       }
       output "eDP-1" {
         mode "2880x1620@120.0"
-        position x=4880 y=1234
+        position x=4880 y=2100
         scale 1.75
       }
     '';
