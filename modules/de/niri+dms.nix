@@ -33,11 +33,5 @@ in
     useNautilus = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    nautilus
-    alacritty
-    fuzzel
-    swaylock
-    brightnessctl
-  ];
+  security.pam.services.swaylock = {};
 }
