@@ -32,4 +32,12 @@ in
     enable = true;
     useNautilus = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    nautilus
+    alacritty
+    fuzzel
+    swaylock
+    brightnessctl
+  ];
 }
