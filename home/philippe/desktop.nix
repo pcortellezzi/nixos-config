@@ -6,6 +6,10 @@ let
   inherit (inputs) llm-agents;
 in
 {
+  imports = [
+    ./niri.nix
+  ];
+
   home.packages = with pkgs; [
     (motivewave.override {
       licenseFile = config.age.secrets.motivewave_license.path;
