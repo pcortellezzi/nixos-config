@@ -63,6 +63,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "backup";
               users.philippe = {
                 imports = [ agenix.homeManagerModules.default ] ++ homeModules;
                 age.identityPaths = [ "/home/philippe/.ssh/id_ed25519" ];
