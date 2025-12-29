@@ -12,6 +12,7 @@
     "trigger": "power",
     "permissions": [
         "settings_read",
-        "settings_write"
+        "settings_write",
+        "process"
     ]
 }

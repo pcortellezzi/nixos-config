@@ -23,5 +23,10 @@ in
     };
   };
 
+  home.packages = with pkgs; [
+    libqalculate
+  ];
+
   xdg.configFile."DankMaterialShell/plugins/powermenu".source = ../../modules/dms-plugins/powermenu;
+  xdg.configFile."DankMaterialShell/plugins/qalculate".source = ../../modules/dms-plugins/qalculate;
 }

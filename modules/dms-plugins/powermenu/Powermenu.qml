@@ -21,28 +21,28 @@ Item {
         const actions = [
             {
                 name: "Lock",
-                icon: "material:lock",
+                icon: "lock",
                 comment: "Lock the screen",
                 action: "lock",
                 categories: ["Powermenu"]
             },
             {
                 name: "Logout",
-                icon: "material:logout",
+                icon: "logout",
                 comment: "Exit user session",
                 action: "logout",
                 categories: ["Powermenu"]
             },
             {
                 name: "Reboot",
-                icon: "material:restart_alt",
+                icon: "restart_alt",
                 comment: "Restart the computer",
                 action: "reboot",
                 categories: ["Powermenu"]
             },
             {
                 name: "Poweroff",
-                icon: "material:power_settings_new",
+                icon: "power_settings_new",
                 comment: "Turn off the computer",
                 action: "poweroff",
                 categories: ["Powermenu"]

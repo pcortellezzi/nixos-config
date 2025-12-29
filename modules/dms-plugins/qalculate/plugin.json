@@ -1,0 +1,18 @@
+{
+    "id": "qalculate",
+    "name": "Qalculate",
+    "description": "Advanced calculator using libqalculate",
+    "version": "1.0.0",
+    "author": "Philippe",
+    "icon": "calculate",
+    "type": "launcher",
+    "capabilities": ["clipboard", "command-execution"],
+    "component": "./Qalculate.qml",
+    "settings": "./QalculateSettings.qml",
+    "trigger": "=",
+    "permissions": [
+        "settings_read",
+        "settings_write",
+        "process"
+    ]
+}
