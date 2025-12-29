@@ -1,0 +1,17 @@
+{
+    "id": "powermenu",
+    "name": "Powermenu",
+    "description": "System power management actions",
+    "version": "1.0.0",
+    "author": "Philippe",
+    "icon": "power",
+    "type": "launcher",
+    "capabilities": ["command-execution", "shell"],
+    "component": "./Powermenu.qml",
+    "settings": "./PowermenuSettings.qml",
+    "trigger": "power",
+    "permissions": [
+        "settings_read",
+        "settings_write"
+    ]
+}

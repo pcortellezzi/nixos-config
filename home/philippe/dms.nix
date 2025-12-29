@@ -22,4 +22,6 @@ in
       };
     };
   };
+
+  xdg.configFile."DankMaterialShell/plugins/powermenu".source = ../../modules/dms-plugins/powermenu;
 }

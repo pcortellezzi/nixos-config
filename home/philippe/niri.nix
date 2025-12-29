@@ -11,93 +11,6 @@
     rbw
   ];
 
-  programs.anyrun = {
-    enable = true;
-    config = {
-      plugins = [
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.applications
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.rink
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.shell
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.symbols
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.niri-focus
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.nix-run
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.randr
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin
-        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.websearch
-      ];
-      width = { fraction = 0.3; };
-      y = { absolute = 15; };
-      hideIcons = false;
-      ignoreExclusiveZones = false;
-      layer = "overlay";
-      hidePluginInfo = false;
-      closeOnClick = false;
-      showResultsImmediately = false;
-      maxEntries = null;
-    };
-    extraCss = ''
-      /* Compact Dank Shell Style */
-      @define-color bg-color rgba(30, 30, 30, 0.95);
-      @define-color fg-color #eeeeee;
-      @define-color accent-color #7fc8ff;
-      @define-color accent-fg-color #1e1e1e;
-      @define-color entry-bg-color rgba(255, 255, 255, 0.07);
-
-      * {
-        all: unset;
-        font-family: "JetBrainsMono Nerd Font", sans-serif;
-        font-size: 15px;
-      }
-
-      window {
-        background: transparent;
-      }
-
-      .main {
-        background-color: @bg-color;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 8px;
-      }
-
-      text {
-        background-color: @entry-bg-color;
-        color: @fg-color;
-        border-radius: 12px;
-        padding: 8px 12px;
-        margin: 4px;
-        caret-color: @accent-color;
-      }
-
-      .match {
-        padding: 6px 12px;
-        border-radius: 10px;
-        margin: 1px 4px;
-        color: @fg-color;
-        transition: background 0.1s ease;
-      }
-
-      .match:selected {
-        background-color: @accent-color;
-        color: @accent-fg-color;
-      }
-
-      .match:selected .title,
-      .match:selected .description {
-        color: @accent-fg-color;
-      }
-
-      .title {
-        font-weight: bold;
-      }
-
-      .description {
-        font-size: 0.85em;
-        opacity: 0.7;
-      }
-    '';
-  };
-
   xdg.configFile = {
     "niri/config.kdl".text = ''
       include "./input.kdl"
@@ -200,9 +113,7 @@
           Mod+Shift+M { show-hotkey-overlay; }
 
           Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-          Mod+Space hotkey-overlay-title="Run an Application: anyrun" { spawn "anyrun"; }
-          Mod+D hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | cliphist decode | wl-copy"; }
-          Mod+B hotkey-overlay-title="Bitwarden" { spawn-sh "rbw list --fields name,user,folder | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | pkgs.gawk/bin/awk -F '\t' '{print $1}' | xargs -r rbw get --clipboard"; }
+          Mod+Space hotkey-overlay-title="Run an Application: DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "open"; }
           Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
           Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
@@ -348,7 +259,6 @@
 
           Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-          Mod+Shift+E hotkey-overlay-title="Powermenu" { spawn-sh "echo -e \"Lock\nLogout\nReboot\nPoweroff\" | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | while read selection; do case $selection in \"Lock\" ) swaylock ;; \"Logout\") niri msg action quit ;; \"Reboot\") systemctl reboot ;; \"Poweroff\") systemctl poweroff ;; esac; done"; }
           Ctrl+Alt+Delete { quit; }
 
           Mod+Shift+P { power-off-monitors; }
