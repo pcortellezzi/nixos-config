@@ -5,6 +5,10 @@ let
   inherit (inputs) dms danksearch;
 in
 {
+  imports = [
+    ../services/keyd.nix
+  ];
+
   programs.dms-shell = {
     enable = true;
     package = dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
