@@ -22,16 +22,6 @@ in
     enableCalendarEvents = true;
   };
 
-  programs.dsearch = {
-    enable = true;
-    package = danksearch.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-    systemd = {
-      enable = true;
-      target = "graphical-session.target";  # Only start in graphical sessions
-    };
-  };
-
   programs.niri = {
     enable = true;
     useNautilus = true;

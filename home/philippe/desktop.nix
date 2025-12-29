@@ -8,6 +8,7 @@ in
 {
   imports = [
     ./niri.nix
+    ./dms.nix
   ];
 
   home.packages = with pkgs; [
