@@ -5,7 +5,7 @@
   imports = [
     ../services/bluetooth.nix
     ../services/displaylink.nix
-    ../services/logid.nix
+    ../services/solaar.nix
     ../services/pipewire.nix
     ../services/printing.nix
     ../services/tailscale.nix

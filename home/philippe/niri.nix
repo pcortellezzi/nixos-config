@@ -89,9 +89,13 @@
 
   xdg.configFile = {
     "niri/config.kdl".text = ''
+      include "./dms/colors.kdl"
+      include "./dms/layout.kdl"
+      include "./dms/alttab.kdl"
+      include "./dms/binds.kdl"
+      include "./dms/wpblur.kdl"
+
       include "./input.kdl"
-      include "./layout.kdl"
-      include "./animations.kdl"
       include "./window-rules.kdl"
       include "./binds.kdl"
       include "./settings.kdl"
@@ -101,8 +105,6 @@
     "niri/input.kdl".text = ''
       input {
           keyboard {
-              xkb {
-              }
               numlock
           }
 
@@ -110,20 +112,11 @@
               tap
               natural-scroll
           }
-
-          mouse {
-          }
-
-          trackpoint {
-          }
       }
     '';
 
     "niri/layout.kdl".text = ''
       layout {
-          gaps 16
-          center-focused-column "never"
-
           preset-column-widths {
               proportion 0.33333
               proportion 0.5
@@ -131,35 +124,6 @@
           }
 
           default-column-width { proportion 0.5; }
-
-          focus-ring {
-              width 4
-              active-color "#7fc8ff"
-              inactive-color "#505050"
-          }
-
-          border {
-              off
-              width 4
-              active-color "#ffc87f"
-              inactive-color "#505050"
-              urgent-color "#9b0000"
-          }
-
-          shadow {
-              softness 30
-              spread 5
-              offset x=0 y=5
-              color "#0007"
-          }
-
-          struts {
-          }
-      }
-    '';
-
-    "niri/animations.kdl".text = ''
-      animations {
       }
     '';
 
@@ -208,22 +172,6 @@
           Mod+Space hotkey-overlay-title="Run an Application: anyrun" { spawn "anyrun"; }
           Mod+D hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | cliphist decode | wl-copy"; }
           Mod+B hotkey-overlay-title="Bitwarden" { spawn-sh "rbw list --fields name,user,folder | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | pkgs.gawk/bin/awk -F '\t' '{print $1}' | xargs -r rbw get --clipboard"; }
-          Super+Alt+L hotkey-overlay-title="Lock the Screen: DMS" { spawn "dms" "ipc" "call" "lock" "lock"; }
-
-          Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-
-          XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "10"; }
-          XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "10"; }
-          XF86AudioMute        allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
-          XF86AudioMicMute     allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
-
-          XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-          XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-          XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-          XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
-
-          XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "brightness" "set" "10%+"; }
-          XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "brightness" "set" "10%-"; }
 
           Mod+O repeat=false { toggle-overview; }
 
@@ -347,16 +295,8 @@
 
           Mod+W { toggle-column-tabbed-display; }
 
-          Print { spawn "dms" "screenshot" "region"; }
-          Ctrl+Print { spawn "dms" "screenshot" "full"; }
-          Alt+Print { spawn "dms" "screenshot" "window"; }
-          Mod+Shift+S { spawn "dms" "screenshot" "region"; }
-          Ctrl+Mod+Shift+S { spawn "dms" "screenshot" "full"; }
-          Alt+Mod+Shift+S { spawn "dms" "screenshot" "window"; }
-
           Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-          Mod+Shift+E hotkey-overlay-title="Powermenu" { spawn-sh "echo -e \"Lock\nLogout\nReboot\nPoweroff\" | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | while read selection; do case $selection in \"Lock\" ) dms ipc call lock lock ;; \"Logout\") niri msg action quit ;; \"Reboot\") systemctl reboot ;; \"Poweroff\") systemctl poweroff ;; esac; done"; }
           Ctrl+Alt+Delete { quit; }
 
           Mod+Shift+P { power-off-monitors; }
@@ -399,7 +339,7 @@
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${config.programs.anyrun.package}/bin/anyrun --daemon";
+      ExecStart = "${config.programs.anyrun.package}/bin/anyrun daemon";
       Restart = "always";
     };
     Install = {
