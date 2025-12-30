@@ -26,6 +26,4 @@ in
     enable = true;
     useNautilus = true;
   };
-
-  security.pam.services.swaylock = {};
 }

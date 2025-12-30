@@ -22,6 +22,35 @@ let
       },
       {
         name: "MX Keys S";
+        buttons: (
+          {
+            # Mic Mute button
+            cid: 0xdf;
+            action:
+            {
+              type: "Keypress";
+              keys: ["KEY_MICMUTE"];
+            };
+          },
+          {
+            # Emoji button
+            cid: 0xd9;
+            action:
+            {
+              type: "Keypress";
+              keys: ["KEY_HOMEPAGE"];
+            };
+          },
+          {
+            # Screenshot button
+            cid: 0xc4;
+            action:
+            {
+              type: "Keypress";
+              keys: ["KEY_SYSRQ"];
+            };
+          }
+        );
       }
     );
   '';

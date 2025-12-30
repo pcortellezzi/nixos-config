@@ -1,15 +1,91 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   home.packages = with pkgs; [
     alacritty
-    swaylock
     brightnessctl
     nautilus
     cliphist
     wl-clipboard
     rbw
+    jq
+    inotify-tools
   ];
+
+  programs.anyrun = {
+    enable = true;
+    config = {
+      plugins = [
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.applications
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.rink
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.shell
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.symbols
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin
+        inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.websearch
+      ];
+      width = { fraction = 0.3; };
+      y = { absolute = 15; };
+      hideIcons = false;
+      ignoreExclusiveZones = false;
+      layer = "overlay";
+      hidePluginInfo = true;
+      closeOnClick = true;
+      showResultsImmediately = false;
+      maxEntries = null;
+    };
+    extraCss = ''
+      @import url("file:///home/philippe/.cache/anyrun-theme.css");
+
+      * {
+        all: unset;
+        font-family: "JetBrainsMono Nerd Font", sans-serif;
+        font-size: 15px;
+      }
+
+      window {
+        background: transparent;
+      }
+
+      .main {
+        background-color: var(--m3-surface, rgba(16, 20, 24, 0.98));
+        border: 1px solid var(--m3-outline, rgba(140, 145, 153, 0.3));
+        border-radius: 24px;
+        padding: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      }
+
+      #entry {
+        background-color: var(--m3-surface-variant, rgba(66, 71, 78, 0.5));
+        color: var(--m3-on-surface, #e0e2e8);
+        border-radius: 16px;
+        padding: 12px 16px;
+        margin: 8px;
+        caret-color: var(--m3-primary, #42a5f5);
+      }
+
+      .match {
+        padding: 6px 12px;
+        border-radius: 10px;
+        margin: 1px 4px;
+        color: var(--m3-on-surface, #e0e2e8);
+        transition: background 0.1s ease;
+      }
+
+      .match:selected {
+        background-color: var(--m3-primary-container, #0d47a1);
+        color: var(--m3-on-surface, #e0e2e8);
+      }
+
+      .title {
+        font-weight: bold;
+      }
+
+      .description {
+        font-size: 0.85em;
+        opacity: 0.8;
+      }
+    '';
+  };
 
   xdg.configFile = {
     "niri/config.kdl".text = ''
@@ -100,7 +176,23 @@
     '';
 
     "niri/settings.kdl".text = ''
-      spawn-at-startup "waybar"
+      spawn-at-startup "bash" "-c" r#"
+        while true; do
+          JSON="$HOME/.cache/DankMaterialShell/dms-colors.json"
+          CSS="$HOME/.cache/anyrun-theme.css"
+          if [ -f "$JSON" ]; then
+            PRIMARY=$(jq -r ".colors.dark.primary" "$JSON")
+            SURFACE=$(jq -r ".colors.dark.surface" "$JSON")
+            ON_SURFACE=$(jq -r ".colors.dark.on_surface" "$JSON")
+            SURFACE_VARIANT=$(jq -r ".colors.dark.surface_variant" "$JSON")
+            PRIMARY_CONTAINER=$(jq -r ".colors.dark.primary_container" "$JSON")
+            OUTLINE=$(jq -r ".colors.dark.outline" "$JSON")
+            printf ":root { --m3-primary: %s; --m3-surface: %s; --m3-on-surface: %s; --m3-surface-variant: %s; --m3-primary-container: %s; --m3-outline: %s; }" \
+              "$PRIMARY" "$SURFACE" "$ON_SURFACE" "$SURFACE_VARIANT" "$PRIMARY_CONTAINER" "$OUTLINE" > "$CSS"
+          fi
+          inotifywait -e modify "$JSON" 2>/dev/null || sleep 5
+        done
+      "#
 
       hotkey-overlay {
       }
@@ -113,23 +205,25 @@
           Mod+Shift+M { show-hotkey-overlay; }
 
           Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-          Mod+Space hotkey-overlay-title="Run an Application: DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "open"; }
-          Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+          Mod+Space hotkey-overlay-title="Run an Application: anyrun" { spawn "anyrun"; }
+          Mod+D hotkey-overlay-title="Clipboard History: cliphist" { spawn-sh "cliphist list | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | cliphist decode | wl-copy"; }
+          Mod+B hotkey-overlay-title="Bitwarden" { spawn-sh "rbw list --fields name,user,folder | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | pkgs.gawk/bin/awk -F '\t' '{print $1}' | xargs -r rbw get --clipboard"; }
+          Super+Alt+L hotkey-overlay-title="Lock the Screen: DMS" { spawn "dms" "ipc" "call" "lock" "lock"; }
 
           Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
-          XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
-          XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-          XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-          XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+          XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "10"; }
+          XF86AudioLowerVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "10"; }
+          XF86AudioMute        allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "mute"; }
+          XF86AudioMicMute     allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "micmute"; }
 
           XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
           XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
           XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
           XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
-          XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-          XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+          XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "brightness" "set" "10%+"; }
+          XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "brightness" "set" "10%-"; }
 
           Mod+O repeat=false { toggle-overview; }
 
@@ -253,12 +347,16 @@
 
           Mod+W { toggle-column-tabbed-display; }
 
-          Print { screenshot; }
-          Ctrl+Print { screenshot-screen; }
-          Alt+Print { screenshot-window; }
+          Print { spawn "dms" "screenshot" "region"; }
+          Ctrl+Print { spawn "dms" "screenshot" "full"; }
+          Alt+Print { spawn "dms" "screenshot" "window"; }
+          Mod+Shift+S { spawn "dms" "screenshot" "region"; }
+          Ctrl+Mod+Shift+S { spawn "dms" "screenshot" "full"; }
+          Alt+Mod+Shift+S { spawn "dms" "screenshot" "window"; }
 
           Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
+          Mod+Shift+E hotkey-overlay-title="Powermenu" { spawn-sh "echo -e \"Lock\nLogout\nReboot\nPoweroff\" | anyrun --plugins ${inputs.anyrun.packages.${pkgs.stdenv.hostPlatform.system}.stdin}/lib/libstdin.so | while read selection; do case $selection in \"Lock\" ) dms ipc call lock lock ;; \"Logout\") niri msg action quit ;; \"Reboot\") systemctl reboot ;; \"Poweroff\") systemctl poweroff ;; esac; done"; }
           Ctrl+Alt+Delete { quit; }
 
           Mod+Shift+P { power-off-monitors; }
@@ -293,5 +391,19 @@
   services.cliphist = {
     enable = true;
     allowImages = true;
+  };
+
+  systemd.user.services.anyrun = {
+    Unit = {
+      Description = "Anyrun Daemon";
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${config.programs.anyrun.package}/bin/anyrun --daemon";
+      Restart = "always";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
