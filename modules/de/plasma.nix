@@ -1,0 +1,11 @@
+{
+  pkgs, ...
+}:
+
+{
+  imports = [
+    ../common/wayland.nix
+  ];
+
+  services.desktopManager.plasma6.enable = true;
+}

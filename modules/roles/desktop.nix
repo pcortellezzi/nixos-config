@@ -10,7 +10,9 @@
     ../services/printing.nix
     ../services/tailscale.nix
 
+    ../de/greeter.nix
     ../de/cosmic.nix
     ../de/niri+dms.nix
+    ../de/plasma.nix
   ];
 }
