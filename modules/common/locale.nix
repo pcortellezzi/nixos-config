@@ -7,6 +7,6 @@
 
   services.xserver.xkb = {
     layout = "fr";
-    variant = "oss_nodeadkeys";
+    variant = "oss";
   };
 }
