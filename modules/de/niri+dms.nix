@@ -7,7 +7,6 @@ in
 {
   imports = [
     ../services/keyd.nix
-    ../common/wayland.nix
   ];
 
   programs.dms-shell = {
@@ -26,5 +25,12 @@ in
   programs.niri = {
     enable = true;
     useNautilus = true;
+  };
+
+  systemd.user.services.dms = {
+    wantedBy = pkgs.lib.mkForce [ "niri.service" ];
+    after = pkgs.lib.mkForce [ "niri.service" ];
+    bindsTo = pkgs.lib.mkForce [ "niri.service" ];
+    partOf = pkgs.lib.mkForce [ ];
   };
 }
