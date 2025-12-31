@@ -9,11 +9,11 @@
     ];
 
   boot = {
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" "evdi" ];
     extraModulePackages = [ config.boot.kernelPackages.evdi ];
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
-      kernelModules = [ "evdi" ];
+      kernelModules = [ ];
     };
   };
 
