@@ -7,6 +7,7 @@ in
 {
   imports = [
     ../services/keyd.nix
+    ../common/wayland.nix
   ];
 
   programs.dms-shell = {
