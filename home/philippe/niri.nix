@@ -11,6 +11,7 @@
     jq
     inotify-tools
     pkgs.hamr
+    bc
   ];
 
   xdg.configFile = {
@@ -72,8 +73,6 @@
           HAMR_CONF=\"$HOME/.config/hamr\";
           mkdir -p \"$HAMR_CONF\";
           if [ -f \"$JSON_DMS\" ]; then
-            # Hamr expects a specific colors.json format
-            # We map DMS colors to Hamr expected names if needed
             jq \".colors.dark\" \"$JSON_DMS\" > \"$HAMR_CONF/colors.json\";
           fi
           inotifywait -e modify \"$JSON_DMS\" 2>/dev/null || sleep 5
@@ -221,6 +220,25 @@
 
           Mod+Shift+P { power-off-monitors; }
       }
+    '';
+
+    "niri/outputs.kdl".text = ''
+      output "LG Electronics LG HDR WQHD 204NTHMB9585" {
+        mode "3440x1440@100.0"
+        position x=0 y=0
+        scale 1.0
+      }
+      output "LG Electronics LG HDR WQHD 204NTABB9600" {
+        mode "3440x1440@100.0"
+        position x=0 y=1440
+        scale 1.0
+      }
+      output "Iiyama North America PL2730Q 1219930721568" {
+        mode "2560x1440@60.0"
+        position x=3440 y=0
+        scale 1.0
+        transform "270"
+      }
       output "eDP-1" {
         mode "2880x1620@120.0"
         position x=4880 y=2100
@@ -230,9 +248,12 @@
   };
 
   xdg.configFile."hamr/config.json".text = builtins.toJSON {
-    plugins = [ "applications" "calculator" "niri" "clipboard" "bitwarden" ];
-    calculator = {
-      prefix = "";
+    apps = {
+      terminal = "alacritty";
+      shell = "bash";
+    };
+    paths = {
+      colorsJson = "~/.config/hamr/colors.json";
     };
   };
 
@@ -244,14 +265,15 @@
   systemd.user.services.hamr = {
     Unit = {
       Description = "Hamr Launcher Daemon";
-      PartOf = [ "graphical-session.target" ];
+      After = [ "niri.service" ];
+      BindsTo = [ "niri.service" ];
     };
     Service = {
       ExecStart = "${pkgs.hamr}/bin/hamr";
       Restart = "always";
     };
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "niri.service" ];
     };
   };
 }
