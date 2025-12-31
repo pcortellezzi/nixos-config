@@ -91,7 +91,7 @@
           Mod+Shift+M { show-hotkey-overlay; }
 
           Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-          Mod+Space hotkey-overlay-title="Toggle Launcher: hamr" { spawn "qs" "ipc" "call" "hamr" "toggle"; }
+          Mod+Space hotkey-overlay-title="Toggle Launcher: hamr" { spawn "qs" "--id" "hamr" "ipc" "call" "hamr" "toggle"; }
 
           Mod+O repeat=false { toggle-overview; }
 
