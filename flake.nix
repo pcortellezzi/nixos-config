@@ -35,9 +35,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    darkly = {
+      url = "github:Bali10050/Darkly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    kwin-better-blur = {
+      url = "github:taj-ny/kwin-effects-forceblur/window-rules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, dms, danksearch, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, dms, danksearch, plasma-manager, darkly, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
