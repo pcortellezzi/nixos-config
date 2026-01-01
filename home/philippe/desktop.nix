@@ -28,6 +28,7 @@ in
     zoom-us
     protonvpn-gui
     sublime-merge
+    auto-claude
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     gemini-cli
     claude-code
