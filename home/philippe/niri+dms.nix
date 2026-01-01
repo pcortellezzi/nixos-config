@@ -28,22 +28,18 @@ in
     plugins = {
       qalculate = {
         enable = true;
-        src = "${pkgs.fetchFromGitHub {
-          owner = "pcortellezzi";
-          repo = "dms-plugins";
-          rev = "main";
-          sha256 = "sha256-mKbmROijhYhy/IPbVxYbKyggXesqVGnS/AfAEyeQVhg=";
-        }}/qalculate";
+        src = pkgs.fetchzip {
+          url = "https://github.com/pcortellezzi/dms_plugins/releases/download/qalculate-v1.0.0/qalculate.zip";
+          sha256 = "sha256-bLJC1JobsUKb4a7i4wU7hnfKizH6hsTj6Khtj2emWTQ=";
+        };
       };
 
       powermenu = {
         enable = true;
-        src = "${pkgs.fetchFromGitHub {
-          owner = "pcortellezzi";
-          repo = "dms-plugins";
-          rev = "main";
-          sha256 = "sha256-mKbmROijhYhy/IPbVxYbKyggXesqVGnS/AfAEyeQVhg=";
-        }}/powermenu";
+        src = pkgs.fetchzip {
+          url = "https://github.com/pcortellezzi/dms_plugins/releases/download/powermenu-v1.0.0/powermenu.zip";
+          sha256 = "sha256-MebInLMPQ8qU7hU+xc4mQLe/RTTTGNrPZZ+h5DkNfs0=";
+        };
       };
 
       webSearch = {
