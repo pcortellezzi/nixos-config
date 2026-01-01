@@ -23,7 +23,7 @@
     };
 
     dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
+      url = "github:pcortellezzi/DankMaterialShell/feat/persistent-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     danksearch = {

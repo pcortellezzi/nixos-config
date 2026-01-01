@@ -1,10 +1,13 @@
 { config, pkgs, inputs, ... }:
 
 let
-  inherit (inputs) danksearch;
+  inherit (inputs) danksearch dms;
 in
 {
-  imports = [ danksearch.homeModules.default ];
+  imports = [
+    danksearch.homeModules.default
+    dms.homeModules.dank-material-shell
+  ];
 
   home.packages = with pkgs; [
     alacritty
@@ -15,10 +18,75 @@ in
     rbw
     jq
     inotify-tools
-    pkgs.hamr
     bc
     libqalculate
   ];
+
+  programs.dank-material-shell = {
+    enable = true;
+
+    plugins = {
+      qalculate = {
+        enable = true;
+        src = "${pkgs.fetchFromGitHub {
+          owner = "pcortellezzi";
+          repo = "dms-plugins";
+          rev = "main";
+          sha256 = "sha256-mKbmROijhYhy/IPbVxYbKyggXesqVGnS/AfAEyeQVhg=";
+        }}/qalculate";
+      };
+
+      powermenu = {
+        enable = true;
+        src = "${pkgs.fetchFromGitHub {
+          owner = "pcortellezzi";
+          repo = "dms-plugins";
+          rev = "main";
+          sha256 = "sha256-mKbmROijhYhy/IPbVxYbKyggXesqVGnS/AfAEyeQVhg=";
+        }}/powermenu";
+      };
+
+      webSearch = {
+        enable = true;
+        src = pkgs.fetchFromGitHub {
+          owner = "devnullvoid";
+          repo = "dms-web-search";
+          rev = "main";
+          sha256 = "sha256-mKbmROijhYhy/IPbVxYbKyggXesqVGnS/AfAEyeQVhg=";
+        };
+      };
+
+      commandRunner = {
+        enable = true;
+        src = pkgs.fetchFromGitHub {
+          owner = "devnullvoid";
+          repo = "dms-command-runner";
+          rev = "main";
+          sha256 = "sha256-tXqDRVp1VhyD1WylW83mO4aYFmVg/NV6Z/toHmb5Tn8=";
+        };
+      };
+
+      niriWindows = {
+        enable = true;
+        src = pkgs.fetchFromGitHub {
+          owner = "rochacbruno";
+          repo = "DankNiriWindows";
+          rev = "main";
+          sha256 = "sha256-rdZAnkRyfycI2a2wjSiepQwRI49zKbwoRzpz1+c6ZJA=";
+        };
+      };
+
+      nixMonitor = {
+        enable = true;
+        src = pkgs.fetchFromGitHub {
+          owner = "antonjah";
+          repo = "nix-monitor";
+          rev = "v1.0.3";
+          sha256 = "sha256-biRc7ESKzPK5Ueus1xjVT8OXCHar3+Qi+Osv/++A+Ls=";
+        };
+      };
+    };
+  };
 
   xdg.configFile = {
     "niri/config.kdl".text = ''
@@ -73,18 +141,6 @@ in
     '';
 
     "niri/settings.kdl".text = ''
-      spawn-at-startup "bash" "-c" r#"\
-        while true; do
-          JSON_DMS=\"$HOME/.cache/DankMaterialShell/dms-colors.json\";
-          HAMR_CONF=\"$HOME/.config/hamr\";
-          mkdir -p \"$HAMR_CONF\";
-          if [ -f \"$JSON_DMS\" ]; then
-            jq \".colors.dark\" \"$JSON_DMS\" > \"$HAMR_CONF/colors.json\";
-          fi
-          inotifywait -e modify \"$JSON_DMS\" 2>/dev/null || sleep 5
-        done
-      "#
-
       hotkey-overlay {
       }
 
@@ -96,7 +152,7 @@ in
           Mod+Shift+M { show-hotkey-overlay; }
 
           Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-          Mod+Space hotkey-overlay-title="Toggle Launcher: hamr" { spawn "hamr" "ipc" "call" "hamr" "toggle"; }
+          Mod+Space hotkey-overlay-title="Toggle Launcher: DMS" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
           Mod+O repeat=false { toggle-overview; }
 
@@ -251,46 +307,11 @@ in
         scale 1.75
       }
     '';
-
-    "hamr/config.json".text = builtins.toJSON {
-      apps = {
-        terminal = "alacritty";
-        shell = "bash";
-      };
-      paths = {
-        colorsJson = "~/.config/hamr/colors.json";
-      };
-    };
   };
 
   services.cliphist = {
     enable = true;
     allowImages = true;
-  };
-
-  systemd.user.services.hamr = {
-    Unit = {
-      Description = "Hamr Launcher Daemon";
-      After = [ "niri.service" ];
-      BindsTo = [ "niri.service" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.hamr}/bin/hamr";
-      Restart = "always";
-      Environment = [
-        "GDK_BACKEND=wayland,x11"
-        "QT_QPA_PLATFORM=wayland;xcb"
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION=1"
-        "QT_AUTO_SCREEN_SCALE_FACTOR=1"
-        "SDL_VIDEODRIVER=wayland"
-        "CLUTTER_BACKEND=wayland"
-        "NIXOS_OZONE_WL=1"
-        "QT_FONT_DPI=120"
-      ];
-    };
-    Install = {
-      WantedBy = [ "niri.service" ];
-    };
   };
 
   programs.dsearch = {
