@@ -1,6 +1,11 @@
 { config, pkgs, inputs, ... }:
 
+let
+  inherit (inputs) danksearch;
+in
 {
+  imports = [ danksearch.homeModules.default ];
+
   home.packages = with pkgs; [
     alacritty
     brightnessctl
@@ -12,6 +17,7 @@
     inotify-tools
     pkgs.hamr
     bc
+    libqalculate
   ];
 
   xdg.configFile = {
@@ -67,7 +73,7 @@
     '';
 
     "niri/settings.kdl".text = ''
-      spawn-at-startup "bash" "-c" r#"
+      spawn-at-startup "bash" "-c" r#"\
         while true; do
           JSON_DMS=\"$HOME/.cache/DankMaterialShell/dms-colors.json\";
           HAMR_CONF=\"$HOME/.config/hamr\";
@@ -245,15 +251,15 @@
         scale 1.75
       }
     '';
-  };
 
-  xdg.configFile."hamr/config.json".text = builtins.toJSON {
-    apps = {
-      terminal = "alacritty";
-      shell = "bash";
-    };
-    paths = {
-      colorsJson = "~/.config/hamr/colors.json";
+    "hamr/config.json".text = builtins.toJSON {
+      apps = {
+        terminal = "alacritty";
+        shell = "bash";
+      };
+      paths = {
+        colorsJson = "~/.config/hamr/colors.json";
+      };
     };
   };
 
@@ -284,6 +290,24 @@
     };
     Install = {
       WantedBy = [ "niri.service" ];
+    };
+  };
+
+  programs.dsearch = {
+    enable = true;
+    config = {
+      exclude = {
+        directories = [ "node_modules" ".git" ".cache" "target" "build" "venv" ];
+      };
+      include = {
+        paths = [ "/home/philippe" ];
+      };
+      indexing = {
+        hidden = false;
+      };
+      search = {
+        fuzzy = true;
+      };
     };
   };
 }

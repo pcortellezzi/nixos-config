@@ -7,8 +7,7 @@ let
 in
 {
   imports = [
-    ./niri.nix
-    ./dms.nix
+    ./niri+dms.nix
     ./plasma.nix
   ];
 
