@@ -29,16 +29,16 @@ in
       qalculate = {
         enable = true;
         src = pkgs.fetchzip {
-          url = "https://github.com/pcortellezzi/dms_plugins/releases/download/qalculate-v1.0.0/qalculate.zip";
-          sha256 = "sha256-bLJC1JobsUKb4a7i4wU7hnfKizH6hsTj6Khtj2emWTQ=";
+          url = "https://github.com/pcortellezzi/dms-plugins/releases/download/qalculate-v1.1.0/qalculate.zip";
+          sha256 = "sha256-cDDoiLH4Je/fTGHbitK9pU+SHeGIjaAXhwU7rtxxH6A=";
         };
       };
 
       powermenu = {
         enable = true;
         src = pkgs.fetchzip {
-          url = "https://github.com/pcortellezzi/dms_plugins/releases/download/powermenu-v1.0.0/powermenu.zip";
-          sha256 = "sha256-MebInLMPQ8qU7hU+xc4mQLe/RTTTGNrPZZ+h5DkNfs0=";
+          url = "https://github.com/pcortellezzi/dms-plugins/releases/download/powermenu-v1.1.0/powermenu.zip";
+          sha256 = "sha256-viGj3outMQaFu3YMOV5+sODr+ysGiFryONmpslC743A=";
         };
       };
 
