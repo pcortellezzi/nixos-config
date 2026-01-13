@@ -222,11 +222,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1768212667,
-        "narHash": "sha256-igbZw/5dX4eaUn3B2o3FVxdBkRVwFlkwKF3RGS5Ofsg=",
+        "lastModified": 1768302415,
+        "narHash": "sha256-qoizRsxyOCD9HKgMZMmlCqHAb+0SOFaIni/m+FAXzQA=",
         "owner": "pcortellezzi",
         "repo": "nixpkgs",
-        "rev": "016cb62f9956e6eae5b77bd1a665dc6dc12c4fc7",
+        "rev": "51382209569055017562bfa03ad27c0e3fb8fda9",
         "type": "github"
       },
       "original": {
