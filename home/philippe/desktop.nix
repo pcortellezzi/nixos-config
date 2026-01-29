@@ -21,7 +21,6 @@ in
     jetbrains.rust-rover
     jetbrains.gateway
     jetbrains-runner
-    vdhcoapp
     wine
     nodejs_24
     unrar
