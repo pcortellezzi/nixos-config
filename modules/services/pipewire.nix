@@ -20,6 +20,9 @@
               actions = {
                 update-props = {
                   "api.alsa.reserve" = false;
+                  "api.acp.auto-port" = false;
+                  "api.acp.auto-profile" = false;
+                  "node.suspend-on-idle" = false;
                 };
               };
             }
