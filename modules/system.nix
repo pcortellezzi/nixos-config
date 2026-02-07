@@ -7,10 +7,7 @@
 
   # Use lqx kernel.
   boot.kernelPackages = pkgs.linuxPackages_lqx;
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-  ];
+  boot.kernelParams = [ ];
 
   # Enable networking
   networking.networkmanager.enable = true;

@@ -3,6 +3,7 @@
 }:
 {
   imports = [
+    ../system/plymouth.nix
     ../services/bluetooth.nix
     ../services/displaylink.nix
     ../services/solaar.nix
