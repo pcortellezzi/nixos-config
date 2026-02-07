@@ -36,8 +36,19 @@
                 update-props = {
                   "api.alsa.use-acp" = false;
                   "api.alsa.use-ucm" = false;
-                  "priority.driver" = 1050;
-                  "priority.session" = 1050;
+                };
+              };
+            }
+            {
+              matches = [
+                {
+                  "node.name" = "~alsa_output.usb-DisplayLink.*";
+                }
+              ];
+              actions = {
+                update-props = {
+                  "priority.driver" = 2000;
+                  "priority.session" = 2000;
                 };
               };
             }
