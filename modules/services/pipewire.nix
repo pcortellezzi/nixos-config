@@ -9,33 +9,20 @@
     wireplumber = {
       enable = true;
       extraConfig = {
-        "10-disable-reserve" = {
+        "10-displaylink-fix" = {
           "monitor.alsa.rules" = [
             {
               matches = [
                 {
-                  "device.name" = "~alsa_card.*";
-                }
-              ];
-              actions = {
-                update-props = {
-                  "api.alsa.reserve" = false;
-                  "api.acp.auto-port" = false;
-                  "api.acp.auto-profile" = false;
-                  "node.suspend-on-idle" = false;
-                };
-              };
-            }
-            {
-              matches = [
-                {
-                  "device.name" = "~alsa_card.usb-DisplayLink.*";
+                  "device.vendor.id" = "0x17e9";
                 }
               ];
               actions = {
                 update-props = {
                   "api.alsa.use-acp" = false;
                   "api.alsa.use-ucm" = false;
+                  "priority.driver" = 3000;
+                  "priority.session" = 3000;
                 };
               };
             }
@@ -47,8 +34,8 @@
               ];
               actions = {
                 update-props = {
-                  "priority.driver" = 2000;
-                  "priority.session" = 2000;
+                  "priority.driver" = 3500;
+                  "priority.session" = 3500;
                 };
               };
             }
