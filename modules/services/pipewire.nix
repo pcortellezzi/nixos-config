@@ -36,6 +36,8 @@
                 update-props = {
                   "api.alsa.use-acp" = false;
                   "api.alsa.use-ucm" = false;
+                  "priority.driver" = 1050;
+                  "priority.session" = 1050;
                 };
               };
             }
