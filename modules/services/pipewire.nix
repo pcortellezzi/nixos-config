@@ -26,6 +26,19 @@
                 };
               };
             }
+            {
+              matches = [
+                {
+                  "device.name" = "~alsa_card.usb-DisplayLink.*";
+                }
+              ];
+              actions = {
+                update-props = {
+                  "api.alsa.use-acp" = false;
+                  "api.alsa.use-ucm" = false;
+                };
+              };
+            }
           ];
         };
       };
