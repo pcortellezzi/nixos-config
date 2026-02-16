@@ -11,8 +11,8 @@
         src = final.fetchFromGitHub {
           owner = "pcortellezzi";
           repo = "cosmic-comp";
-          rev = "fd70668e";
-          hash = "sha256-6vd1IRda6YvrZcdNfKN542tO6lCVC9gQi+PHIrJpyiY=";
+          rev = "9ab41fe2";
+          hash = "sha256-DHbmwIV71u/u1ifDjpHtsuFF/dUGuhKT2/BI1rm09Oc=";
         };
 
         # Same Cargo.lock as epoch-1.0.5, so cargoHash is unchanged.
