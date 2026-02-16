@@ -4,19 +4,34 @@
 { ... }:
 {
   nixpkgs.overlays = [
-    (final: prev: {
-      cosmic-comp = prev.cosmic-comp.overrideAttrs (old: {
-        version = "1.0.5-evdi-gpu";
-
+    (final: prev:
+      let
         src = final.fetchFromGitHub {
           owner = "pcortellezzi";
           repo = "cosmic-comp";
           rev = "eb247015";
           hash = "sha256-hRZsFcYwiGkV0UfGAf6E2uomGvFb7BdU3L/p7CvGbxI=";
         };
+      in
+      {
+        cosmic-comp = prev.cosmic-comp.overrideAttrs (old: {
+          version = "1.0-master-evdi-gpu";
+          inherit src;
 
-        # Same Cargo.lock as epoch-1.0.5, so cargoHash is unchanged.
-      });
-    })
+          cargoDeps = final.rustPlatform.fetchCargoVendor {
+            inherit src;
+            name = "cosmic-comp-1.0-master-evdi-gpu-vendor";
+            hash = "sha256-hcQ6u4Aj5Av9T9uX0oDSbJG82g6E8IXcJc4Z2CfoRtg=";
+            # Workaround: nix-prefetch-git binary has a version suffix
+            # (nix-prefetch-git-26.05pre-git) but fetch-cargo-vendor-util
+            # expects "nix-prefetch-git". Add a wrapper with the expected name.
+            nativeBuildInputs = [
+              (final.writeShellScriptBin "nix-prefetch-git" ''
+                exec "${final.nix-prefetch-git}/bin/"nix-prefetch-git-* "$@"
+              '')
+            ];
+          };
+        });
+      })
   ];
 }
