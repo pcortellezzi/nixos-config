@@ -12,7 +12,7 @@
 
   # Enable debug logging for EVDI cursor plane investigation.
   # Remove once cursor plane behavior is confirmed working.
-  systemd.user.services.cosmic-comp.environment.RUST_LOG = "cosmic_comp::backend::kms=debug";
+  environment.sessionVariables.RUST_LOG = "cosmic_comp::backend::kms=debug";
 
   # Create a dedicated systemd service for nm-applet tied to COSMIC
   systemd.user.services.nm-applet = {
