@@ -1,5 +1,5 @@
-# Override cosmic-comp with a patched version that uses hardware GPU
-# rendering for EVDI/DisplayLink outputs instead of llvmpipe (CPU).
+# Override cosmic-comp with a patched version that re-enables cursor planes
+# on EVDI outputs and throttles EBUSY retries with backoff.
 # Remove this overlay once the fix is upstreamed or no longer needed.
 { ... }:
 {
@@ -9,8 +9,8 @@
         src = final.fetchFromGitHub {
           owner = "pcortellezzi";
           repo = "cosmic-comp";
-          rev = "a43b0994";
-          hash = "sha256-E7Y3X2Gmxl+r0UTDxGv3m/IgX11+ymkgdxxCxFghRdg=";
+          rev = "b5d2a889";
+          hash = "sha256-Z2CMGh0Mrxaaytg43PLHFWpIKP5JypiYR/CU+pfcn6w=";
         };
       in
       {
