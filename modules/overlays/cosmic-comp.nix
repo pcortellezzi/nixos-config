@@ -1,5 +1,6 @@
-# Override cosmic-comp with a patched version that re-enables cursor planes
-# on EVDI outputs and throttles EBUSY retries with backoff.
+# Override cosmic-comp with a patched version that bypasses llvmpipe for
+# software outputs (EVDI/DisplayLink) by using the primary GPU's allocator.
+# Follows smithay's anvil primary render fallback pattern (PR #1680).
 # Remove this overlay once the fix is upstreamed or no longer needed.
 { ... }:
 {
@@ -9,8 +10,8 @@
         src = final.fetchFromGitHub {
           owner = "pcortellezzi";
           repo = "cosmic-comp";
-          rev = "06db8799";
-          hash = "sha256-B3HnXfGqGvF4oU93xLYyAZgPkrQSteS+sdgN3boEF0A=";
+          rev = "fb7df317820bf9b2bfbd24a3b79e1d861bd3552b";
+          hash = "sha256-hg500YktBENmqLppp3Ew2s1sE/l3H8sqIz9Z+iXgkcI=";
         };
       in
       {
