@@ -54,8 +54,10 @@
         specialArgs = { inherit inputs stateVersion; };
         modules = [
           ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
+          ./modules/system/manual-update.nix # Manual update script (nixos-update)
           {
             my.auto-update.enable = true; # Enable auto-update for all hosts
+            my.manual-update.enable = true; # Enable manual update script
             nixpkgs.hostPlatform = "x86_64-linux";
             nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
             nixpkgs.config.allowUnfree = true;
