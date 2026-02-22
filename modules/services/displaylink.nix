@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  imports = [ ../overlays/evdi.nix ];
-
   # 1. Installe notre paquet displaylink
   environment.systemPackages = [ pkgs.displaylink ];
 
