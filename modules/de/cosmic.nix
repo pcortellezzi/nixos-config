@@ -10,6 +10,9 @@
   services.desktopManager.cosmic.enable = true;
   services.system76-scheduler.enable = true;
 
+  # Temporary: enable debug logging for EVDI set_allocator diagnostics.
+  environment.sessionVariables.RUST_LOG = "cosmic_comp::backend::kms=info";
+
   # Create a dedicated systemd service for nm-applet tied to COSMIC
   systemd.user.services.nm-applet = {
     description = "NetworkManager Applet";
