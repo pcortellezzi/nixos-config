@@ -11,8 +11,8 @@
         src = final.fetchFromGitHub {
           owner = "pcortellezzi";
           repo = "cosmic-comp";
-          rev = "2e6473b7c6ea83925d7b50c0c49b1204f6fa4225";
-          hash = "sha256-iidDNkPLKdnWC97MzBTJNt78bysopj4wp90LDhr3X3w=";
+          rev = "9392d553dedecd8e33de44b306061631ed65e3a2";
+          hash = "sha256-DJBkNeRbl3D0kbR2KVRKuonQKXiSG+mj9OffAVVDT4c=";
         };
       in
       {
