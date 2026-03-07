@@ -18,21 +18,18 @@ in
     google-chrome
     vlc
     tradingview
-    jetbrains.rust-rover
-    jetbrains.gateway
-    jetbrains-runner
     wine
     nodejs_24
     unrar
     zoom-us
     protonvpn-gui
     sublime-merge
-    auto-claude
+    zed-editor
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+    auto-claude
     gemini-cli
     claude-code
     claude-code-router
-    zed-editor
   ]);
 
   age.secrets.motivewave_license = {
