@@ -23,7 +23,7 @@
     };
 
     trading-bot = {
-      url = "git+ssh://git@github.com/pcortellezzi/trading_bot";
+      url = "github:pcortellezzi/trading_bot";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -19,6 +19,9 @@ in
   "ser5_host_key.age".publicKeys = [ philippe ser5 ];
   "trading_bot_env.age".publicKeys = [ philippe ser5 ];
 
+  # Nix access token for private flake inputs (all hosts need it for rebuild)
+  "nix_github_token.age".publicKeys = all;
+
   # Per-host keys
   "vvb_host_key.age".publicKeys = [ philippe vvb ];
   "flip-cx5_host_key.age".publicKeys = [ philippe flip-cx5 ];

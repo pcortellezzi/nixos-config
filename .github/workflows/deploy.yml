@@ -59,6 +59,7 @@ jobs:
           extra-conf: |
             substituters = https://cache.nixos.org/ https://pcortellezzi.cachix.org
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= pcortellezzi.cachix.org-1:IL7g88BOsIf1AeFl37PclJtA/lLY6Auf3xtRh30M0fI=
+            access-tokens = github.com=${{ secrets.PAT }}
 
       - name: Check flake validity
         run: nix flake check
