@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    trading-bot = {
+      url = "git+ssh://git@github.com/pcortellezzi/trading_bot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dms = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,7 +50,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, dms, danksearch, plasma-manager, darkly, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, dms, danksearch, plasma-manager, darkly, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
@@ -64,6 +69,7 @@
           }
           hostPath
           agenix.nixosModules.default
+          trading-bot.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             # The system deploys the user's SSH key.
