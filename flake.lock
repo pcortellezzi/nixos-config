@@ -542,15 +542,15 @@
       "locked": {
         "lastModified": 1773943081,
         "narHash": "sha256-XTywYzSwm0RI/3UsHRZCDO8opVl0NbxBEm7P59IeNsI=",
-        "ref": "refs/heads/main",
+        "owner": "pcortellezzi",
+        "repo": "trading_bot",
         "rev": "e07444e3a83b85c9ff17ecf5847a5846821819e1",
-        "revCount": 3,
-        "type": "git",
-        "url": "ssh://git@github.com/pcortellezzi/trading_bot"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/pcortellezzi/trading_bot"
+        "owner": "pcortellezzi",
+        "repo": "trading_bot",
+        "type": "github"
       }
     },
     "treefmt-nix": {
