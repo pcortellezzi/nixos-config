@@ -540,11 +540,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1774014135,
-        "narHash": "sha256-M/Ea/qUQB4b2LKDx8cyinZVtb988ol2SAKDWzAzi6v0=",
+        "lastModified": 1774015622,
+        "narHash": "sha256-bPvBlIjbsMDg46CG5S4VRVQry3D6g58rKiEBREAqST8=",
         "owner": "pcortellezzi",
         "repo": "trading_bot",
-        "rev": "9dc2f3c96d7d45ec113d3576df0ee5585c657090",
+        "rev": "ddc79c1d8b19d58de3bfebd38aa7f51e9ea926ca",
         "type": "github"
       },
       "original": {
