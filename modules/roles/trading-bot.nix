@@ -10,6 +10,11 @@
   services.trading-bot = {
     enable = true;
 
+    rithmic = {
+      system_name = "Rithmic Paper Trading";
+      gateway = "Chicago Area";
+    };
+
     starting_equity = 150000.0;
     max_drawdown = 4500.0;
     trail_until = 150100.0;
