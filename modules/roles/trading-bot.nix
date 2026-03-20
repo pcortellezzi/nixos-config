@@ -22,7 +22,7 @@
     default_sizing = "onrb_funded";
     sizing_strategies.onrb_funded = {
       pre_lock = { type = "fixed_nq"; contracts = 1; };
-      post_lock = { type = "dd_step"; base = 1; step_dollars = 500.0; };
+      post_lock = { type = "log2"; base_dd = 2250.0; };
       max_contracts = 17;
     };
 
