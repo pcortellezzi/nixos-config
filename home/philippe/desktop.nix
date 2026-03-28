@@ -9,6 +9,7 @@ in
   imports = [
     ./niri+dms.nix
     ./plasma.nix
+    ./gnome.nix
   ];
 
   home.packages = with pkgs; [

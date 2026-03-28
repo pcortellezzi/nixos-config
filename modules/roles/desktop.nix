@@ -15,6 +15,7 @@
     ../de/cosmic.nix
     ../de/niri+dms.nix
     ../de/plasma.nix
+    ../de/gnome.nix
   ];
 
   hardware.graphics = {
