@@ -23,7 +23,7 @@ in
     nodejs_24
     unrar
     zoom-us
-    protonvpn-gui
+    proton-vpn
     sublime-merge
     zed-editor
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
