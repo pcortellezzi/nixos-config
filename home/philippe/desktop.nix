@@ -19,12 +19,15 @@ in
     google-chrome
     vlc
     tradingview
-    wine
+    wine-wayland
+    winetricks
     nodejs_24
     unrar
     zoom-us
     proton-vpn
     sublime-merge
+    calibre
+    obs-studio
     zed-editor
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
