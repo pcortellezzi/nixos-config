@@ -5,8 +5,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use lqx kernel.
-  boot.kernelPackages = pkgs.linuxPackages_lqx;
+  # Use zen kernel.
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ ];
 
   # Enable networking
