@@ -331,11 +331,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1773915620,
-        "narHash": "sha256-GAW9XBIoORMbG28qwR6pUTN8q8dM/X9MKvwnyw27W9k=",
+        "lastModified": 1774779295,
+        "narHash": "sha256-YxMHoTm6vz7Kdt1mcnYFkoN0mfw5fjR6rOKMZopYXo0=",
         "owner": "pcortellezzi",
         "repo": "nixpkgs",
-        "rev": "1ab5b9b798d8aed53e5ef30c8d88d528ede2de92",
+        "rev": "e0aeee229ededde9c24291df855724d8df88c10a",
         "type": "github"
       },
       "original": {
