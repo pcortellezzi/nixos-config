@@ -33,7 +33,7 @@ in
     auto-claude
     gemini-cli
     claude-code
-    claude-code-router
+    opencode
     oh-my-opencode
   ]);
 
