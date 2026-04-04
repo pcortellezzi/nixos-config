@@ -34,6 +34,7 @@ in
     gemini-cli
     claude-code
     claude-code-router
+    oh-my-opencode
   ]);
 
   age.secrets.motivewave_license = {
