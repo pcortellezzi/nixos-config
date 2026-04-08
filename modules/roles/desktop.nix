@@ -13,7 +13,7 @@
 
     ../de/greeter.nix
     ../de/cosmic.nix
-    ../de/niri+dms.nix
+    ../de/hyprland+dms.nix
     ../de/plasma.nix
     ../de/gnome.nix
   ];
