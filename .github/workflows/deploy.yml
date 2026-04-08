@@ -107,12 +107,51 @@ jobs:
             echo "is_available=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Deploy and wait for result
+      - name: Trigger remote update
         if: steps.check_host.outputs.is_available == 'true'
         run: |
-          echo "Triggering remote update on ${{ matrix.host }} and waiting for completion..."
-          if ! ssh ${{ matrix.host }} "sudo systemctl start --wait nixos-update-runner.service"; then
-            echo "::error::Remote update failed. Fetching last 50 log lines from the service..."
-            ssh ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager"
-            exit 1
-          fi
+          echo "Triggering remote update on ${{ matrix.host }}..."
+          ssh ${{ matrix.host }} "sudo systemctl start --no-block nixos-update-runner.service"
+
+      - name: Wait for update to complete
+        if: steps.check_host.outputs.is_available == 'true'
+        run: |
+          echo "Waiting for nixos-update-runner to finish on ${{ matrix.host }}..."
+          MAX_WAIT=600
+          ELAPSED=0
+          INTERVAL=15
+
+          while [ $ELAPSED -lt $MAX_WAIT ]; do
+            sleep $INTERVAL
+            ELAPSED=$((ELAPSED + INTERVAL))
+
+            # SSH may fail temporarily if the switch restarts networking — retry silently
+            # is-active doesn't need sudo, and returns non-zero for inactive/failed — capture output only
+            STATE=$(ssh -o ConnectTimeout=10 -o ServerAliveInterval=5 -o ServerAliveCountMax=2 \
+              ${{ matrix.host }} "systemctl is-active nixos-update-runner.service 2>/dev/null || true" 2>/dev/null || echo "unreachable")
+
+            case "$STATE" in
+              activating|active)
+                echo "[$ELAPSED/${MAX_WAIT}s] Still running..."
+                ;;
+              inactive)
+                echo "Update completed successfully."
+                exit 0
+                ;;
+              failed)
+                echo "::error::Remote update failed. Fetching logs..."
+                ssh ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager"
+                exit 1
+                ;;
+              unreachable)
+                echo "[$ELAPSED/${MAX_WAIT}s] Host unreachable (switch may be restarting networking), retrying..."
+                ;;
+              *)
+                echo "[$ELAPSED/${MAX_WAIT}s] Unexpected state: $STATE, retrying..."
+                ;;
+            esac
+          done
+
+          echo "::error::Timed out waiting for update after ${MAX_WAIT}s"
+          ssh -o ConnectTimeout=10 ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager" 2>/dev/null || true
+          exit 1

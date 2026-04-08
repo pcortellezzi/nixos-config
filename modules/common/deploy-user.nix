@@ -66,23 +66,18 @@ in
             users = [ "deploy-user" ];
 
             commands = [
-
               {
-
                 command = "/nix/store/*-system-path/bin/systemctl start --wait nixos-update-runner.service";
-
                 options = [ "NOPASSWD" ];
-
               }
-
               {
-
-                command = "/nix/store/*-system-path/bin/journalctl -u nixos-update-runner.service -n 50 --no-pager";
-
+                command = "/nix/store/*-system-path/bin/systemctl start --no-block nixos-update-runner.service";
                 options = [ "NOPASSWD" ];
-
               }
-
+              {
+                command = "/nix/store/*-system-path/bin/journalctl -u nixos-update-runner.service -n 50 --no-pager";
+                options = [ "NOPASSWD" ];
+              }
             ];
 
           }
