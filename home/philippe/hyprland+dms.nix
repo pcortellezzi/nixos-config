@@ -121,18 +121,22 @@ in
 
       animations.enabled = true;
 
-      exec-once = [ "dms" ];
+      exec-once = [ "dms" "echo 'hyprland exec-once ran' > /tmp/hypr-exec-once.log" ];
 
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;
       };
 
-      # Window rules
+      debug = {
+        disable_logs = false;
+      };
+
+      # Window rules (v3 syntax: match before comma, effect after)
       windowrule = [
-        "float, class:^(org\\.wezfurlong\\.wezterm)$"
-        "float, class:firefox, title:^(Picture-in-Picture)$"
-        "pin, class:firefox, title:^(Picture-in-Picture)$"
+        "match:class ^(org\\.wezfurlong\\.wezterm)$, float on"
+        "match:class firefox match:title ^(Picture-in-Picture)$, float on"
+        "match:class firefox match:title ^(Picture-in-Picture)$, pin on"
       ];
 
       # Keybindings
