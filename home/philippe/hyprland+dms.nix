@@ -121,16 +121,13 @@ in
 
       animations.enabled = true;
 
-      exec-once = [ "dms" "echo 'hyprland exec-once ran' > /tmp/hypr-exec-once.log" ];
+      exec-once = [ "dms run --session" ];
 
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;
       };
 
-      debug = {
-        disable_logs = false;
-      };
 
       # Window rules (v3 syntax: match before comma, effect after)
       windowrule = [
