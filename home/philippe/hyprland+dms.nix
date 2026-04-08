@@ -129,7 +129,7 @@ in
       };
 
       # Window rules
-      windowrulev2 = [
+      windowrule = [
         "float, class:^(org\\.wezfurlong\\.wezterm)$"
         "float, class:firefox, title:^(Picture-in-Picture)$"
         "pin, class:firefox, title:^(Picture-in-Picture)$"
