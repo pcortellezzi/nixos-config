@@ -19,10 +19,9 @@ in
     enableCalendarEvents = true;
   };
 
+  # Disable systemd auto-start for DMS — it will be launched via exec-once in Hyprland config
+  # to ensure WAYLAND_DISPLAY is available
   systemd.user.services.dms = {
-    wantedBy = lib.mkForce [ "hyprland-session.target" ];
-    after = lib.mkForce [ "hyprland-session.target" ];
-    bindsTo = lib.mkForce [ "hyprland-session.target" ];
-    partOf = lib.mkForce [ ];
+    wantedBy = lib.mkForce [ ];
   };
 }
