@@ -260,9 +260,11 @@ in
       # Media & volume keys (locked = works even when screen is locked)
       bindl = [
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioNext, exec, playerctl next"
+        ", XF86Calculator, exec, dms ipc call spotlight openWith qalculate"
       ];
 
       bindle = [
