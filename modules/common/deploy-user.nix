@@ -22,12 +22,35 @@
     users.groups.deploy-user = { };
 
     my.deploy-user.triggerUpdateScript = pkgs.writeShellScriptBin "trigger-nixos-update" ''
-      set -e
       echo "Attempting to acquire update lock and launch NixOS configuration switch..."
-      if ! ${pkgs.util-linux}/bin/flock --nonblock /run/nixos-rebuild.lock -c "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch -v --flake github:pcortellezzi/nixos-config#${config.networking.hostName} --refresh" ; then
+
+      notify_user() {
+        local icon="$1" title="$2" body="$3"
+        for uid in $(${pkgs.systemd}/bin/loginctl list-users --no-legend | ${pkgs.gawk}/bin/awk '{print $1}'); do
+          local user=$(${pkgs.systemd}/bin/loginctl list-users --no-legend | ${pkgs.gawk}/bin/awk -v u="$uid" '$1==u {print $2}')
+          local runtime_dir="/run/user/$uid"
+          if [ -d "$runtime_dir" ]; then
+            ${pkgs.sudo}/bin/sudo -u "$user" \
+              DBUS_SESSION_BUS_ADDRESS="unix:path=$runtime_dir/bus" \
+              ${pkgs.libnotify}/bin/notify-send -i "$icon" "$title" "$body" 2>/dev/null || true
+          fi
+        done
+      }
+
+      rc=0
+      ${pkgs.util-linux}/bin/flock --nonblock --conflict-exit-code 100 /run/nixos-rebuild.lock -c \
+        "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch -v --flake github:pcortellezzi/nixos-config#${config.networking.hostName} --refresh" \
+        || rc=$?
+
+      if [ "$rc" -eq 100 ]; then
         echo "Update lock already held. Skipping update." >&2
         exit 0
+      elif [ "$rc" -ne 0 ]; then
+        notify_user "dialog-error" "NixOS" "Configuration switch failed (exit $rc)."
+        exit "$rc"
       fi
+
+      notify_user "emblem-default" "NixOS" "Configuration applied successfully."
     '';
 
     security.sudo.extraRules = [
