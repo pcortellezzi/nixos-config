@@ -21,6 +21,8 @@ in
     bc
     libqalculate
     adw-gtk3
+    grim
+    slurp
   ];
 
   programs.dank-material-shell = {
@@ -243,6 +245,31 @@ in
         "SUPER, C, centerwindow"
         "CTRL ALT, Delete, exit"
         "SUPER SHIFT, P, dpms, off"
+
+        # Screenshot — zone selection
+        ", Print, exec, grim -g \"$(slurp)\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+        "SUPER SHIFT, S, exec, grim -g \"$(slurp)\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+        # Screenshot — full screen
+        "CTRL, Print, exec, grim ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+        "CTRL SUPER SHIFT, S, exec, grim ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+        # Screenshot — active window
+        "ALT, Print, exec, grim -g \"$(hyprctl -j activewindow | jq -r '.at[0],.at[1],.size[0],.size[1]' | tr '\\n' ' ' | awk '{printf \"%d,%d %dx%d\",$1,$2,$3,$4}')\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+        "ALT SUPER SHIFT, S, exec, grim -g \"$(hyprctl -j activewindow | jq -r '.at[0],.at[1],.size[0],.size[1]' | tr '\\n' ' ' | awk '{printf \"%d,%d %dx%d\",$1,$2,$3,$4}')\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+      ];
+
+      # Media & volume keys (locked = works even when screen is locked)
+      bindl = [
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPrev, exec, playerctl previous"
+        ", XF86AudioNext, exec, playerctl next"
+      ];
+
+      bindle = [
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
 
       # SUPER key alone triggers DMS spotlight (on release)
