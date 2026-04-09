@@ -20,10 +20,16 @@ in
     inotify-tools
     bc
     libqalculate
+    adw-gtk3
   ];
 
   programs.dank-material-shell = {
     enable = true;
+
+    settings = {
+      gtkThemingEnabled = true;
+      qtThemingEnabled = true;
+    };
 
     plugins = {
       qalculate = {
