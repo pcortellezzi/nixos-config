@@ -129,6 +129,14 @@ in
 
       exec-once = [ "dms run --session" ];
 
+      cursor = {
+        no_hardware_cursors = true;
+      };
+
+      xwayland = {
+        force_zero_scaling = true;
+      };
+
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = true;

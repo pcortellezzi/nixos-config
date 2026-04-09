@@ -7,6 +7,10 @@ in
 {
   programs.hyprland.enable = true;
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   programs.dms-shell = {
     enable = true;
     package = dms.packages.${pkgs.stdenv.hostPlatform.system}.default;

@@ -70,6 +70,8 @@
           hostPath
           agenix.nixosModules.default
           trading-bot.nixosModules.default
+          dms.nixosModules.greeter
+          dms.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             # The system deploys the user's SSH key.
