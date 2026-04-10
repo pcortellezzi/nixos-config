@@ -244,7 +244,6 @@ in
         # Misc
         "SUPER, C, centerwindow"
         "CTRL ALT, Delete, exit"
-        "SUPER SHIFT, P, dpms, toggle"
 
         # Screenshot — zone selection
         ", Print, exec, grim -g \"$(slurp)\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
