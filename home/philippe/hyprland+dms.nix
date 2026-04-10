@@ -244,7 +244,7 @@ in
         # Misc
         "SUPER, C, centerwindow"
         "CTRL ALT, Delete, exit"
-        "SUPER SHIFT, P, dpms, off"
+        "SUPER SHIFT, P, dpms, toggle"
 
         # Screenshot — zone selection
         ", Print, exec, grim -g \"$(slurp)\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
@@ -257,8 +257,9 @@ in
         "ALT SUPER SHIFT, S, exec, grim -g \"$(hyprctl -j activewindow | jq -r '.at[0],.at[1],.size[0],.size[1]' | tr '\\n' ' ' | awk '{printf \"%d,%d %dx%d\",$1,$2,$3,$4}')\" ~/Images/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
       ];
 
-      # Media & volume keys (locked = works even when screen is locked)
+      # Locked bindings (work even when screen is off/locked)
       bindl = [
+        "SUPER SHIFT, P, dpms, toggle"
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"
