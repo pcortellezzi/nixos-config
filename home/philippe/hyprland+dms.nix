@@ -84,7 +84,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [ pkgs.hyprlandPlugins.hyprspace ];
+    plugins = [ inputs.hyprspace.packages.${pkgs.stdenv.hostPlatform.system}.Hyprspace ];
     settings = {
       # Monitors
       monitor = [
