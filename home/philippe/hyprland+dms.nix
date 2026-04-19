@@ -84,6 +84,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [ pkgs.hyprlandPlugins.hyprspace ];
     settings = {
       # Monitors
       monitor = [
@@ -128,6 +129,16 @@ in
       };
 
       animations.enabled = true;
+
+      plugin = {
+        overview = {
+          centerAligned = true;
+          autoDrag = true;
+          exitOnClick = true;
+          switchOnDrop = true;
+          exitOnSwitch = true;
+        };
+      };
 
       exec-once = [ "dms run --session" ];
 
@@ -174,7 +185,7 @@ in
         "SUPER, L, movefocus, r"
 
         # Overview & window cycling
-        "SUPER, Tab, exec, dms ipc call hypr toggleOverview"
+        "SUPER, Tab, overview:toggle"
         "ALT, Tab, movefocus, r"
         "ALT SHIFT, Tab, movefocus, l"
 
