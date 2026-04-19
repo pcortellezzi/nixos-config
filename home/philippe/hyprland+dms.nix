@@ -173,6 +173,11 @@ in
         "SUPER, K, movefocus, u"
         "SUPER, L, movefocus, r"
 
+        # Overview & window cycling
+        "SUPER, Tab, exec, dms ipc call hypr toggleOverview"
+        "ALT, Tab, movefocus, r"
+        "ALT SHIFT, Tab, movefocus, l"
+
         # Move windows
         "SUPER CTRL, left, movewindow, l"
         "SUPER CTRL, down, movewindow, d"
