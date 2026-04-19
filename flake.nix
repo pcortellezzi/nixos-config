@@ -44,13 +44,21 @@
       url = "github:Bali10050/Darkly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland/v0.54.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprspace = {
+      url = "github:KZDKM/Hyprspace";
+      inputs.hyprland.follows = "hyprland";
+    };
     kwin-better-blur = {
       url = "github:taj-ny/kwin-effects-forceblur/window-rules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, dms, danksearch, plasma-manager, darkly, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, dms, danksearch, plasma-manager, darkly, hyprland, hyprspace, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
