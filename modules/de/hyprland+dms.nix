@@ -5,7 +5,6 @@ let
   inherit (inputs) dms hyprland;
 in
 {
-  imports = [ ../overlays/aquamarine.nix ];
   programs.hyprland = {
     enable = true;
     package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;

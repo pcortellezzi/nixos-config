@@ -44,9 +44,14 @@
       url = "github:Bali10050/Darkly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    aquamarine = {
+      url = "github:hyprwm/aquamarine";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.54.3";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.aquamarine.follows = "aquamarine";
     };
     hyprspace = {
       url = "github:pcortellezzi/Hyprspace/fix/nullcheck-onkeypress";
@@ -72,7 +77,10 @@
             my.auto-update.enable = true; # Enable auto-update for all hosts
             my.manual-update.enable = true; # Enable manual update script
             nixpkgs.hostPlatform = "x86_64-linux";
-            nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
+            nixpkgs.overlays = [ 
+              my-nixpkgs.overlays.default
+              (import ./modules/overlays/aquamarine-input.nix { inherit inputs; })
+            ];
             nixpkgs.config.allowUnfree = true;
           }
           hostPath
