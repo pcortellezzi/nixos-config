@@ -11,7 +11,7 @@ in
 
   # Force AMD iGPU as primary renderer for aquamarine/Hyprland
   # Needed for DisplayLink/EVDI virtual outputs to be detected
-  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/card1";
+  home.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/card1";
 
   home.packages = with pkgs; [
     alacritty
