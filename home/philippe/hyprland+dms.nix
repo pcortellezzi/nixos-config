@@ -9,9 +9,8 @@ in
     dms.homeModules.dank-material-shell
   ];
 
-  # Force AMD iGPU as primary renderer for aquamarine/Hyprland
-  # Needed for DisplayLink/EVDI virtual outputs to be detected
-  home.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
+  # Force legacy DRM mode for EVDI/DisplayLink compatibility with Hyprland
+  home.sessionVariables.AQ_NO_ATOMIC = "1";
 
   home.packages = with pkgs; [
     alacritty
