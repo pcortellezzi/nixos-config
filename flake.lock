@@ -531,15 +531,16 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1775071961,
-        "narHash": "sha256-LXkeeH9Blr6ohS1LAsVZbkJ/EAkkMDATh5qu45hC7Zo=",
-        "owner": "KZDKM",
+        "lastModified": 1776670547,
+        "narHash": "sha256-eC2VGQ8xB7xD2I4twXKqX4ffuHCjgLHIQUw9mYzImMA=",
+        "owner": "pcortellezzi",
         "repo": "Hyprspace",
-        "rev": "12ddde04f8584bf7de3151e6169918e0dda9f822",
+        "rev": "49f5b173dcb4a0cba7fbc85328831defe84c0b56",
         "type": "github"
       },
       "original": {
-        "owner": "KZDKM",
+        "owner": "pcortellezzi",
+        "ref": "fix/nullcheck-onkeypress",
         "repo": "Hyprspace",
         "type": "github"
       }

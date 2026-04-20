@@ -49,7 +49,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprspace = {
-      url = "github:KZDKM/Hyprspace";
+      url = "github:pcortellezzi/Hyprspace/fix/nullcheck-onkeypress";
       inputs.hyprland.follows = "hyprland";
     };
     kwin-better-blur = {
