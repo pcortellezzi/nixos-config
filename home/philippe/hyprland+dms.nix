@@ -85,7 +85,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    plugins = [ inputs.hyprspace.packages.${pkgs.stdenv.hostPlatform.system}.Hyprspace ];
+    # plugins = [ inputs.hyprspace.packages.${pkgs.stdenv.hostPlatform.system}.Hyprspace ]; # TODO: crashes in onKeyPress with Hyprland 0.54.3
     settings = {
       # Monitors
       monitor = [
@@ -186,7 +186,7 @@ in
         "SUPER, L, movefocus, r"
 
         # Overview & window cycling
-        "SUPER, Tab, overview:toggle"
+        # "SUPER, Tab, overview:toggle" # TODO: re-enable when Hyprspace is fixed
         "ALT, Tab, movefocus, r"
         "ALT SHIFT, Tab, movefocus, l"
 
