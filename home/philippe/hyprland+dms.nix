@@ -9,9 +9,6 @@ in
     dms.homeModules.dank-material-shell
   ];
 
-  # Force legacy DRM mode for EVDI/DisplayLink compatibility with Hyprland
-  home.sessionVariables.AQ_NO_ATOMIC = "1";
-
   home.packages = with pkgs; [
     alacritty
     brightnessctl

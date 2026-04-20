@@ -1,0 +1,84 @@
+diff --git a/src/backend/drm/DRM.cpp b/src/backend/drm/DRM.cpp
+index 1234567..abcdefg 100644
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -165,6 +165,12 @@ void Aquamarine::CSessionDevice::resolveMatchingRenderNode(udev_device* cardDevi
+     auto*       pciBusParent      = udev_device_get_parent_with_subsystem_devtype(cardDevice, "pci", nullptr);
+     auto*       platformBusParent = udev_device_get_parent_with_subsystem_devtype(cardDevice, "platform", nullptr);
+     bool        isStandardBus     = pciBusParent != nullptr;
++    
++    // Check if this is an EVDI device
++    auto*       driverName        = udev_device_get_driver(cardDevice);
++    bool        isEvdi             = driverName && std::string_view(driverName) == "evdi";
++    if (isEvdi) {
++        backend->log(AQ_LOG_DEBUG, std::format("drm: Device {} is an EVDI device, using special handling", path));
++    }
+ 
+     auto*       parentDevice  = platformBusParent ? platformBusParent : udev_device_get_parent(cardDevice);
+     const char* parentSyspath = parentDevice ? udev_device_get_sysattr_value(parentDevice, "devpath") : nullptr;
+@@ -197,6 +203,13 @@ void Aquamarine::CSessionDevice::resolveMatchingRenderNode(udev_device* cardDevi
+             if (!devnode || !devtype || strcmp(devtype, "drm_minor") != 0 || !strstr(devnode, "renderD"))
+                 continue;
+ 
++            // For EVDI devices, don't require a matching render node
++            if (isEvdi) {
++                backend->log(AQ_LOG_DEBUG, std::format("drm: EVDI device {} doesn't need render node", path));
++                matched = true;
++                break;
++            }
++
+             renderNodeFd = open(devnode, O_RDWR | O_CLOEXEC);
+             if (renderNodeFd >= 0) {
+                 backend->log(AQ_LOG_WARNING, std::format("drm: No matching render node for {}, falling back to {}", path, devnode));
+@@ -450,6 +463,17 @@ bool Aquamarine::CDRMBackend::registerGPU(SP<CSessionDevice> gpu_, SP<CDRMBacken
+     auto drmVerName = drmVer->name ? drmVer->name : "unknown";
+     if (std::string_view(drmVerName) == "evdi")
+         primary = {};
++        
++    // Special handling for EVDI devices
++    bool isEvdiDevice = std::string_view(drmVerName) == "evdi";
++    if (isEvdiDevice) {
++        backend->log(AQ_LOG_INFO, std::format("drm: EVDI device {} detected, enabling special handling", gpuName ? gpuName : "unknown"));
++        // Don't require a render node for EVDI - it doesn't have one by design
++        if (gpu_->renderNodeFd < 0) {
++            backend->log(AQ_LOG_DEBUG, std::format("drm: EVDI device {} has no render node (expected), using card fd", gpu_->path));
++            gpu_->renderNodeFd = gpu_->fd; // Use card fd as fallback
++        }
++    }
+ 
+     backend->log(AQ_LOG_DEBUG,
+                  std::format("drm: Starting backend for {}, with driver {}{}", drmName ? drmName : "unknown", drmVerName,
+@@ -580,6 +604,17 @@ void Aquamarine::CDRMBackend::scanConnectors() {
+             continue;
+         }
+ 
++        // Special handling for EVDI connectors
++        auto drmName = drmGetDeviceNameFromFd2(gpu->fd);
++        auto drmVer = drmGetVersion(gpu->fd);
++        bool isEvdiConnector = drmVer && drmVer->name && std::string_view(drmVer->name) == "evdi";
++        drmFreeVersion(drmVer);
++        
++        if (isEvdiConnector && drmConn->connection != DRM_MODE_CONNECTED) {
++            backend->log(AQ_LOG_DEBUG, std::format("drm: EVDI connector {} forcing connected state", connectorID));
++            drmConn->connection = DRM_MODE_CONNECTED; // Force connected for EVDI
++        }
++
+         auto it = std::ranges::find_if(connectors, [connectorID](const auto& e) { return e->id == connectorID; });
+         if (it == connectors.end()) {
+             backend->log(AQ_LOG_DEBUG, std::format("drm: Initializing connector id {}", connectorID));
+@@ -593,6 +628,15 @@ void Aquamarine::CDRMBackend::scanConnectors() {
+             }
+         } else {
+             backend->log(AQ_LOG_DEBUG, std::format("drm: Connector id {} already initialized", connectorID));
++            
++            // For EVDI, always update status to ensure it's detected
++            if (isEvdiConnector) {
++                backend->log(AQ_LOG_DEBUG, std::format("drm: EVDI connector {} updating connection state", connectorID));
++                // EVDI might report disconnected initially, force a recheck
++                if (drmConn->connection == DRM_MODE_DISCONNECTED) {
++                    drmConn->connection = DRM_MODE_CONNECTED;
++                }
++            }
+             conn = *it;
+         }
+ 
