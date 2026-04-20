@@ -9,6 +9,10 @@ in
     dms.homeModules.dank-material-shell
   ];
 
+  # Force AMD iGPU as primary renderer for aquamarine/Hyprland
+  # Needed for DisplayLink/EVDI virtual outputs to be detected
+  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/card1";
+
   home.packages = with pkgs; [
     alacritty
     brightnessctl
@@ -141,10 +145,7 @@ in
         };
       };
 
-      exec-once = [
-        "AQ_DRM_DEVICES=/dev/dri/card1"  # Force AMD iGPU for EVDI/DisplayLink
-        "dms run --session"
-      ];
+      exec-once = [ "dms run --session" ];
 
       cursor = {
         no_hardware_cursors = true;
