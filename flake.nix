@@ -68,10 +68,7 @@
             my.auto-update.enable = true; # Enable auto-update for all hosts
             my.manual-update.enable = true; # Enable manual update script
             nixpkgs.hostPlatform = "x86_64-linux";
-            nixpkgs.overlays = [ 
-              my-nixpkgs.overlays.default
-              (import ./modules/overlays/aquamarine.nix { inherit inputs; })
-            ];
+nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
             nixpkgs.config.allowUnfree = true;
           }
           hostPath
