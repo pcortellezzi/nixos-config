@@ -141,7 +141,10 @@ in
         };
       };
 
-      exec-once = [ "dms run --session" ];
+      exec-once = [
+        "AQ_DRM_DEVICES=/dev/dri/card1"  # Force AMD iGPU for EVDI/DisplayLink
+        "dms run --session"
+      ];
 
       cursor = {
         no_hardware_cursors = true;
