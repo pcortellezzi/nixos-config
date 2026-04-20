@@ -531,11 +531,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1776671354,
-        "narHash": "sha256-4wC3o8PUuOXtStgwAyHFP8Wz44je60QjRbf6annEm7Q=",
+        "lastModified": 1776671997,
+        "narHash": "sha256-EKF38I7EC9zb/QjpGCtziry4tygI9eohW93Y5t7G1K4=",
         "owner": "pcortellezzi",
         "repo": "Hyprspace",
-        "rev": "f9088b98f2831e8606403241b31d3f4e4aa4a343",
+        "rev": "921f248ad5f8234e22c42ab0b8a66fd48ed9c9f2",
         "type": "github"
       },
       "original": {
