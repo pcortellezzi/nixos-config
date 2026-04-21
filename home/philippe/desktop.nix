@@ -29,6 +29,7 @@ in
     calibre
     obs-studio
     zed-editor
+    obsidian
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
     gemini-cli
