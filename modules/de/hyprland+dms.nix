@@ -2,12 +2,12 @@
   pkgs, lib, inputs, ...
 }:
 let
-  inherit (inputs) dms hyprland;
+  inherit (inputs) dms;
 in
 {
   programs.hyprland = {
     enable = true;
-    package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = pkgs.hyprland;
   };
 
   services.gnome.gnome-keyring.enable = true;
