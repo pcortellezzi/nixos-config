@@ -15,6 +15,7 @@
     my-nixpkgs = {
       url = "github:pcortellezzi/nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprland.follows = "hyprland";
     };
 
     llm-agents = {
