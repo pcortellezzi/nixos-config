@@ -3,7 +3,7 @@
 {
   age.secrets.agent_convergence_env = {
     file = ../../secrets/agent_convergence_env.age;
-    owner = "agent-convergence";
+    owner = "root";
     mode = "0400";
   };
 
