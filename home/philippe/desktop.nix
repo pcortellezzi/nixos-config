@@ -19,6 +19,7 @@ in
     google-chrome
     vlc
     tradingview
+    tealstreet
     wine-wayland
     winetricks
     nodejs_24
