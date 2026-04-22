@@ -8,6 +8,7 @@
       ../../modules/roles/nas.nix
       ../../modules/roles/domotique.nix
       ../../modules/roles/trading-bot.nix
+      ../../modules/roles/agent-convergence.nix
     ];
 
   networking.hostName = "ser5";

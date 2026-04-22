@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agent-convergence = {
+      url = "github:pcortellezzi/agent-convergence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dms = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,7 +60,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, dms, danksearch, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, agent-convergence, dms, danksearch, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
@@ -75,6 +80,7 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           hostPath
           agenix.nixosModules.default
           trading-bot.nixosModules.default
+          agent-convergence.nixosModules.default
           dms.nixosModules.greeter
           dms.nixosModules.default
           home-manager.nixosModules.home-manager
