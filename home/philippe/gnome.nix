@@ -66,7 +66,7 @@ let
         <logicalmonitor>
           <x>4880</x>
           <y>2100</y>
-          <scale>1</scale>
+          <scale>2</scale>
           <monitor>
             <monitorspec>
               <connector>eDP-1</connector>
@@ -75,8 +75,8 @@ let
               <serial>unknown</serial>
             </monitorspec>
             <mode>
-              <width>1920</width>
-              <height>1080</height>
+              <width>2880</width>
+              <height>1620</height>
               <rate>120.000</rate>
             </mode>
           </monitor>

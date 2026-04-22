@@ -298,9 +298,9 @@ in
         transform "270"
       }
       output "eDP-1" {
-        mode "1920x1080@120.0"
+        mode "2880x1620@120.0"
         position x=4880 y=2100
-        scale 1.0
+        scale 1.75
       }
     '';
   };
