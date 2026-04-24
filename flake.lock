@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777037788,
-        "narHash": "sha256-+LIkD8KkJi40rO/qT7ScSAkfYG91oW9ybWcJ3Sw9rmQ=",
+        "lastModified": 1777038116,
+        "narHash": "sha256-guBy7VPuvnENYgQu2UJk2ciHHP/GJ5vIq0WyC15zHD0=",
         "owner": "pcortellezzi",
         "repo": "agent-convergence",
-        "rev": "44eb6aa9807aecf7d2f959f9b81c6c16947c577a",
+        "rev": "fc56cb971a075e26753c415954be4bd2629099c7",
         "type": "github"
       },
       "original": {
