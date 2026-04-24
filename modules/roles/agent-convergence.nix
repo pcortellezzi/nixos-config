@@ -11,6 +11,5 @@
     enable = true;
     environmentFile = config.age.secrets.agent_convergence_env.path;
     image = "ghcr.io/pcortellezzi/agent-convergence:main";
-    codeRepoPath = "/home/philippe/Projects/rs_trader";
   };
 }
