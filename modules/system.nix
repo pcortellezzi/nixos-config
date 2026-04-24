@@ -96,4 +96,6 @@
   nix.extraOptions = ''
     !include ${config.age.secrets.nix_github_token.path}
   '';
+
+  nix.settings.extra-sandbox-paths = [ config.age.secrets.nix_github_token.path ];
 }
