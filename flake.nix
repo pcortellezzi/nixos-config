@@ -23,8 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trading-bot = {
-      url = "github:pcortellezzi/trading_bot";
+    trading-nautilus = {
+      url = "github:pcortellezzi/trading-nautilus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -60,7 +60,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-bot, agent-convergence, dms, danksearch, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, dms, danksearch, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
@@ -79,7 +79,7 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           }
           hostPath
           agenix.nixosModules.default
-          trading-bot.nixosModules.default
+          trading-nautilus.nixosModules.default
           agent-convergence.nixosModules.default
           dms.nixosModules.greeter
           dms.nixosModules.default

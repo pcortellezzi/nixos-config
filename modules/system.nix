@@ -87,7 +87,7 @@
 
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  # GitHub access token for private flake inputs (trading-bot)
+  # GitHub access token for private flake inputs
   age.secrets.nix_github_token = {
     file = ../secrets/nix_github_token.age;
     owner = "root";
