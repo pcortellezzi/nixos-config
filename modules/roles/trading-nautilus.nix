@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, inputs, ... }:
 
 {
   age.secrets.trading_bot_env = {
@@ -8,6 +8,7 @@
 
   services.trading-nautilus = {
     enable = true;
+    image = "ghcr.io/pcortellezzi/trading-nautilus/nautilus-mr:${inputs.trading-nautilus.imageTag}";
     environmentFile = config.age.secrets.trading_bot_env.path;
     testnet = true;
   };
