@@ -10,6 +10,15 @@
     enable = true;
     image = "ghcr.io/pcortellezzi/trading-nautilus/nautilus-mr:${inputs.trading-nautilus.imageTag}";
     environmentFile = config.age.secrets.trading_bot_env.path;
-    testnet = true;
+
+    instances = {
+      hyperliquid = {
+        strategy = "scripts.live_stat_arb";
+        env = [ "TESTNET=1" ];
+      };
+      rithmic-dryrun = {
+        strategy = "scripts.live_rithmic_dryrun";
+      };
+    };
   };
 }
