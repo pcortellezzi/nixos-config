@@ -35,8 +35,6 @@ in
     auto-claude
     gemini-cli
     claude-code
-    opencode
-    oh-my-opencode
   ]);
 
   age.secrets.motivewave_license = {

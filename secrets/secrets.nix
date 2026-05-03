@@ -29,4 +29,5 @@ in
 
   # Home-manager secrets (desktops)
   "../home/philippe/secrets/motivewave_license.age".publicKeys = [ philippe vvb flip-cx5 ];
+  "../home/philippe/secrets/opencode_go_api_key.age".publicKeys = [ philippe vvb flip-cx5 ];
 }

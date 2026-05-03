@@ -124,6 +124,7 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           homeModules = [
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
+            ./home/philippe/opencode.nix
           ];
         };
 
@@ -132,6 +133,7 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           homeModules = [
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
+            ./home/philippe/opencode.nix
           ];
         };
       };
