@@ -8,6 +8,25 @@ let
     exec ${opencodePkg}/bin/opencode "$@"
   '';
 
+  # Modèles pour opencode-voice
+  whisperModel = pkgs.fetchurl {
+    name = "ggml-large-v3-turbo-q5_0.bin";
+    url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin";
+    sha256 = lib.fakeSha256;
+  };
+
+  piperVoice = pkgs.fetchurl {
+    name = "en_US-ryan-high.onnx";
+    url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/high/en_US-ryan-high.onnx";
+    sha256 = lib.fakeSha256;
+  };
+
+  piperVoiceJson = pkgs.fetchurl {
+    name = "en_US-ryan-high.onnx.json";
+    url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/high/en_US-ryan-high.onnx.json";
+    sha256 = lib.fakeSha256;
+  };
+
   opencodeTuiConfig = {
     "$schema" = "https://opencode.ai/tui.json";
     plugin = [
@@ -36,6 +55,12 @@ in
   ] ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     oh-my-opencode
   ]);
+
+  home.file = {
+    ".local/share/whisper-cpp/ggml-large-v3-turbo-q5_0.bin".source = whisperModel;
+    ".local/share/piper-voices/en_US-ryan-high.onnx".source = piperVoice;
+    ".local/share/piper-voices/en_US-ryan-high.onnx.json".source = piperVoiceJson;
+  };
 
   xdg.configFile."opencode/tui.json".text = builtins.toJSON opencodeTuiConfig;
 }
