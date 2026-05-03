@@ -8,23 +8,23 @@ let
     exec ${opencodePkg}/bin/opencode "$@"
   '';
 
-  # Modèles pour opencode-voice
+  # Modèles pour opencode-voice (téléchargés une fois dans le nix store)
   whisperModel = pkgs.fetchurl {
     name = "ggml-large-v3-turbo-q5_0.bin";
     url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin";
-    sha256 = lib.fakeSha256;
+    sha256 = "1qm7zxamlvac564c3270wqqqks5wc7532q3fqi01zbfmkiq22hir";
   };
 
   piperVoice = pkgs.fetchurl {
     name = "en_US-ryan-high.onnx";
     url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/high/en_US-ryan-high.onnx";
-    sha256 = lib.fakeSha256;
+    sha256 = "1jjf2nxn1zyih00jwh8c3bg65wblf1ha8w5spy6yr0z10rv0v6dk";
   };
 
   piperVoiceJson = pkgs.fetchurl {
     name = "en_US-ryan-high.onnx.json";
     url = "https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/high/en_US-ryan-high.onnx.json";
-    sha256 = lib.fakeSha256;
+    sha256 = "04c0ni1qb8jw7p6l1fb47i81njgzqh7xaj8dpyzb8p1i127vkly6";
   };
 
   opencodeTuiConfig = {
