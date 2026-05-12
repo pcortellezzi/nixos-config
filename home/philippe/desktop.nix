@@ -7,9 +7,7 @@ let
 in
 {
   imports = [
-    ./hyprland+dms.nix
     ./plasma.nix
-    ./gnome.nix
   ];
 
   home.packages = with pkgs; [

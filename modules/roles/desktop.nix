@@ -12,10 +12,7 @@
     ../services/tailscale.nix
 
     ../de/greeter.nix
-    ../de/cosmic.nix
-    ../de/hyprland+dms.nix
     ../de/plasma.nix
-    ../de/gnome.nix
   ];
 
   hardware.graphics = {

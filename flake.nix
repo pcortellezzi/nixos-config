@@ -33,14 +33,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    danksearch = {
-      url = "github:AvengeMedia/danksearch";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,7 +52,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, dms, danksearch, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
     let
       stateVersion = "25.11";
 
@@ -81,8 +73,6 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           agenix.nixosModules.default
           trading-nautilus.nixosModules.default
           agent-convergence.nixosModules.default
-          dms.nixosModules.greeter
-          dms.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             # The system deploys the user's SSH key.
@@ -111,6 +101,10 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
       };
     in
     {
+      devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
+        packages = [ nixpkgs.legacyPackages.x86_64-linux.nixd ];
+      };
+
       nixosConfigurations = {
         ser5 = mkHost {
           hostPath = ./hosts/ser5/configuration.nix;
