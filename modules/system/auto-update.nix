@@ -22,6 +22,7 @@ in
           Type = "oneshot";
           User = "root";
           ExecStart = "${config.my.deploy-user.triggerUpdateScript}/bin/trigger-nixos-update";
+          KillMode = "process";
         };
       };
 
