@@ -6,6 +6,7 @@
   ];
 
   home.packages = with pkgs; [
+    kde-rounded-corners
     krohnkite
   ];
 
@@ -101,16 +102,41 @@
         };
         "Script-krohnkite" = {
           "enableCustomBorders" = false;
-          "screenGapBottom" = 10;
-          "screenGapLeft" = 10;
-          "screenGapRight" = 10;
-          "screenGapTop" = 10;
-          "tileLayoutGap" = 10;
+          "screenGapBottom" = 5;
+          "screenGapLeft" = 5;
+          "screenGapRight" = 5;
+          "screenGapTop" = 5;
+          "tileLayoutGap" = 5;
+        };
+        # Activer "disable" outline mais désactiver round sur fenêtres tuilées
+        # pour éviter de cacher le contour actif en mode tiling
+        "Round-Corners" = {
+          # Fenêtre active : contour bleu 2px (comme i3/sway)
+          "OutlineThickness" = 2;
+          "OutlineColor" = "61,174,233";
+          "ActiveOutlineAlpha" = 255;
+          # Fenêtres inactives : contour gris subtil 1px
+          "InactiveOutlineThickness" = 1;
+          "InactiveOutlineColor" = "100,100,100";
+          "InactiveOutlineAlpha" = 150;
+          # Contour visible en mode tiling
+          "DisableOutlineTile" = false;
+          "DisableRoundTile" = true;
+          # Pas de contour en maximisé / plein écran / fullscreen
+          "DisableOutlineMaximize" = true;
+          "DisableOutlineFullScreen" = true;
+          # Rayon des coins et animation
+          "Size" = 10;
+          "InactiveCornerRadius" = 10;
+          "AnimationDuration" = 200;
         };
       };
       
       "klaunchrc"."FeedbackStyle"."BusyCursor" = false;
       "kdeglobals"."KDE"."AnimationDurationFactor" = "0.7";
+
+      # Désactiver l'outline Breeze natif (pour éviter conflit avec Round-Corners)
+      "breezerc"."Common"."OutlineIntensity" = "OutlineOff";
 
       "kcminputrc" = {
         "Mouse" = {
