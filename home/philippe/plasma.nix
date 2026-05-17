@@ -77,9 +77,10 @@
           "Meta" = "org.kde.krunner,org.kde.krunner,runCommand";
         };
         "org.kde.kdecoration2" = {
-          "BorderSize" = "Normal";
+          "BorderSize" = "Large";
           "ButtonsOnLeft" = "M";
           "ButtonsOnRight" = "IAX";
+          "library" = "org.kde.kwin.breeze";
         };
         "Desktops" = {
           "Number" = 4;
