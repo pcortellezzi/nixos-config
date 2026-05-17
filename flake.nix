@@ -15,7 +15,6 @@
     my-nixpkgs = {
       url = "github:pcortellezzi/nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hyprland.follows = "hyprland";
     };
 
     llm-agents = {
@@ -38,21 +37,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    darkly = {
-      url = "github:Bali10050/Darkly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.54.3";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    kwin-better-blur = {
-      url = "github:taj-ny/kwin-effects-forceblur/window-rules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, plasma-manager, darkly, hyprland, kwin-better-blur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, plasma-manager, ... }@inputs:
     let
       stateVersion = "25.11";
 
