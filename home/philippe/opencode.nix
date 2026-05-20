@@ -25,6 +25,24 @@ let
       ]
     ];
   };
+
+  # Liste des plugins npm globaux nécessaires pour la config Supreme
+  npmPlugins = [
+    "opencode-snippets@latest"
+    "opencode-snip@latest"
+    "opencode-notify@latest"
+    "opencode-mem@latest"
+    "opencode-quota@latest"
+    "opencode-background-agents@latest"
+    "opencode-worktree@latest"
+    "opencode-dynamic-context-pruning@latest"
+    "opencode-smart-title@latest"
+    "ocwatch@latest"
+    "supermemory@latest"
+    "openskills@latest"
+    "@ast-grep/cli@latest"
+    "@colbymchenry/codegraph@latest"
+  ];
 in
 {
   age.secrets.opencode_go_api_key = {
@@ -32,6 +50,7 @@ in
   };
 
   home.packages = with pkgs; [
+    nodejs
     whisper-cpp
     piper-tts
     sox
@@ -46,5 +65,23 @@ in
     ".local/share/piper-voices/en_US-ryan-high.onnx.json".source = "${voiceModels}/share/opencode-voice/piper/en_US-ryan-high.onnx.json";
   };
 
-  xdg.configFile."opencode/tui.json".text = builtins.toJSON opencodeTuiConfig;
+  xdg.configFile = {
+    "opencode/tui.json".text = builtins.toJSON opencodeTuiConfig;
+
+    "opencode/opencode.json".source = ./opencode-config/opencode.json;
+    "opencode/AGENTS.md".source = ./opencode-config/AGENTS.md;
+    "opencode/oh-my-openagent.json".source = ./opencode-config/oh-my-openagent.json;
+  };
+
+  # Activation script : installe les plugins npm globaux au premier déploiement
+  home.activation.installOpendodePlugins = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    export PATH="${pkgs.nodejs}/bin:$PATH"
+    if ! npm list -g opencode-snippets &>/dev/null; then
+      echo "  installing opencode npm plugins..."
+      npm install -g \
+        ${builtins.concatStringsSep " \\\n        " npmPlugins} \
+        git+https://github.com/obra/superpowers.git \
+        2>&1
+    fi
+  '';
 }

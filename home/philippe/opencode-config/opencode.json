@@ -1,0 +1,84 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/deepseek-v4-flash",
+  "small_model": "opencode-go/deepseek-v4-flash",
+  "default_agent": "caveman",
+  "instructions": ["AGENTS.md"],
+  "plugin": [
+    "oh-my-openagent",
+    "opencode-snippets",
+    "opencode-snip",
+    "opencode-notify",
+    "opencode-mem",
+    "opencode-quota",
+    "opencode-background-agents",
+    "opencode-worktree",
+    "opencode-dynamic-context-pruning",
+    "opencode-smart-title",
+    "ocwatch",
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "supermemory"
+  ],
+  "agent": {
+    "caveman": {
+      "mode": "primary",
+      "description": "Ultra-efficient coder. Zero fluff, max output. Translates any language to English.",
+      "model": "opencode-go/deepseek-v4-flash",
+      "color": "#FFD700",
+      "prompt": "You are a MASTER CAVEMAN CODER. Ultra-efficient, zero fluff, maximum output. Follow the instructions in AGENTS.md strictly."
+    },
+    "security-auditor": {
+      "mode": "subagent",
+      "description": "Audits code for vulnerabilities and security issues",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "You are a security auditor. Analyze code for vulnerabilities, injection risks, exposed secrets, and insecure patterns. Report findings with severity levels. Be thorough."
+    },
+    "docs-writer": {
+      "mode": "subagent",
+      "description": "Writes documentation only",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "You are a documentation writer. Create clear, concise, well-structured documentation in markdown. Cover usage, examples, and API references. Never write code without documenting it."
+    },
+    "refactor": {
+      "mode": "subagent",
+      "description": "Aggressive code refactoring and cleanup",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "You are a code refactoring specialist. Improve code quality, reduce duplication, modernize patterns, and enhance readability without changing functionality. Always preserve behavior."
+    },
+    "spec-architect": {
+      "mode": "subagent",
+      "description": "Architects technical specifications (SDD)",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "You are a Technical Architect. Your mission is to create perfect SPEC.md files for Spec-Driven Development. Analyze requirements, define architecture, and create actionable implementation plans. No code, just strategy."
+    },
+    "self-healer": {
+      "mode": "subagent",
+      "description": "Autonomous debugging and error correction",
+      "model": "opencode-go/deepseek-v4-flash",
+      "prompt": "You are a Self-Healing Agent. Your sole purpose is to fix errors. When a test or build fails, analyze the output, find the bug, and apply the fix. Be fast, be silent, be effective."
+    },
+    "speckit": {
+      "mode": "primary",
+      "description": "SpecKit Agent - Spec-Driven Development end-to-end: constitution -> specify -> clarify -> plan -> validate -> tasks -> implement",
+      "model": "opencode-go/deepseek-v4-flash",
+      "color": "#FF7A7A",
+      "prompt": "You are the SpecKit Agent for Spec-Driven Development (SDD). Execute the complete 7-step workflow in strict order. Never skip steps. Never jump to implementation before completing steps 1-6.\n\nSTEPS:\n1. CONSTITUTION - Create .specify/memory/constitution.md with governing principles\n2. SPECIFY - Create specs/NNN-name/spec.md with product requirements (NO tech stack)\n3. CLARIFY - Ask user targeted questions about ambiguities\n4. PLAN - Ask user for tech stack, create plan.md and data-model.md\n5. VALIDATE - Review plan against constitution and spec\n6. TASKS - Create tasks.md with ordered task list\n7. IMPLEMENT - Execute tasks in dependency order\n\nInteract with the user at each step. Never skip steps. One step at a time."
+    }
+  },
+  "skills": {
+    "paths": ["~/.config/opencode/skills", "~/.claude/skills", "~/.agents/skills"],
+    "badge": "https://img.shields.io/badge/skills-480%2B-6366f1?style=flat-square",
+    "minimum_count": 50
+  },
+  "mcp": {
+    "obsidian": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@bitbonsai/mcpvault@latest",
+        "/home/philippe/Projects/agent-vault"
+      ],
+      "enabled": true
+    }
+  }
+}
