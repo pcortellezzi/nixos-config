@@ -45,6 +45,8 @@ let
   ];
 in
 {
+  home.sessionPath = [ "$HOME/.npm-global/bin" ];
+
   age.secrets.opencode_go_api_key = {
     file = ./secrets/opencode_go_api_key.age;
   };
@@ -74,9 +76,13 @@ in
   };
 
   # Activation script : installe les plugins npm globaux au premier déploiement
+  # NixOS a un prefix en lecture seule → on utilise ~/.npm-global
   home.activation.installOpendodePlugins = lib.hm.dag.entryAfter ["writeBoundary"] ''
     export PATH="${pkgs.nodejs}/bin:$PATH"
-    if ! npm list -g opencode-snippets &>/dev/null; then
+    export npm_config_prefix="$HOME/.npm-global"
+    export PATH="$npm_config_prefix/bin:$PATH"
+    mkdir -p "$npm_config_prefix"
+    if ! "$npm_config_prefix/bin/opencode-snippets" --version &>/dev/null 2>&1; then
       echo "  installing opencode npm plugins..."
       npm install -g \
         ${builtins.concatStringsSep " \\\n        " npmPlugins} \
