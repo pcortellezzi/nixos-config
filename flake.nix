@@ -89,7 +89,7 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
     in
     {
       devShells.x86_64-linux.default = nixpkgs.legacyPackages.x86_64-linux.mkShell {
-        packages = [ nixpkgs.legacyPackages.x86_64-linux.nixd ];
+        packages = with nixpkgs.legacyPackages.x86_64-linux; [ nixd gh ];
       };
 
       nixosConfigurations = {
