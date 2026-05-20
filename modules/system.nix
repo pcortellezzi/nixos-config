@@ -20,6 +20,7 @@
     ./services/resolved.nix
     ./common/locale.nix
     ./common/wifi-networks.nix
+    ./common/ethernet-wifi-switch.nix
     ./common/deploy-user.nix
   ];
 
