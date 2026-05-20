@@ -354,11 +354,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779288880,
-        "narHash": "sha256-HkE3HjK8pECKsjInh61wmjoTDCx4OcQOFNoyrSawKJk=",
+        "lastModified": 1779290216,
+        "narHash": "sha256-7c03cPgbTijOOow9zIFc37fViaqRfC0MoVMwrZOLQFA=",
         "owner": "pcortellezzi",
         "repo": "trading-nautilus",
-        "rev": "c9d7d209597d261ec5e7f364426b7752fe83098b",
+        "rev": "ddb8ca2a0f426d0697470790b9a578ce1cf1729a",
         "type": "github"
       },
       "original": {
