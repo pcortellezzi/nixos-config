@@ -29,7 +29,7 @@ in
     obs-studio
     zed-editor
     obsidian
-    skanlite
+    kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
     gemini-cli

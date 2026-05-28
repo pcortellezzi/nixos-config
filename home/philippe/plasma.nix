@@ -7,7 +7,6 @@
 
   home.packages = with pkgs; [
     kde-rounded-corners
-    krohnkite
   ];
 
   programs.plasma = {
@@ -98,15 +97,7 @@
         "Plugins" = {
            "contrastEnabled" = true;
            "kwin4_effect_shapecornersEnabled" = true;
-           "krohnkiteEnabled" = true;
-        };
-        "Script-krohnkite" = {
-          "enableCustomBorders" = false;
-          "screenGapBottom" = 5;
-          "screenGapLeft" = 5;
-          "screenGapRight" = 5;
-          "screenGapTop" = 5;
-          "tileLayoutGap" = 5;
+           "krohnkiteEnabled" = false;
         };
         # Activer "disable" outline mais désactiver round sur fenêtres tuilées
         # pour éviter de cacher le contour actif en mode tiling

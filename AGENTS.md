@@ -314,4 +314,4 @@ push my-nixpkgs/main
 - **Ne pas supprimer `mkHost` ou changer sa signature** sans adapter tous les hôtes
 - **Ne pas push directement sur main sans PR** — la CI déploie automatiquement
 - **Ne pas utiliser `rec` dans `mkDerivation`** sauf si `version` est utilisée dans `src.url`
-- **Toujours builder localement avant de push** : `nix flake check` ou `nix build .#<hostname>`
+- **Toujours exécuter `nix flake check` avant chaque commit et push** — valide toutes les configurations NixOS et home-manager. Ne jamais commit sans que `nix flake check` passe.
