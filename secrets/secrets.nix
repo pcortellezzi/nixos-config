@@ -17,8 +17,6 @@ in
   # ser5 only
   "aria2_rpc_token.age".publicKeys = [ philippe ser5 ];
   "ser5_host_key.age".publicKeys = [ philippe ser5 ];
-  "trading_bot_env.age".publicKeys = [ philippe ser5 ];
-  "agent_convergence_env.age".publicKeys = [ philippe ser5 ];
 
   # Nix access token for private flake inputs (all hosts need it for rebuild)
   "nix_github_token.age".publicKeys = all;

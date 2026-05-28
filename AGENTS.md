@@ -29,7 +29,7 @@
 
 | Machine | Type | Rôles | GPU |
 |---------|------|-------|-----|
-| `ser5` | Serveur (AMD) | nas, domotique, trading-nautilus, agent-convergence | — |
+| `ser5` | Serveur (AMD) | nas, domotique | — |
 | `vvb` | Desktop principal | desktop (KDE Plasma 6) | AMD iGPU + NVIDIA dGPU |
 | `flip-cx5` | Laptop | desktop (KDE Plasma 6) | Intel intégré |
 
@@ -58,7 +58,7 @@ nixosConfigurations = {
 - Overlay my-nixpkgs (`nixpkgs.overlays = [ my-nixpkgs.overlays.default ]`)
 - `allowUnfree = true`
 - Modules système obligatoires : auto-update, manual-update
-- Intégration agenix, home-manager, trading-nautilus, agent-convergence
+- Intégration agenix, home-manager
 - Clé SSH utilisateur déployée via agenix
 
 ### Composition modulaire (ordre d'imports)
@@ -79,8 +79,6 @@ flake.nix (mkHost)
   │     └── ../../modules/roles/*.nix     # agrégateurs de services
   │           └── services/*.nix          # services individuels
   ├── agenix.nixosModules.default
-  ├── trading-nautilus.nixosModules.default
-  ├── agent-convergence.nixosModules.default
   └── home-manager.nixosModules.home-manager
         └── user philippe
               ├── common.nix
@@ -96,8 +94,6 @@ flake.nix (mkHost)
 | `modules/roles/desktop.nix` | Agrège : plymouth, bluetooth, displaylink, solaar, pipewire, printing, tailscale, SDDM, Plasma |
 | `modules/roles/nas.nix` | Agrège : tailscale, samba, plex, aria2 |
 | `modules/roles/domotique.nix` | Home Assistant |
-| `modules/roles/trading-nautilus.nix` | Container Docker trading + secret via agenix |
-| `modules/roles/agent-convergence.nix` | Container Docker AI agent + secret via agenix |
 | `modules/roles/builder.nix` | Clé de signature Nix (défini mais non importé actuellement) |
 
 ### Home-manager (`home/philippe/`)
@@ -111,7 +107,7 @@ flake.nix (mkHost)
 
 ### Secrets avec agenix
 
-- **10 fichiers `.age`** dans `secrets/`
+- **9 fichiers `.age`** dans `secrets/`
 - `secrets/secrets.nix` définit quelle clé publique peut déchiffrer quel secret
 - Système utilise `/etc/ssh/ssh_host_ed25519_key`, home-manager utilise `~/.ssh/id_ed25519`
 - **Ne jamais créer de secrets sans passer par agenix**

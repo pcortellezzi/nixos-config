@@ -22,16 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trading-nautilus = {
-      url = "github:pcortellezzi/trading-nautilus";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    agent-convergence = {
-      url = "github:pcortellezzi/agent-convergence";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +29,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, trading-nautilus, agent-convergence, plasma-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, my-nixpkgs, llm-agents, plasma-manager, ... }@inputs:
     let
       stateVersion = "25.11";
 
@@ -58,8 +48,6 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
           }
           hostPath
           agenix.nixosModules.default
-          trading-nautilus.nixosModules.default
-          agent-convergence.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             # The system deploys the user's SSH key.
