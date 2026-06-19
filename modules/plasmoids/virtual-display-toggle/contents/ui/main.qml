@@ -1,28 +1,24 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
+import QtQuick
+import QtQuick.Layouts
 import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasma5support 2.0 as P5Support
 
 PlasmoidItem {
     id: root
 
-    Layout.minimumWidth: PlasmaCore.Units.iconSizes.medium
-    Layout.minimumHeight: PlasmaCore.Units.iconSizes.medium
+    Layout.minimumWidth: 32
+    Layout.minimumHeight: 32
 
     property bool isActive: false
 
-    PlasmaCore.DataSource {
+    P5Support.DataSource {
         id: runner
         engine: "executable"
         connectedSources: []
-        onNewData: {
+        onNewData: function(data) {
             var out = data["stdout"] || "";
-            if (data["exit code"] == 0 && out.indexOf("active") >= 0) {
-                isActive = true;
-            } else {
-                isActive = false;
-            }
-            disconnectSource(sourceName);
+            isActive = (data["exit code"] == 0 && out.indexOf("active") >= 0);
+            disconnectSource(data["sourceName"]);
         }
     }
 
@@ -36,18 +32,28 @@ PlasmoidItem {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            if (isActive) {
-                runner.connectSource("systemctl --user stop virtual-display");
-            } else {
-                runner.connectSource("systemctl --user start virtual-display");
-            }
+            runner.connectSource(isActive
+                ? "systemctl --user stop virtual-display"
+                : "systemctl --user start virtual-display");
         }
     }
 
-    PlasmaCore.IconItem {
+    Item {
         anchors.centerIn: parent
-        width: PlasmaCore.Units.iconSizes.medium
-        height: PlasmaCore.Units.iconSizes.medium
-        source: isActive ? "video-display" : "monitor"
+        width: 22
+        height: 22
+
+        Rectangle {
+            anchors.fill: parent
+            color: isActive ? "#3d8ee9" : "#666"
+            radius: 4
+        }
+
+        Text {
+            anchors.centerIn: parent
+            text: isActive ? "\u25B6" : "\u25A0"
+            color: "white"
+            font.pixelSize: 14
+        }
     }
 }
