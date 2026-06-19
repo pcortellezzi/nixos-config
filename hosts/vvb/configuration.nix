@@ -7,6 +7,8 @@
       ./nvidia.nix
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
+      ../../modules/services/sunshine.nix
+      ../../modules/services/virtual-display.nix
     ];
 
   networking.hostName = "vvb";
@@ -18,6 +20,11 @@
     description = "Philippe CORTELLEZZI";
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
+
+  my.sunshine.enable = true;
+
+  # Uncomment to auto-create virtual display at login (extended desktop mode)
+  # my.virtual-display.enable = true;
 
   
 }

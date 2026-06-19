@@ -29,6 +29,7 @@ in
     obs-studio
     zed-editor
     obsidian
+    moonlight-qt
     kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude

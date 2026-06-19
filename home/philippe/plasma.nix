@@ -47,6 +47,7 @@
           }
           "org.kde.plasma.appmenu"
           "org.kde.plasma.panelspacer"
+          "org.cortellezzi.virtualdisplaytoggle"
           {
             systemTray.items = {
               shown = [
