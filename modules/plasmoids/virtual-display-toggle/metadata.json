@@ -1,0 +1,27 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "Philippe Cortellezzi"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Toggle virtual display for remote streaming (Sunshine/Moonlight)",
+        "Description[fr]": "Activer/Désactiver l'écran virtuel pour le streaming (Sunshine/Moonlight)",
+        "EnabledByDefault": true,
+        "Icon": "video-display",
+        "Id": "org.cortellezzi.virtualdisplaytoggle",
+        "License": "MIT",
+        "Name": "Virtual Display Toggle",
+        "Name[fr]": "Interrupteur écran virtuel",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.0",
+        "Website": ""
+    },
+    "X-Plasma-API": "declarative",
+    "X-Plasma-MainScript": "ui/main.qml"
+}
