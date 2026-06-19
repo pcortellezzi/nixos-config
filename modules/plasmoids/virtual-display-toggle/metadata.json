@@ -7,10 +7,10 @@
                 "Name": "Philippe Cortellezzi"
             }
         ],
-        "Category": "System Information",
+        "Category": "Utilities",
         "Description": "Toggle virtual display for remote streaming (Sunshine/Moonlight)",
         "Description[fr]": "Activer/Désactiver l'écran virtuel pour le streaming (Sunshine/Moonlight)",
-        "EnabledByDefault": true,
+        "EnabledByDefault": false,
         "Icon": "video-display",
         "Id": "org.cortellezzi.virtualdisplaytoggle",
         "License": "MIT",

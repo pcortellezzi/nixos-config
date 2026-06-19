@@ -8,13 +8,8 @@ PlasmoidItem {
 
     Layout.minimumWidth: PlasmaCore.Units.iconSizes.medium
     Layout.minimumHeight: PlasmaCore.Units.iconSizes.medium
-    Layout.preferredWidth: PlasmaCore.Units.iconSizes.medium
-    Layout.preferredHeight: PlasmaCore.Units.iconSizes.medium
 
     property bool isActive: false
-
-    Plasmoid.toolTipMainText: i18n("Virtual Display")
-    Plasmoid.toolTipSubText: isActive ? i18n("Active - Click to disable") : i18n("Inactive - Click to enable")
 
     PlasmaCore.DataSource {
         id: runner
@@ -39,9 +34,7 @@ PlasmoidItem {
     }
 
     MouseArea {
-        id: clickArea
         anchors.fill: parent
-        hoverEnabled: true
         onClicked: {
             if (isActive) {
                 runner.connectSource("systemctl --user stop virtual-display");
@@ -52,19 +45,9 @@ PlasmoidItem {
     }
 
     PlasmaCore.IconItem {
-        id: iconItem
         anchors.centerIn: parent
         width: PlasmaCore.Units.iconSizes.medium
         height: PlasmaCore.Units.iconSizes.medium
         source: isActive ? "video-display" : "monitor"
-        active: clickArea.containsMouse || Plasmoid.expanded
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: isActive ? PlasmaCore.Theme.highlightColor : "transparent"
-        opacity: isActive ? 0.3 : 0
-        radius: PlasmaCore.Units.smallSpacing
-        Behavior on opacity { NumberAnimation { duration: 150 } }
     }
 }
