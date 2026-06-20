@@ -24,7 +24,7 @@ in
     networking.firewall = {
       allowedTCPPorts = [ 47989 47984 47990 48010 ];
       allowedUDPPortRanges = [
-        { from = 47984; to = 48010; }
+        { from = 47998; to = 48000; }
       ];
     };
 
