@@ -15,8 +15,6 @@
   networking.firewall.trustedInterfaces = [ "lo" ];
 
   imports = [
-  services.xserver.enable = true;
-  imports = [
     ./services/openssh.nix
     ./services/avahi.nix
     ./services/resolved.nix
