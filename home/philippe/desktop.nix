@@ -30,6 +30,7 @@ in
     zed-editor
     obsidian
     moonlight-qt
+    kdePackages.krdc
     kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
