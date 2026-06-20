@@ -17,10 +17,7 @@ PlasmoidItem {
         connectedSources: []
         onNewData: function(data) {
             var out = data["stdout"] || "";
-            var exitCode = data["exit code"];
-            if (exitCode == 0) {
-                isActive = (out.indexOf("active") >= 0);
-            }
+            isActive = (out.indexOf("Virtual-1") >= 0);
             disconnectSource(data["sourceName"]);
         }
     }
@@ -29,13 +26,18 @@ PlasmoidItem {
         interval: 3000
         running: true
         repeat: true
-        onTriggered: runner.connectSource("systemctl --user is-active sunshine 2>/dev/null || echo inactive")
+        onTriggered: runner.connectSource("kscreen-doctor -o 2>/dev/null | grep Virtual-1 || echo inactive")
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: runner.connectSource("xdg-open http://localhost:47989 2>/dev/null")
-    }
+        onClicked: {
+            if (isActive) {
+                runner.connectSource("kscreen-doctor output.Virtual-1.disable 2>/dev/null");
+            } else {
+                runner.connectSource("kscreen-doctor output.Virtual-1.enable 2>/dev/null");
+            }
+        }
 
     Item {
         anchors.centerIn: parent
