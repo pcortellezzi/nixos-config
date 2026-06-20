@@ -31,6 +31,7 @@ in
     obsidian
     moonlight-qt
     kdePackages.krdc
+    freerdp
     kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude

@@ -8,7 +8,7 @@
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
       ../../modules/services/sunshine.nix
-      ../../modules/services/krdp.nix
+      ../../modules/services/vkms.nix
     ];
 
   networking.hostName = "vvb";
