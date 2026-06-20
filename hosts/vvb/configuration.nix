@@ -23,8 +23,5 @@
 
   my.sunshine.enable = true;
 
-  # Uncomment to auto-create virtual display at login (extended desktop mode)
-  # my.virtual-display.enable = true;
-
   
 }

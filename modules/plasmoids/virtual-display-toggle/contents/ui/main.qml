@@ -17,7 +17,10 @@ PlasmoidItem {
         connectedSources: []
         onNewData: function(data) {
             var out = data["stdout"] || "";
-            isActive = (data["exit code"] == 0 && out.indexOf("active") >= 0);
+            var exitCode = data["exit code"];
+            if (exitCode == 0) {
+                isActive = (out.indexOf("active") >= 0);
+            }
             disconnectSource(data["sourceName"]);
         }
     }
@@ -26,16 +29,12 @@ PlasmoidItem {
         interval: 3000
         running: true
         repeat: true
-        onTriggered: runner.connectSource("systemctl --user is-active virtual-display 2>/dev/null || echo inactive")
+        onTriggered: runner.connectSource("systemctl --user is-active sunshine 2>/dev/null || echo inactive")
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            runner.connectSource(isActive
-                ? "systemctl --user stop virtual-display"
-                : "systemctl --user start virtual-display");
-        }
+        onClicked: runner.connectSource("xdg-open http://localhost:47989 2>/dev/null")
     }
 
     Item {
