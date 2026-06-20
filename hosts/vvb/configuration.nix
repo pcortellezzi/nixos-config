@@ -8,6 +8,7 @@
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
       ../../modules/services/vkms.nix
+      ../../modules/services/sunshine.nix
       ../../modules/services/krdp.nix
     ];
 
@@ -21,6 +22,7 @@
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
 
+  my.sunshine.enable = true;
   my.krdp.enable = true;
 
   

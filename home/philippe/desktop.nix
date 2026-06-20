@@ -28,6 +28,7 @@ in
     calibre
     obs-studio
     zed-editor
+    moonlight-qt
     obsidian
     kdePackages.krdc
     freerdp
