@@ -1,5 +1,9 @@
 { pkgs, lib, config, stateVersion, ... }:
 
+
+  services.xserver.enable = true;
+
+
 {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -23,6 +27,7 @@
     ./common/ethernet-wifi-switch.nix
     ./common/deploy-user.nix
   ];
+  ./services/xserver.nix
 
   
 
