@@ -25,8 +25,6 @@
     ./common/ethernet-wifi-switch.nix
     ./common/deploy-user.nix
   ];
-  ./services/xserver.nix
-
   
 
   # Enable Nix experimental features for flakes and nix-command
