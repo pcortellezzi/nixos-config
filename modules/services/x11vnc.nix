@@ -40,8 +40,7 @@ let
   '';
 in
 {
-  # AMD GPU virtual display (appears as a real connected monitor)
-  boot.kernelParams = [ "amdgpu.virtual_display=0000:64:00.0,1" ];
+
   environment.systemPackages = [ pkgs.x11vnc ];
 
   networking.firewall.allowedTCPPorts = [ 5902 ];
