@@ -6,6 +6,11 @@ in
 {
   options.my.sunshine = {
     enable = lib.mkEnableOption "Sunshine game stream host (Moonlight server)";
+    capSysAdmin = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Give CAP_SYS_ADMIN for DRM/KMS display capture (required for Wayland)";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -16,6 +21,13 @@ in
       allowedUDPPorts = [ 47984 47999 48000 48010 ];
     };
 
+    security.wrappers.sunshine = lib.mkIf cfg.capSysAdmin {
+      owner = "root";
+      group = "root";
+      capabilities = "cap_sys_admin+p";
+      source = "${pkgs.sunshine}/bin/sunshine";
+    };
+
     systemd.user.services.sunshine = {
       description = "Sunshine Game Stream Host";
       partOf = [ "graphical-session.target" ];
@@ -23,7 +35,9 @@ in
       after = [ "network.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.sunshine}/bin/sunshine";
+        ExecStart = if cfg.capSysAdmin
+          then "${config.security.wrapperDir}/sunshine"
+          else "${pkgs.sunshine}/bin/sunshine";
         Restart = "on-failure";
         RestartSec = "5";
       };
