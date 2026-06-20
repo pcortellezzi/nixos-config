@@ -42,4 +42,14 @@ in
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
   };
+
+  xdg.desktopEntries."remote-vvb" = {
+    name = "Écran étendu vvb";
+    comment = "Connexion RDP à l'écran virtuel de vvb";
+    exec = "wlfreerdp /v:vvb /u:philippe /monitors:1 /cert-ignore +clipboard /floatbar";
+    icon = "video-display";
+    categories = [ "Network" "RemoteAccess" ];
+    terminal = false;
+    startupNotify = true;
+  };
 }
