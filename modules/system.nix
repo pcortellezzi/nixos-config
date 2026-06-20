@@ -1,9 +1,5 @@
 { pkgs, lib, config, stateVersion, ... }:
 
-
-  services.xserver.enable = true;
-
-
 {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -18,6 +14,8 @@
 
   networking.firewall.trustedInterfaces = [ "lo" ];
 
+  # Enable X11 server for X11 session support
+  services.xserver.enable = true;
   imports = [
     ./services/openssh.nix
     ./services/avahi.nix
