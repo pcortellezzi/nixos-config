@@ -22,6 +22,8 @@
     ];
   };
 
+  services.xserver.enable = true;
+
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
     "vm.vfs_cache_pressure" = 50;

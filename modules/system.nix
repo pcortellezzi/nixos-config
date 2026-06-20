@@ -14,7 +14,7 @@
 
   networking.firewall.trustedInterfaces = [ "lo" ];
 
-  # Enable X11 server for X11 session support
+  imports = [
   services.xserver.enable = true;
   imports = [
     ./services/openssh.nix
