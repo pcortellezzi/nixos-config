@@ -1,9 +1,33 @@
 { config, lib, pkgs, ... }:
 
+let
+  startScript = pkgs.writeShellScriptBin "kmsvnc-start" ''
+    set -euo pipefail
+
+    VKMS_CARD="card0"
+    for d in /sys/class/drm/card*; do
+      if ls "$d-"* 2>/dev/null | grep -q Virtual-1; then
+        VKMS_CARD="$(basename $d)"
+        break
+      fi
+    done
+
+    DEVICE="/dev/dri/$VKMS_CARD"
+    echo "Starting kmsvnc on $DEVICE (Virtual-1)"
+    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -i --fps 30 -p 5901
+  '';
+in
 {
   environment.systemPackages = [ pkgs.kmsvnc ];
 
   networking.firewall.allowedTCPPorts = [ 5901 ];
+
+  security.wrappers.kmsvnc = {
+    owner = "root";
+    group = "root";
+    capabilities = "cap_sys_admin+p";
+    source = "${pkgs.kmsvnc}/bin/kmsvnc";
+  };
 
   systemd.user.services.kmsvnc = {
     description = "KMS VNC Server - Virtual-1 display";
@@ -11,7 +35,7 @@
     wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.kmsvnc}/bin/kmsvnc -d /dev/dri/card2 -i --fps 30 -p 5901";
+      ExecStart = "${startScript}/bin/kmsvnc-start";
       Restart = "on-failure";
       RestartSec = "5";
     };
