@@ -7,8 +7,8 @@
       ./nvidia.nix
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
-      ../../modules/services/sunshine.nix
       ../../modules/services/vkms.nix
+      ../../modules/services/krdp.nix
     ];
 
   networking.hostName = "vvb";
@@ -21,7 +21,6 @@
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
 
-  my.sunshine.enable = true;
   my.krdp.enable = true;
 
   

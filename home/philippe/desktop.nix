@@ -29,7 +29,6 @@ in
     obs-studio
     zed-editor
     obsidian
-    moonlight-qt
     kdePackages.krdc
     freerdp
     kdePackages.skanlite
