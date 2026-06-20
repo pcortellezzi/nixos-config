@@ -8,7 +8,6 @@
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
       ../../modules/services/sunshine.nix
-      ../../modules/services/virtual-display.nix
       ../../modules/services/krdp.nix
     ];
 
@@ -23,6 +22,7 @@
   };
 
   my.sunshine.enable = true;
+  my.krdp.enable = true;
 
   
 }
