@@ -28,10 +28,8 @@ in
     calibre
     obs-studio
     zed-editor
-    moonlight-qt
     obsidian
-    kdePackages.krdc
-    freerdp
+    tigervnc
     kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
@@ -46,7 +44,7 @@ in
   xdg.desktopEntries."remote-vvb" = {
     name = "Écran étendu vvb";
     comment = "Connexion RDP à l'écran virtuel de vvb";
-    exec = "wlfreerdp /v:vvb /u:philippe /monitors:1 /cert-ignore +clipboard /floatbar";
+    exec = "vncviewer vvb:5901";
     icon = "video-display";
     categories = [ "Network" "RemoteAccess" ];
     terminal = false;
