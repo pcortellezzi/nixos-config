@@ -14,7 +14,7 @@ let
 
     DEVICE="/dev/dri/$VKMS_CARD"
     echo "Starting kmsvnc on $DEVICE (Virtual-1)"
-    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -i --fps 30 -p 5901
+    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901
   '';
 in
 {

@@ -44,7 +44,7 @@ in
   xdg.desktopEntries."remote-vvb" = {
     name = "Écran étendu vvb";
     comment = "Connexion RDP à l'écran virtuel de vvb";
-    exec = "vncviewer vvb:5901";
+    exec = "vncviewer -FullScreen vvb:5901";
     icon = "video-display";
     categories = [ "Network" "RemoteAccess" ];
     terminal = false;
