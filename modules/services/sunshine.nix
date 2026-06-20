@@ -22,8 +22,10 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = [ 47989 47984 47990 ];
-      allowedUDPPorts = [ 47984 47999 48000 48010 ];
+      allowedTCPPorts = [ 47989 47984 47990 48010 ];
+      allowedUDPPortRanges = [
+        { from = 47984; to = 48010; }
+      ];
     };
 
     security.wrappers.sunshine = lib.mkIf cfg.capSysAdmin {
