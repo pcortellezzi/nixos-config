@@ -16,8 +16,7 @@ PlasmoidItem {
         engine: "executable"
         connectedSources: []
         onNewData: function(data) {
-            var out = data["stdout"] || "";
-            isActive = (out.indexOf("Virtual-1") >= 0);
+            isActive = (data["stdout"] || "").indexOf("enabled") >= 0;
             disconnectSource(data["sourceName"]);
         }
     }
@@ -26,7 +25,7 @@ PlasmoidItem {
         interval: 3000
         running: true
         repeat: true
-        onTriggered: runner.connectSource("kscreen-doctor -o 2>/dev/null | grep Virtual-1 || echo inactive")
+        onTriggered: runner.connectSource("kscreen-doctor -o 2>/dev/null | grep -A5 Virtual-1 | grep -q enabled && echo enabled || echo disabled")
     }
 
     MouseArea {
