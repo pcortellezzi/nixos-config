@@ -30,6 +30,7 @@ in
     zed-editor
     obsidian
     tigervnc
+    kdePackages.krfb
     kdePackages.skanlite
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
