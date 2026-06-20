@@ -10,6 +10,7 @@
       ../../modules/services/vkms.nix
       ../../modules/services/kmsvnc.nix
       ../../modules/services/krdp.nix
+      ../../modules/services/x11vnc.nix
     ];
 
   networking.hostName = "vvb";
