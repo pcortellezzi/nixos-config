@@ -14,7 +14,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.sunshine ];
+    hardware.uinput.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      sunshine
+      libva-utils
+    ];
+
+    networking.firewall = {
 
     networking.firewall = {
       allowedTCPPorts = [ 47989 47984 47990 ];
@@ -32,7 +39,7 @@ in
       description = "Sunshine Game Stream Host";
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
-      after = [ "network.target" ];
+      after = [ "network.target" "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = if cfg.capSysAdmin
@@ -40,6 +47,10 @@ in
           else "${pkgs.sunshine}/bin/sunshine";
         Restart = "on-failure";
         RestartSec = "5";
+      };
+      environment = {
+        WAYLAND_DISPLAY = "wayland-0";
+        XDG_SESSION_TYPE = "wayland";
       };
     };
 
