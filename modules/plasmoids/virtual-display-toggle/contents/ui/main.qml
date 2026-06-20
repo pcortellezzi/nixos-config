@@ -38,6 +38,7 @@ PlasmoidItem {
                 runner.connectSource("kscreen-doctor output.Virtual-1.enable 2>/dev/null");
             }
         }
+    }
 
     Item {
         anchors.centerIn: parent
