@@ -8,5 +8,6 @@
   environment.systemPackages = with pkgs; [
     gnome-extension-manager
     wl-clipboard
+    ghostty
   ];
 }

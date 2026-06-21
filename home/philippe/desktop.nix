@@ -43,6 +43,10 @@ in
     "org/gnome/shell" = {
       enabled-extensions = [ "copyous@boerdereinar.dev" ];
     };
+    "org/gnome/desktop/applications/terminal" = {
+      exec = "ghostty";
+      exec-arg = "-e";
+    };
   };
 
   xdg.desktopEntries."remote-vvb" = {
