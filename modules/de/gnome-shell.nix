@@ -4,9 +4,11 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-remote-desktop.enable = true;
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
-
   services.dbus.packages = [ pkgs.gpaste ];
   environment.systemPackages = [ pkgs.gpaste ];
+  environment.sessionVariables.XDG_DATA_DIRS = [
+    "${pkgs.gpaste}/share/gsettings-schemas/gpaste-45.3"
+  ];
 
   systemd.user.services.gpaste-daemon = {
     description = "GPaste daemon";
