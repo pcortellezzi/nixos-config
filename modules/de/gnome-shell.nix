@@ -6,3 +6,4 @@
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
 
   environment.systemPackages = [ pkgs.gnome-extension-manager ];
+}
