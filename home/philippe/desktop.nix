@@ -39,6 +39,12 @@ in
     file = ./secrets/motivewave_license.age;
   };
 
+  dconf.settings = {
+    "org/gnome/shell" = {
+      enabled-extensions = [ "copyous@boerdereinar.dev" ];
+    };
+  };
+
   xdg.desktopEntries."remote-vvb" = {
     name = "Écran étendu vvb";
     comment = "Connexion RDP à l'écran virtuel de vvb";
