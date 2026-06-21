@@ -5,5 +5,4 @@
   services.gnome.gnome-remote-desktop.enable = true;
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
 
-  environment.systemPackages = [ pkgs.gnomeExtensions.copyous ];
-}
+  environment.systemPackages = [ pkgs.gnome-extension-manager ];
