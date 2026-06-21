@@ -11,6 +11,7 @@
     wl-clipboard
     ghostty
   ];
+    rclone
   environment.gnome.excludePackages = [ pkgs.gnome-console ];
 
 }
