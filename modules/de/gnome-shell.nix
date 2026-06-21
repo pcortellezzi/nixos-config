@@ -10,4 +10,6 @@
     wl-clipboard
     ghostty
   ];
+  environment.gnome.excludePackages = [ pkgs.gnome-console ];
+
 }
