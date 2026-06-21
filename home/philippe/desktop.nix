@@ -7,7 +7,6 @@ let
 in
 {
   imports = [
-    ./plasma.nix
   ];
 
   home.packages = with pkgs; [
@@ -29,9 +28,7 @@ in
     obs-studio
     zed-editor
     obsidian
-    tigervnc
-    kdePackages.krfb
-    kdePackages.skanlite
+    simple-scan
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
     gemini-cli

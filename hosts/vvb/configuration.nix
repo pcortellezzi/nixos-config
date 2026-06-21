@@ -19,15 +19,5 @@
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
 
-  # GNOME avec Remote Desktop (écran virtuel étendu + curseur)
-  services.xserver.desktopManager.gnome.enable = true;
-  services.gnome.gnome-remote-desktop.enable = true;
-  systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
   networking.firewall.allowedTCPPorts = [ 3389 ];
-
-  # Forcer ksshaskpass (KDE) plutot que seahorse (GNOME) pour éviter le conflit
-  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
-
-
-  
 }

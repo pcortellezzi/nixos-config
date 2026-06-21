@@ -12,7 +12,7 @@
     ../services/tailscale.nix
 
     ../de/greeter.nix
-    ../de/plasma.nix
+    ../de/gnome-shell.nix
   ];
   hardware.graphics = {
     enable = true;
@@ -21,10 +21,6 @@
       intel-media-driver
     ];
   };
-
-
-
-  services.xserver.enable = true;
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
