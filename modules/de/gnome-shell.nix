@@ -19,4 +19,13 @@
       ExecStart = "${pkgs.gpaste}/libexec/gpaste/gpaste-daemon";
     };
   };
+
+  systemd.user.services.gpaste-ui = {
+    description = "GPaste user interface";
+    serviceConfig = {
+      Type = "dbus";
+      BusName = "org.gnome.GPaste.Ui";
+      ExecStart = "${pkgs.gpaste}/libexec/gpaste/gpaste-ui --gapplication-service";
+    };
+  };
 }
