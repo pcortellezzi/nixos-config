@@ -6,6 +6,7 @@
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
 
   services.dbus.packages = [ pkgs.gpaste ];
+  environment.systemPackages = [ pkgs.gpaste ];
 
   systemd.user.services.gpaste-daemon = {
     description = "GPaste daemon";
