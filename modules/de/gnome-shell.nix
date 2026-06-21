@@ -5,11 +5,8 @@
   services.gnome.gnome-remote-desktop.enable = true;
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
 
-  nixpkgs.overlays = [(final: prev: {
-    gvfs = prev.gvfs.override { gnomeSupport = true; };
-  })];
-
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs;
+  [
     gnome-extension-manager
     wl-clipboard
     ghostty
