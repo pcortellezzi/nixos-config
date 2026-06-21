@@ -4,30 +4,6 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-remote-desktop.enable = true;
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
-  services.dbus.packages = [ pkgs.gpaste ];
-  environment.systemPackages = [ pkgs.gpaste ];
-  environment.sessionVariables.XDG_DATA_DIRS = [
-    "${pkgs.gpaste}/share/gsettings-schemas/gpaste-45.3"
-  ];
 
-  systemd.user.services.gpaste-daemon = {
-    description = "GPaste daemon";
-    partOf = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    wantedBy = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "dbus";
-      BusName = "org.gnome.GPaste";
-      ExecStart = "${pkgs.gpaste}/libexec/gpaste/gpaste-daemon";
-    };
-  };
-
-  systemd.user.services.gpaste-ui = {
-    description = "GPaste user interface";
-    serviceConfig = {
-      Type = "dbus";
-      BusName = "org.gnome.GPaste.Ui";
-      ExecStart = "${pkgs.gpaste}/libexec/gpaste/gpaste-ui --gapplication-service";
-    };
-  };
+  environment.systemPackages = [ pkgs.gnomeExtensions.copyous ];
 }
