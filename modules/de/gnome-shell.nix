@@ -5,5 +5,8 @@
   services.gnome.gnome-remote-desktop.enable = true;
   systemd.services.gnome-remote-desktop.wantedBy = [ "graphical.target" ];
 
-  environment.systemPackages = [ pkgs.gnome-extension-manager ];
+  environment.systemPackages = with pkgs; [
+    gnome-extension-manager
+    wl-clipboard
+  ];
 }
