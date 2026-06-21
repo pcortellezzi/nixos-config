@@ -21,6 +21,11 @@
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
 
+  # GNOME avec Remote Desktop (écran virtuel étendu + curseur)
+  services.xserver.desktopManager.gnome.enable = true;
+  services.gnome.gnome-remote-desktop.enable = true;
+  networking.firewall.allowedTCPPorts = [ 3389 ];
+
 
   
 }
