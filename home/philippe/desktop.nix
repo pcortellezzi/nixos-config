@@ -10,9 +10,15 @@ in
   ];
 
   home.packages = with pkgs; [
-    (motivewave.override {
+    ((motivewave.override {
       licenseFile = config.age.secrets.motivewave_license.path;
-    })
+    }).overrideAttrs (old: {
+      version = "7.0.24";
+      src = pkgs.fetchurl {
+        url = "https://downloads.motivewave.com/builds/638/motivewave_7.0.24_amd64.deb";
+        sha256 = "173j733xx5dnhrk6jw39bwnh6by3sdi2d30rfwcfr5r41mdagkwc";
+      };
+    }))
     google-chrome
     vlc
     tradingview
