@@ -6,7 +6,7 @@ let
     # AMD Ryzen 9 7940HS | 32GB RAM | NVIDIA RTX 4050 6GB VRAM
     MAX_HEAP=8G
     MAX_VRAM=3072M
-    VM_ARGS=-XX:+UseZGC -XX:+ZGenerational -XX:ZAllocationSpikeTolerance=2.0
+    VM_ARGS=-XX:+UseZGC -XX:ZAllocationSpikeTolerance=2.0
   '';
 in {
   home.file.".motivewave/startup.ini" = {
