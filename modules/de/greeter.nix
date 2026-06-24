@@ -19,5 +19,8 @@ in {
   ];
   services.displayManager.sddm.settings.Wayland.CompositorCommand = kwin;
 
-  systemd.services.display-manager.environment.KWIN_IM_SHOW_ALWAYS = "1";
+  systemd.services.display-manager.environment = {
+    KWIN_IM_SHOW_ALWAYS = "1";
+    LANG = "fr_FR.UTF-8";
+  };
 }
