@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   programs.plasma = {
@@ -47,18 +47,24 @@
       };
     };
 
+    configFile."kcminputrc"."Libinput" = {
+      NaturalScroll = true;
+    };
+
+
     panels = [
       {
-        location = "bottom";
-        height = 36;
+        location = "top";
+        height = 32;
         floating = true;
-        hiding = "autohide";
+        hiding = "none";
         opacity = "adaptive";
+        alignment = "center";
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
           "org.kde.plasma.icontasks"
-          "org.kde.plasma.systemtray"
+          "org.kde.plasma.panelspacer"
           {
             digitalClock = {
               calendar.firstDayOfWeek = "monday";
@@ -67,6 +73,8 @@
               time.format = "24h";
             };
           }
+          "org.kde.plasma.panelspacer"
+          "org.kde.plasma.systemtray"
           "org.kde.plasma.battery"
         ];
       }
