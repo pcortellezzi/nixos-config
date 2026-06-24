@@ -7,6 +7,8 @@
       ./nvidia.nix
       ../../modules/system.nix
       ../../modules/roles/desktop.nix
+      ../../modules/services/vkms.nix
+      ../../modules/services/kmsvnc.nix
     ];
 
   networking.hostName = "vvb";
@@ -18,6 +20,4 @@
     description = "Philippe CORTELLEZZI";
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
-
-  networking.firewall.allowedTCPPorts = [ 3389 ];
 }

@@ -12,7 +12,7 @@
     ../services/tailscale.nix
 
     ../de/greeter.nix
-    ../de/gnome-shell.nix
+    ../de/plasma.nix
   ];
   hardware.graphics = {
     enable = true;

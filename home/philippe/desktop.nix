@@ -34,7 +34,8 @@ in
     obs-studio
     zed-editor
     obsidian
-    simple-scan
+    kdePackages.skanlite
+    kdePackages.krfb
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
     gemini-cli
@@ -45,15 +46,6 @@ in
     file = ./secrets/motivewave_license.age;
   };
 
-  dconf.settings = {
-    "org/gnome/shell" = {
-      enabled-extensions = [ "copyous@boerdereinar.dev" ];
-    };
-    "org/gnome/desktop/applications/terminal" = {
-      exec = "ghostty";
-      exec-arg = "-e";
-    };
-  };
 
   xdg.desktopEntries."remote-vvb" = {
     name = "Écran étendu vvb";
