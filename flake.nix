@@ -92,6 +92,7 @@
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
             ./home/philippe/opencode.nix
+            ./home/philippe/vvb.nix
           ];
         };
 
