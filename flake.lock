@@ -198,11 +198,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782333829,
-        "narHash": "sha256-RutBf0ZSHuI/9RgPtLhWses7JUO3louKjLA/XOnU91k=",
+        "lastModified": 1782334702,
+        "narHash": "sha256-yeJiQwfOyjbRVsV9d3fXr/2UvelLhdbhl78z2DEnXQQ=",
         "owner": "pcortellezzi",
         "repo": "nixpkgs",
-        "rev": "10a9c6856f14566521a0fdb6e71557e27a436925",
+        "rev": "8298a0f5d853a95f611d39390471a369e658a1dd",
         "type": "github"
       },
       "original": {
