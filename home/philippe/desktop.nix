@@ -7,6 +7,8 @@ let
 in
 {
   imports = [
+    inputs.plasma-manager.homeModules.plasma-manager
+    ./plasma.nix
   ];
 
   home.packages = with pkgs; [

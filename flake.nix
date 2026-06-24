@@ -37,20 +37,19 @@
       mkHost = { hostPath, homeModules ? [] }: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs stateVersion; };
         modules = [
-          ./modules/system/auto-update.nix # Automatically update NixOS configuration on boot
-          ./modules/system/manual-update.nix # Manual update script (nixos-update)
+          ./modules/system/auto-update.nix
+          ./modules/system/manual-update.nix
           {
-            my.auto-update.enable = true; # Enable auto-update for all hosts
-            my.manual-update.enable = true; # Enable manual update script
+            my.auto-update.enable = true;
+            my.manual-update.enable = true;
             nixpkgs.hostPlatform = "x86_64-linux";
-nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
+            nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
             nixpkgs.config.allowUnfree = true;
           }
           hostPath
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {
-            # The system deploys the user's SSH key.
             age.secrets.philippe_ssh_id_ed25519 = {
               file = ./secrets/philippe_ssh_id_ed25519.age;
               path = "/home/philippe/.ssh/id_ed25519";
@@ -58,7 +57,6 @@ nixpkgs.overlays = [ my-nixpkgs.overlays.default ];
               mode = "600";
               symlink = false;
             };
-
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
