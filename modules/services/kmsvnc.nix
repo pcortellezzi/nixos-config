@@ -4,18 +4,18 @@ let
   startScript = pkgs.writeShellScriptBin "kmsvnc-start" ''
     set -euo pipefail
 
-    # Find the VKMS DRM card (it has a Virtual-1 connector)
-    VKMS_CARD="card0"
+    # Find the AMD DRM card with HDMI-A-1 connector (EDID injected)
+    AMD_CARD="card0"
     for d in /sys/class/drm/card*; do
-      if ls "$d-"* 2>/dev/null | grep -q Virtual-1; then
-        VKMS_CARD="$(basename $d)"
+      if ls "$d-"* 2>/dev/null | grep -q HDMI-A-1; then
+        AMD_CARD="$(basename $d)"
         break
       fi
     done
 
     DEVICE="/dev/dri/$VKMS_CARD"
-    echo "Starting kmsvnc on $DEVICE (Virtual-1)"
-    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901 --embed-cursor
+    echo "Starting kmsvnc on $DEVICE (HDMI-A-1 via EDID injection)"
+    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901
   '';
 in
 {
@@ -31,7 +31,7 @@ in
   };
 
   systemd.user.services.kmsvnc = {
-    description = "KMS VNC Server - Virtual-1 display";
+    description = "KMS VNC Server - AMD HDMI-A-1 virtual display";
     after = [ "graphical-session.target" ];
     wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
