@@ -15,7 +15,7 @@
 
     boot.kernelParams = [
       # Enable the HDMI-A-1 connector (EDID provides 1920x1080 mode)
-      "video=HDMI-A-1:e"
+      "video=HDMI-A-1:1920x1080M@60e"
       "drm_kms_helper.edid_firmware=HDMI-A-1:edid/1920x1080.bin"
     ];
   };
