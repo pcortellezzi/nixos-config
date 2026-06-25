@@ -8,9 +8,14 @@
   config = lib.mkIf config.my.virtual-display.enable {
     hardware.firmware = [ pkgs.virtual-display-edid ];
 
+    # EDID must be in initrd so DRM can load it early during connector init
+    boot.initrd.extraFiles."/lib/firmware/edid/1920x1080.bin" = {
+      source = "${pkgs.virtual-display-edid}/lib/firmware/edid/1920x1080.bin";
+    };
+
     boot.kernelParams = [
-      # Force-enable HDMI-A-1 on AMD GPU and provide custom EDID
-      "video=HDMI-A-1:1920x1080@60e"
+      # Enable the HDMI-A-1 connector (EDID provides 1920x1080 mode)
+      "video=HDMI-A-1:e"
       "drm_kms_helper.edid_firmware=HDMI-A-1:edid/1920x1080.bin"
     ];
   };
