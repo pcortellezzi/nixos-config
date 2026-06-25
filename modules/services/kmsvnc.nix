@@ -26,7 +26,7 @@ in
   security.wrappers.kmsvnc = {
     owner = "root";
     group = "root";
-    capabilities = "cap_sys_admin+p";
+    capabilities = "cap_setpcap,cap_sys_admin=p";
     source = "${pkgs.kmsvnc}/bin/kmsvnc";
   };
 
