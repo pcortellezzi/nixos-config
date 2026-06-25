@@ -8,6 +8,11 @@
   config = lib.mkIf config.my.virtual-display.enable {
     hardware.firmware = [ pkgs.virtual-display-edid ];
 
+    # Firmware must be in initrd for drm_kms_helper to load it early
+    boot.initrd.include = [
+      "${pkgs.virtual-display-edid}/lib/firmware/edid/1920x1080.bin"
+    ];
+
     boot.kernelParams = [
       "drm_kms_helper.edid_firmware=HDMI-A-1:edid/1920x1080.bin"
     ];
