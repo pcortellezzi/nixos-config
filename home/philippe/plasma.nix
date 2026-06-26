@@ -96,6 +96,7 @@ in
         hiding = "none";
         opacity = "adaptive";
         alignment = "center";
+        screen = 0;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
