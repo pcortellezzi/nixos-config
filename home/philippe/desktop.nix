@@ -38,6 +38,10 @@ in
     obsidian
     kdePackages.skanlite
     kdePackages.krfb
+    kdePackages.kaccounts-integration
+    kdePackages.kaccounts-providers
+    kdePackages.signond
+    kdePackages.kio-gdrive
     tigervnc
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
