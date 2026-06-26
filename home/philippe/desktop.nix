@@ -41,6 +41,7 @@ in
     kdePackages.kaccounts-integration
     kdePackages.kaccounts-providers
     kdePackages.signond
+    signon-plugin-oauth2
     kdePackages.kio-gdrive
     tigervnc
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
