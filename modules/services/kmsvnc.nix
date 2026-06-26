@@ -16,7 +16,7 @@ let
     done
 
     echo "Starting kmsvnc on $DEVICE (DP-1 virtual display)"
-    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901
+    exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -i --fps 30 -p 5901
   '';
 in
 {
