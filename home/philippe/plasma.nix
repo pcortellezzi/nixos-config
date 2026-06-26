@@ -110,6 +110,36 @@ in
               time.showSeconds = "always";
             };
           }
+          {
+            digitalClock = {
+              time.format = "24h";
+              time.showSeconds = "always";
+              timeZone.selected = [ "Europe/Paris" ];
+              timeZone.lastSelected = "Europe/Paris";
+              timeZone.format = "offset";
+              timeZone.alwaysShow = true;
+            };
+          }
+          {
+            digitalClock = {
+              time.format = "24h";
+              time.showSeconds = "always";
+              timeZone.selected = [ "America/New_York" ];
+              timeZone.lastSelected = "America/New_York";
+              timeZone.format = "offset";
+              timeZone.alwaysShow = true;
+            };
+          }
+          {
+            digitalClock = {
+              time.format = "24h";
+              time.showSeconds = "always";
+              timeZone.selected = [ "Europe/London" ];
+              timeZone.lastSelected = "Europe/London";
+              timeZone.format = "offset";
+              timeZone.alwaysShow = true;
+            };
+          }
           "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
           "org.kde.plasma.battery"
