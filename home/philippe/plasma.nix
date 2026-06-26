@@ -26,15 +26,17 @@ let
 
   ensureNaturalScroll = pkgs.writeShellScriptBin "ensure-natural-scroll" ''
     for i in $(seq 10); do
-      qdbus org.kde.KWin /KWin >/dev/null 2>&1 && break
+      qdbus org.kde.KWin /org/kde/KWin >/dev/null 2>&1 && break
       sleep 0.5
     done
-    QDBUS=$(command -v qdbus 2>/dev/null || command -v qdbus6 2>/dev/null)
+    QDBUS=$(command -v qdbus 2>/dev/null)
     [ -z "$QDBUS" ] && exit 0
-    for dev in $("$QDBUS" org.kde.KWin /KWin inputDevices 2>/dev/null); do
-      type=$("$QDBUS" org.kde.KWin "$dev" org.kde.KWin.InputDevice.type 2>/dev/null)
-      if [ "$type" = "Touchpad" ] || [ "$type" = "Pointer" ]; then
-        "$QDBUS" org.kde.KWin "$dev" org.kde.KWin.InputDevice.naturalScroll true
+    for dev in $("$QDBUS" org.kde.KWin 2>/dev/null | grep '/org/kde/KWin/InputDevice/event'); do
+      pointer=$("$QDBUS" org.kde.KWin "$dev" org.freedesktop.DBus.Properties.Get org.kde.KWin.InputDevice pointer 2>/dev/null)
+      touchpad=$("$QDBUS" org.kde.KWin "$dev" org.freedesktop.DBus.Properties.Get org.kde.KWin.InputDevice touchpad 2>/dev/null)
+      supports=$("$QDBUS" org.kde.KWin "$dev" org.freedesktop.DBus.Properties.Get org.kde.KWin.InputDevice supportsNaturalScroll 2>/dev/null)
+      if [ "$supports" = "true" ] && { [ "$pointer" = "true" ] || [ "$touchpad" = "true" ]; }; then
+        "$QDBUS" org.kde.KWin "$dev" org.freedesktop.DBus.Properties.Set org.kde.KWin.InputDevice naturalScroll true 2>/dev/null
       fi
     done
   '';
