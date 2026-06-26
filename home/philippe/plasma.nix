@@ -96,7 +96,6 @@ in
         hiding = "none";
         opacity = "adaptive";
         alignment = "center";
-        screen = 0;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
@@ -115,10 +114,18 @@ in
             digitalClock = {
               time.format = "24h";
               time.showSeconds = "always";
+              timeZone.selected = [ "Europe/Paris" ];
+              timeZone.lastSelected = "Europe/Paris";
+              settings.Appearance.displayTimezoneFormat = "FullText";
+            };
+          }
+          {
+            digitalClock = {
+              time.format = "24h";
+              time.showSeconds = "always";
               timeZone.selected = [ "America/New_York" ];
               timeZone.lastSelected = "America/New_York";
-              timeZone.format = "city";
-              settings.Appearance.showDate = false;
+              settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
           {
@@ -127,26 +134,15 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/London" ];
               timeZone.lastSelected = "Europe/London";
-              timeZone.format = "city";
-              settings.Appearance.showDate = false;
+              settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
-          {
-            digitalClock = {
-              time.format = "24h";
-              time.showSeconds = "always";
-              timeZone.selected = [ "Europe/Paris" ];
-              timeZone.lastSelected = "Europe/Paris";
-              timeZone.format = "city";
-              settings.Appearance.showDate = false;
-            };
-          }
+          "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
           "org.kde.plasma.battery"
         ];
       }
     ];
-
     shortcuts = {
       "kwin"."Switch to Desktop 1" = "Ctrl+F1";
       "kwin"."Switch to Desktop 2" = "Ctrl+F2";
