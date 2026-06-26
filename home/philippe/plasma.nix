@@ -199,7 +199,7 @@ in
       [Desktop Entry]
       Type=Application
       Name=Ensure Natural Scrolling
-      Exec=ensure-natural-scroll
+      Exec=${ensureNaturalScroll}/bin/ensure-natural-scroll
       X-KDE-autostart-phase=2
       Terminal=false
     '';
