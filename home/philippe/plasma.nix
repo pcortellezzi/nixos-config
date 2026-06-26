@@ -114,15 +114,6 @@ in
             digitalClock = {
               time.format = "24h";
               time.showSeconds = "always";
-              timeZone.selected = [ "Europe/Paris" ];
-              timeZone.lastSelected = "Europe/Paris";
-              settings.Appearance.displayTimezoneFormat = "FullText";
-            };
-          }
-          {
-            digitalClock = {
-              time.format = "24h";
-              time.showSeconds = "always";
               timeZone.selected = [ "America/New_York" ];
               timeZone.lastSelected = "America/New_York";
               settings.Appearance.displayTimezoneFormat = "FullText";
@@ -134,6 +125,15 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/London" ];
               timeZone.lastSelected = "Europe/London";
+              settings.Appearance.displayTimezoneFormat = "FullText";
+            };
+          }
+          {
+            digitalClock = {
+              time.format = "24h";
+              time.showSeconds = "always";
+              timeZone.selected = [ "Europe/Paris" ];
+              timeZone.lastSelected = "Europe/Paris";
               settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
