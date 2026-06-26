@@ -116,8 +116,7 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/Paris" ];
               timeZone.lastSelected = "Europe/Paris";
-              timeZone.format = "offset";
-              timeZone.alwaysShow = true;
+              settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
           {
@@ -126,8 +125,7 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "America/New_York" ];
               timeZone.lastSelected = "America/New_York";
-              timeZone.format = "offset";
-              timeZone.alwaysShow = true;
+              settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
           {
@@ -136,8 +134,7 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/London" ];
               timeZone.lastSelected = "Europe/London";
-              timeZone.format = "offset";
-              timeZone.alwaysShow = true;
+              settings.Appearance.displayTimezoneFormat = "FullText";
             };
           }
           "org.kde.plasma.panelspacer"
