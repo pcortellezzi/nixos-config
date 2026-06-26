@@ -116,7 +116,8 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/Paris" ];
               timeZone.lastSelected = "Europe/Paris";
-              settings.Appearance.displayTimezoneFormat = "FullText";
+              timeZone.format = "city";
+              settings.Appearance.showDate = false;
             };
           }
           {
@@ -125,7 +126,8 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "America/New_York" ];
               timeZone.lastSelected = "America/New_York";
-              settings.Appearance.displayTimezoneFormat = "FullText";
+              timeZone.format = "city";
+              settings.Appearance.showDate = false;
             };
           }
           {
@@ -134,10 +136,10 @@ in
               time.showSeconds = "always";
               timeZone.selected = [ "Europe/London" ];
               timeZone.lastSelected = "Europe/London";
-              settings.Appearance.displayTimezoneFormat = "FullText";
+              timeZone.format = "city";
+              settings.Appearance.showDate = false;
             };
           }
-          "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
           "org.kde.plasma.battery"
         ];
