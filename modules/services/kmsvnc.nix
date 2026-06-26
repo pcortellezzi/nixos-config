@@ -4,16 +4,15 @@ let
   startScript = pkgs.writeShellScriptBin "kmsvnc-start" ''
     set -euo pipefail
 
-    # Find the AMD DRM card with HDMI-A-1 connector (EDID injected)
-    AMD_CARD="card0"
+    # Find the DRM card with HDMI-A-1 connector (EDID-injected virtual display)
+    DEVICE="/dev/dri/card0"
     for d in /sys/class/drm/card*; do
       if ls "$d-"* 2>/dev/null | grep -q HDMI-A-1; then
-        AMD_CARD="$(basename $d)"
+        DEVICE="/dev/dri/$(basename $d)"
         break
       fi
     done
 
-    DEVICE="/dev/dri/$AMD_CARD"
     echo "Starting kmsvnc on $DEVICE (HDMI-A-1 via EDID injection)"
     exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901
   '';
