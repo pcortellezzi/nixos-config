@@ -13,7 +13,7 @@ let
       fi
     done
 
-    DEVICE="/dev/dri/$VKMS_CARD"
+    DEVICE="/dev/dri/$AMD_CARD"
     echo "Starting kmsvnc on $DEVICE (HDMI-A-1 via EDID injection)"
     exec ${config.security.wrapperDir}/kmsvnc -d "$DEVICE" -c -i --fps 30 -p 5901
   '';
