@@ -107,6 +107,7 @@ in
               date.enable = true;
               date.format = "longDate";
               time.format = "24h";
+              time.showSeconds = "always";
             };
           }
           "org.kde.plasma.panelspacer"
