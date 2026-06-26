@@ -8,7 +8,7 @@
   config = lib.mkIf config.my.virtual-display.enable {
     hardware.display.edid.packages = [ pkgs.virtual-display-edid ];
 
-    hardware.display.outputs."HDMI-A-1" = {
+    hardware.display.outputs."DP-1" = {
       edid = "1920x1080.bin";
       mode = "e";
     };
