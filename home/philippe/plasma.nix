@@ -117,6 +117,7 @@ in
               timeZone.selected = [ "America/New_York" ];
               timeZone.lastSelected = "America/New_York";
               settings.Appearance.displayTimezoneFormat = "FullText";
+              settings.Appearance.showDate = false;
             };
           }
           {
@@ -126,6 +127,7 @@ in
               timeZone.selected = [ "Europe/London" ];
               timeZone.lastSelected = "Europe/London";
               settings.Appearance.displayTimezoneFormat = "FullText";
+              settings.Appearance.showDate = false;
             };
           }
           {
@@ -135,6 +137,7 @@ in
               timeZone.selected = [ "Europe/Paris" ];
               timeZone.lastSelected = "Europe/Paris";
               settings.Appearance.displayTimezoneFormat = "FullText";
+              settings.Appearance.showDate = false;
             };
           }
           "org.kde.plasma.panelspacer"
