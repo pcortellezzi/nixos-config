@@ -40,6 +40,7 @@ let
       fi
     done
   '';
+
 in
 {
   programs.plasma = {
@@ -173,6 +174,7 @@ in
       "krunner"."RunClipboard" = "Alt+Shift+Space";
       "org_kde_pi_plasma_clock"."screenshots" = "Print";
       "org_kde_pi_plasma_clock"."screenshotsOfArea" = "Meta+Shift+S";
+      "org_kde_powerdevil"."Turn Off Screen" = "Meta+O";
     };
 
     configFile."kdeglobals"."General" = {
@@ -220,6 +222,25 @@ in
       RepeatDelay = 250;
       RepeatRate = 40;
       NumLock = 0;
+    };
+
+    powerdevil = {
+      AC = {
+        autoSuspend = {
+          action = "nothing";
+        };
+        turnOffDisplay = {
+          idleTimeout = "never";
+        };
+        dimDisplay = {
+          enable = false;
+        };
+      };
+    };
+
+    kscreenlocker = {
+      autoLock = false;
+      lockOnResume = false;
     };
   };
   home.packages = [
