@@ -20,4 +20,8 @@
     description = "Philippe CORTELLEZZI";
     extraGroups = [ "networkmanager" "wheel" "i2c" ];
   };
+
+  environment.sessionVariables = {
+    KWIN_FORCE_SW_CURSOR = "1";
+  };
 }
