@@ -24,6 +24,5 @@ in {
   systemd.services.display-manager.environment = {
     KWIN_IM_SHOW_ALWAYS = "1";
     LANG = "fr_FR.UTF-8";
-    __GLX_VENDOR_LIBRARY_NAME = "mesa";
   };
 }
