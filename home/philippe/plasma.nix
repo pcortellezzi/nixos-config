@@ -192,6 +192,12 @@ in
     };
 
 
+    configFile."kwinrc"."Compositing" = {
+      Backend = "QPainter";
+    };
+    configFile."ksplashrc"."KSplash" = {
+      Engine = "none";
+    };
     configFile."konsolerc"."Desktop Entry" = {
       DefaultProfile = "Shell.profile";
     };
