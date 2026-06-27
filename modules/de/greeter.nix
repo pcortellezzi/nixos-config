@@ -25,5 +25,6 @@ in {
     KWIN_IM_SHOW_ALWAYS = "1";
     LANG = "fr_FR.UTF-8";
     __GLX_VENDOR_LIBRARY_NAME = "mesa";
+    KWIN_OPENGL_INTERFACE = "egl";
   };
 }
