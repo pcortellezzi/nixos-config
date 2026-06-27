@@ -46,7 +46,7 @@ in
     tigervnc
   ] ++ (with llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     auto-claude
-    gemini-cli
+    antigravity-cli
     claude-code
   ]);
 
