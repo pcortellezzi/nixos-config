@@ -24,5 +24,6 @@
   environment.sessionVariables = {
     KWIN_FORCE_SW_CURSOR = "1";
     KWIN_OPENGL_INTERFACE = "egl";
+    DRI_PRIME = "0";
   };
 }

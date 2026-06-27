@@ -191,9 +191,6 @@ in
       FocusPolicy = "FollowsMouse";
     };
 
-    configFile."kwinrc"."Compositing" = {
-      Backend = "XRender";
-    };
 
     configFile."konsolerc"."Desktop Entry" = {
       DefaultProfile = "Shell.profile";
