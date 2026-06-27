@@ -48,7 +48,7 @@ in
     auto-claude
     antigravity-cli
     claude-code
-  ]);
+  ]) ++ [ pkgs."atas-x-wine" ];
 
   age.secrets.motivewave_license = {
     file = ./secrets/motivewave_license.age;
