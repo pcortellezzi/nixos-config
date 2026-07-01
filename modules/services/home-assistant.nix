@@ -1,38 +1,61 @@
-{ config, lib, ... }:
-
+{ config, lib, pkgs, ... }:
+let
+  containerName = "homeassistant";
+in
 {
-  config = {
-    services.home-assistant = {
+  virtualisation = {
+    containers.enable = true;
+    podman = {
       enable = true;
-      openFirewall = true;
-      extraComponents = [
-        "esphome"
-        "met"
-        "radio_browser"
-      ];
-      config = {
-        homeassistant = {
-          name = "Home";
-          unit_system = "metric";
-          temperature_unit = "C";
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    oci-containers = {
+      backend = "podman";
+      containers.${containerName} = {
+        image = "ghcr.io/home-assistant/home-assistant:stable";
+        autoStart = true;
+        volumes = [
+          "home-assistant-config:/config"
+        ];
+        environment = {
+          TZ = "America/Cayenne";
         };
-        http = {
-          server_port = 8123;
-        };
-        default_config = {};
+        extraOptions = [
+          "--network=host"
+          "--label=io.containers.autoupdate=registry"
+        ];
       };
     };
-
-    environment.etc."avahi/services/home-assistant.service".text = lib.mkIf config.services.avahi.enable ''
-      <?xml version="1.0" standalone='no'?>
-      <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-      <service-group>
-        <name replace-wildcards="yes">%h Home Assistant</name>
-        <service>
-          <type>_home-assistant._tcp</type>
-          <port>8123</port>
-        </service>
-      </service-group>
-    '';
   };
+
+  systemd.services.podman-auto-update-homeassistant = {
+    description = "Podman auto-update Home Assistant container";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.podman}/bin/podman auto-update --format=json";
+    };
+  };
+
+  systemd.timers.podman-auto-update-homeassistant = {
+    description = "Weekly Home Assistant container image update";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 8123 ];
+
+  environment.etc."avahi/services/home-assistant.service".text = lib.mkIf config.services.avahi.enable ''
+    <?xml version="1.0" standalone='no'?>
+    <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+    <service-group>
+      <name replace-wildcards="yes">%h Home Assistant</name>
+      <service>
+        <type>_home-assistant._tcp</type>
+        <port>8123</port>
+      </service>
+    </service-group>
+  '';
 }
