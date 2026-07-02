@@ -3,6 +3,31 @@ let
   containerName = "homeassistant";
 in
 {
+  systemd.tmpfiles.rules = [
+    "d /srv/homeassistant/config 0755 root root -"
+    "d /srv/homeassistant/config/custom_components 0755 root root -"
+  ];
+
+  systemd.services.seed-hacs = {
+    description = "Seed HACS into Home Assistant config on first boot";
+    before = [ "podman-${containerName}.service" ];
+    wantedBy = [ "podman-${containerName}.service" ];
+    script = ''
+      if [ ! -f /srv/homeassistant/config/custom_components/hacs/manifest.json ]; then
+        mkdir -p /srv/homeassistant/config/custom_components
+        ${pkgs.wget}/bin/wget -q -O /tmp/hacs.zip \
+          https://github.com/hacs/integration/releases/latest/download/hacs.zip
+        ${pkgs.unzip}/bin/unzip -q -o /tmp/hacs.zip \
+          -d /srv/homeassistant/config/custom_components/hacs
+        rm /tmp/hacs.zip
+      fi
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
+
   virtualisation = {
     containers.enable = true;
     podman = {
@@ -15,11 +40,9 @@ in
         image = "ghcr.io/home-assistant/home-assistant:stable";
         autoStart = true;
         volumes = [
-          "home-assistant-config:/config"
+          "/srv/homeassistant/config:/config"
         ];
-        environment = {
-          TZ = "America/Cayenne";
-        };
+        environment.TZ = "America/Cayenne";
         extraOptions = [
           "--network=host"
           "--label=io.containers.autoupdate=registry"
