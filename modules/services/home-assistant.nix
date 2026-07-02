@@ -18,7 +18,7 @@ in
         ${pkgs.wget}/bin/wget -q -O /tmp/hacs.zip \
           https://github.com/hacs/integration/releases/latest/download/hacs.zip
         ${pkgs.unzip}/bin/unzip -q -o /tmp/hacs.zip \
-          -d /srv/homeassistant/config/custom_components/hacs
+          -d /srv/homeassistant/config
         rm /tmp/hacs.zip
       fi
     '';
