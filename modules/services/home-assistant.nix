@@ -14,12 +14,17 @@ in
     wantedBy = [ "podman-${containerName}.service" ];
     script = ''
       if [ ! -f /srv/homeassistant/config/custom_components/hacs/manifest.json ]; then
-        mkdir -p /srv/homeassistant/config/custom_components
+        mkdir -p /srv/homeassistant/config/custom_components/hacs
+        WORKDIR=$(mktemp -d)
         ${pkgs.wget}/bin/wget -q -O /tmp/hacs.zip \
           https://github.com/hacs/integration/releases/latest/download/hacs.zip
-        ${pkgs.unzip}/bin/unzip -q -o /tmp/hacs.zip \
-          -d /srv/homeassistant/config
-        rm /tmp/hacs.zip
+        ${pkgs.unzip}/bin/unzip -q -o /tmp/hacs.zip -d "$WORKDIR"
+        if [ -d "$WORKDIR/custom_components/hacs" ]; then
+          cp -a "$WORKDIR/custom_components/hacs/"* /srv/homeassistant/config/custom_components/hacs/
+        else
+          cp -a "$WORKDIR/"* /srv/homeassistant/config/custom_components/hacs/
+        fi
+        rm -rf /tmp/hacs.zip "$WORKDIR"
       fi
     '';
     serviceConfig = {
