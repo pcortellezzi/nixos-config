@@ -7,8 +7,6 @@
       ../../modules/system.nix
       ../../modules/roles/nas.nix
       ../../modules/roles/domotique.nix
-      ../../modules/services/hermes-agent.nix
-      ../../modules/services/hermes-workspace.nix
     ];
 
   networking.hostName = "ser5";
