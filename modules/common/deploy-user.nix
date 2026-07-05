@@ -66,7 +66,7 @@
             options = [ "NOPASSWD" ];
           }
           {
-            command = "/run/current-system/sw/bin/journalctl -u nixos-update-runner.service";
+            command = "/run/current-system/sw/bin/journalctl -u nixos-update-runner.service -n 50 --no-pager";
             options = [ "NOPASSWD" ];
           }
         ];
