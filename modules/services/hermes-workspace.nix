@@ -1,0 +1,18 @@
+{ config, lib, pkgs, inputs, ... }:
+
+{
+  imports = [
+    inputs.hermes-workspace.nixosModules.default
+  ];
+
+  services.hermes-workspace = {
+    enable = true;
+    package = inputs.hermes-workspace.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    host = "0.0.0.0";
+    port = 3000;
+    hermesApiUrl = "http://127.0.0.1:8642";
+    hermesDashboardUrl = "http://127.0.0.1:9119";
+  };
+
+  networking.firewall.allowedTCPPorts = [ 3000 ];
+}
