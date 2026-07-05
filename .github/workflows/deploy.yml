@@ -117,7 +117,7 @@ jobs:
         if: steps.check_host.outputs.is_available == 'true'
         run: |
           echo "Waiting for nixos-update-runner to finish on ${{ matrix.host }}..."
-          MAX_WAIT=600
+          MAX_WAIT=1200
           ELAPSED=0
           INTERVAL=15
 
