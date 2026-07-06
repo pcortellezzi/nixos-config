@@ -140,7 +140,7 @@ jobs:
                 ;;
               failed)
                 echo "::error::Remote update failed. Fetching logs..."
-                ssh ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 200 --no-pager"
+                ssh ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager"
                 exit 1
                 ;;
               unreachable)
@@ -153,5 +153,5 @@ jobs:
           done
 
           echo "::error::Timed out waiting for update after ${MAX_WAIT}s"
-          ssh -o ConnectTimeout=10 ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 200 --no-pager" 2>/dev/null || true
+          ssh -o ConnectTimeout=10 ${{ matrix.host }} "sudo journalctl -u nixos-update-runner.service -n 50 --no-pager" 2>/dev/null || true
           exit 1

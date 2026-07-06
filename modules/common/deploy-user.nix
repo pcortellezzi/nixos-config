@@ -37,9 +37,10 @@
         done
       }
 
+
       rc=0
       ${pkgs.util-linux}/bin/flock --nonblock --conflict-exit-code 100 /run/nixos-rebuild.lock -c \
-        "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch -v --flake github:pcortellezzi/nixos-config#${config.networking.hostName}" \
+        "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch -v --flake github:pcortellezzi/nixos-config#${config.networking.hostName} --refresh" \
         || rc=$?
 
       if [ "$rc" -eq 100 ]; then
