@@ -7,7 +7,7 @@
 
   services.hermes-workspace = {
     enable = true;
-    package = inputs.hermes-workspace.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    package = pkgs.hermes-workspace;
     host = "0.0.0.0";
     port = 3000;
     hermesApiUrl = "http://127.0.0.1:8642";
