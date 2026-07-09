@@ -23,6 +23,11 @@
 
     environmentFiles = [ config.age.secrets.hermes_api_keys.path ];
     environment.API_SERVER_ENABLED = "true";
+    settings = {
+      terminal = {
+        user = "hermes";
+        backend = "local";
+      };
   };
 
   networking.firewall.allowedTCPPorts = [ 8642 ];
