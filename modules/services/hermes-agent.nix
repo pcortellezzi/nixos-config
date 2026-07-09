@@ -37,9 +37,11 @@
 
     serviceConfig = {
       Type = "simple";
-      Restart = "on-failure";
-      RestartSec = 5;
+      Restart = "always";
+      RestartSec = 10;
       ExecStart = "${pkgs.podman}/bin/podman exec hermes-agent hermes dashboard";
+      # Wait for container to be ready before starting
+      ExecStartPre = "${pkgs.bash}/bin/bash -c 'for i in \$(seq 30); do ${pkgs.podman}/bin/podman exec hermes-agent true 2>/dev/null && exit 0; sleep 2; done; exit 1'";
     };
   };
 
