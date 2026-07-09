@@ -17,5 +17,7 @@
     cookieSecure = false;
   };
 
+  systemd.services.hermes-workspace.serviceConfig.Restart = "always";
+
   networking.firewall.allowedTCPPorts = [ 3000 ];
 }
