@@ -53,7 +53,10 @@ in
   xdg.configFile = {
     "opencode/tui.json".text = builtins.toJSON opencodeTuiConfig;
 
-    "opencode/opencode.json".source = ./opencode-config/opencode.json;
+    "opencode/opencode.json" = {
+      source = ./opencode-config/opencode.json;
+      force = true;
+    };
     "opencode/AGENTS.md".source = ./opencode-config/AGENTS.md;
     "opencode/oh-my-openagent.json".source = ./opencode-config/oh-my-openagent.json;
   };
