@@ -25,5 +25,6 @@
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
     "vm.vfs_cache_pressure" = 50;
+    "kernel.unprivileged_userns_clone" = 1;
   };
 }
