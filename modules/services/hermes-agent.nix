@@ -25,9 +25,5 @@
     environment.API_SERVER_ENABLED = "true";
   };
 
-
-
-
-
   networking.firewall.allowedTCPPorts = [ 8642 ];
 }
