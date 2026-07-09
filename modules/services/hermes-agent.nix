@@ -22,6 +22,7 @@
     };
 
     environmentFiles = [ config.age.secrets.hermes_api_keys.path ];
+    environment.API_SERVER_ENABLED = "true";
   };
 
   networking.firewall.allowedTCPPorts = [ 8642 ];

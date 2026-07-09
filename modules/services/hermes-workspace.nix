@@ -13,6 +13,8 @@
     hermesApiUrl = "http://127.0.0.1:8642";
     hermesDashboardUrl = "http://127.0.0.1:9119";
     passwordFile = config.age.secrets.hermes_api_keys.path;
+    environmentFile = config.age.secrets.hermes_api_keys.path;
+    cookieSecure = false;
   };
 
   networking.firewall.allowedTCPPorts = [ 3000 ];
