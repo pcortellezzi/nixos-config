@@ -17,7 +17,7 @@
     cookieSecure = false;
   };
 
-  systemd.services.hermes-workspace.serviceConfig.Restart = "always";
+  systemd.services.hermes-workspace.serviceConfig.Restart = lib.mkForce "always";
 
   networking.firewall.allowedTCPPorts = [ 3000 ];
 }
