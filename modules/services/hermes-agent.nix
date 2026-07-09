@@ -29,6 +29,7 @@
         backend = "local";
       };
     };
+  };
 
   networking.firewall.allowedTCPPorts = [ 8642 ];
 }
