@@ -102,6 +102,7 @@
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
             ./home/philippe/opencode.nix
+            ./home/philippe/codex.nix
             ./home/philippe/vvb.nix
           ];
         };
@@ -112,6 +113,7 @@
             ./home/philippe/common.nix
             ./home/philippe/desktop.nix
             ./home/philippe/opencode.nix
+            ./home/philippe/codex.nix
           ];
         };
       };
