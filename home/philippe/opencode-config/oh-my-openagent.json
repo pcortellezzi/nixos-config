@@ -1,106 +1,31 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
-  "agents": {
-    "sisyphus": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#00CED1"
-    },
-    "oracle": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#9B59B6"
-    },
-    "librarian": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#3498DB"
-    },
-    "explore": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#2ECC71"
-    },
-    "multimodal-looker": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#E67E22"
-    },
-    "prometheus": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#E74C3C"
-    },
-    "metis": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#1ABC9C"
-    },
-    "momus": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#F39C12"
-    },
-    "atlas": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#27AE60"
-    },
-    "sisyphus-junior": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#7F8C8D"
-    },
-    "hephaestus": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#FF8C00"
-    },
-    "caveman": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#FFD700"
-    },
-    "speckit": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }],
-      "color": "#FF7A7A"
-    }
-  },
-  "categories": {
-    "visual-engineering": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "ultrabrain": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "deep": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "artistry": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "quick": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "unspecified-low": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "unspecified-high": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    },
-    "writing": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "fallback_models": [{ "model": "opencode-zen/deepseek-v4-flash-free" }]
-    }
-  },
+"agents": {
+  "sisyphus":      { "model": "devpass/kimi-k3" },
+  "hephaestus":    { "model": "devpass/gpt-5.6-sol", "variant": "medium" },
+  "oracle":        { "model": "devpass/gpt-5.6-sol", "variant": "high" },
+  "momus":         { "model": "devpass/gpt-5.6-terra", "variant": "high" },
+  "metis":         { "model": "devpass/kimi-k3" },
+  "prometheus":    { "model": "devpass/glm-5.2" },
+  "atlas":         { "model": "devpass/kimi-k3" },
+  "explore":       { "model": "opencode-go/deepseek-v4-flash" },
+  "librarian":     { "model": "opencode-go/deepseek-v4-flash" },
+  "quick":         { "model": "opencode-go/deepseek-v4-flash" },
+  "caveman":       { "model": "opencode-go/deepseek-v4-flash" },
+  "sisyphus-junior": { "model": "opencode-go/deepseek-v4-flash" },
+  "multimodal-looker": { "model": "opencode-go/deepseek-v4-flash" },
+  "speckit":       { "model": "opencode-go/deepseek-v4-flash" }
+},
+"categories": {
+  "ultrabrain":        { "model": "devpass/gpt-5.6-sol", "variant": "xhigh" },
+  "deep":              { "model": "devpass/kimi-k3" },
+  "unspecified-high":  { "model": "devpass/kimi-k3" },
+  "unspecified-low":   { "model": "opencode-go/deepseek-v4-flash" },
+  "visual-engineering": { "model": "opencode-go/qwen3.6-plus" },
+  "writing":           { "model": "opencode-go/deepseek-v4-flash" },
+  "artistry":          { "model": "opencode-go/deepseek-v4-flash" },
+  "quick":             { "model": "opencode-go/deepseek-v4-flash" }
+},
   "google_auth": false,
   "team_mode": {
     "enabled": true,
