@@ -99,6 +99,5 @@ in
       source = ./opencode-config/opencode.json;
       force = true;
     };
-    "opencode/AGENTS.md".source = ./opencode-config/AGENTS.md;
   };
 }
