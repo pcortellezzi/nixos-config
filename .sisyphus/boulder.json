@@ -1,0 +1,12 @@
+{
+  "active_plan": "/home/philippe/Projects/nixos-config/.sisyphus/plans/omo-presets.md",
+  "started_at": "2026-07-23T05:38:03.364Z",
+  "session_ids": [
+    "ses_08b68b0a3ffeRA4P5OHVktZKnO"
+  ],
+  "session_origins": {
+    "ses_08b68b0a3ffeRA4P5OHVktZKnO": "direct"
+  },
+  "plan_name": "omo-presets",
+  "agent": "atlas"
+}
